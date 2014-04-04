@@ -1,4 +1,4 @@
 miracle_tool
 ============
 
-Tool for Miracle 2D animation framework
+Tool for [Miracle](https://github.com/MerlinDS/Miracle) 2D animation framework
