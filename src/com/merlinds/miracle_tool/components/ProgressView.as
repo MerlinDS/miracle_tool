@@ -45,7 +45,6 @@ package com.merlinds.miracle_tool.components {
 		private function addHandler(event:Event):void {
 			this.removeEventListener(event.type, this.addHandler);
 			_currentState = -1;
-			this.nextState();
 		}
 
 		//==============================================================================

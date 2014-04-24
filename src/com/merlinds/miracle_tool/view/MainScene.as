@@ -69,12 +69,10 @@ package com.merlinds.miracle_tool.view {
 			_progressView = new ProgressView();
 			this.addChild(_progressView);
 			this.removeChild(inputDialog);
-
-			var path:String = "";
-			var target:String = inputDialog.message.text;
+			_model.instanceName = inputDialog.message.text;
 //
 			_processor.addEventListener(Event.CHANGE, changeHandler);
-			setTimeout(_processor.execute, 0, path, target);
+			setTimeout(_processor.execute, 0);
 		}
 
 		private function changeHandler(event:Event):void {

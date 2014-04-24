@@ -7,7 +7,6 @@ package com.merlinds.miracle_tool.tools.structures {
 	import com.merlinds.miracle_tool.tools.ITool;
 
 	import flash.events.Event;
-
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
@@ -16,7 +15,6 @@ package com.merlinds.miracle_tool.tools.structures {
 	import flash.utils.setTimeout;
 
 	import nochump.util.zip.ZipEntry;
-
 	import nochump.util.zip.ZipFile;
 
 	public class StructureConverter implements ITool{
@@ -34,7 +32,7 @@ package com.merlinds.miracle_tool.tools.structures {
 		//==============================================================================
 		//{region							PUBLIC METHODS
 
-		public function execute(callback:Function = null):void {
+		public function execute():void {
 			trace(this, "execute");
 			_callback = callback;
 			this.selectFile();

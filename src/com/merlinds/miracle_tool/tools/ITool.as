@@ -7,7 +7,7 @@ package com.merlinds.miracle_tool.tools {
 	public interface ITool {
 		//==============================================================================
 		//{region							METHODS
-		function execute(callback:Function = null):void;
+		function execute():void;
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
