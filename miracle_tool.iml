@@ -12,7 +12,7 @@
           <sdk name="AIR 4.0" />
         </dependencies>
         <compiler-options />
-        <packaging-air-desktop package-file-name="Miracle Tool" />
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/MiracleTool-app.xml" package-file-name="Miracle Tool" />
         <packaging-android />
         <packaging-ios />
       </configuration>

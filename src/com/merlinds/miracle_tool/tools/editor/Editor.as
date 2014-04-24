@@ -1,25 +1,22 @@
 /**
  * User: MerlinDS
- * Date: 04.04.2014
- * Time: 15:48
+ * Date: 24.04.2014
+ * Time: 21:57
  */
-package com.merlinds.miracle_tool {
+package com.merlinds.miracle_tool.tools.editor {
 	import com.merlinds.miracle_tool.models.AppModel;
-	import com.merlinds.miracle_tool.tools.editor.EditorLauncher;
-	import com.merlinds.miracle_tool.view.MainScene;
 
 	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
 	import flash.events.Event;
 
-	public class MiracleTool extends Sprite {
+	public class Editor extends Sprite {
 
 		private var _model:AppModel;
 
-		public function MiracleTool() {
+		public function Editor(model:AppModel) {
+			_model = model;
+			this.addEventListener(Event.ADDED_TO_STAGE, this.initHandler);
 			super();
-			this.addEventListener(Event.ADDED_TO_STAGE, this.initializeHandler);
 		}
 
 		//==============================================================================
@@ -32,19 +29,9 @@ package com.merlinds.miracle_tool {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
-		private function initializeHandler(event:Event):void {
-			this.removeEventListener(event.type, this.initializeHandler);
-			new Config("C:\\Program Files\\Adobe\\Adobe Flash CC\\Flash.exe");
-			this.stage.scaleMode = StageScaleMode.NO_SCALE;
-			this.stage.align = StageAlign.TOP_LEFT;
-
-			_model = new AppModel();
-			EditorLauncher.getInstance().initialize(this.stage, _model);
-
-			var scene:MainScene = new MainScene(_model);
-			this.addChild(scene);
+		private function initHandler(event:Event):void {
+			this.removeEventListener(event.type, initHandler);
 		}
-
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================
