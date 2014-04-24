@@ -18,8 +18,8 @@ package com.merlinds.miracle_tool.services {
 	public class FileManager extends EventDispatcher{
 
 		private var _file:File;
-		private var _stream:FileStream;
 		private var _model:AppModel;
+		private var _target:File;
 
 		public function FileManager(model:AppModel) {
 			_file = model.lastDirectory;
@@ -47,13 +47,13 @@ package com.merlinds.miracle_tool.services {
 			_model.lastDirectory = _file.parent;
 			//copy to work dir
 			const workDirectory:File = File.createTempDirectory();
-			var target:File = workDirectory.resolvePath( _file.name );
-			_file.copyToAsync(target, true);
+			_target = workDirectory.resolvePath( _file.name );
+			_file.copyToAsync(_target, true);
 		}
 
 		private function completeHandler(event:Event):void {
 			_file.removeEventListener(event.type, this.completeHandler);
-			_model.workFLA = _file;
+			_model.workFLA = _target;
 			this.dispatchEvent(event);
 		}
 		//} endregion EVENTS HANDLERS ==================================================

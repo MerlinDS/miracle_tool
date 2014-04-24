@@ -49,6 +49,10 @@ package com.merlinds.miracle_tool.models {
 			return _workFLA;
 		}
 
+		public function get workDir():File {
+			return _workFLA.parent;
+		}
+
 		public function set workFLA(value:File):void {
 			_workFLA = value;
 			if(_workFLA != null){

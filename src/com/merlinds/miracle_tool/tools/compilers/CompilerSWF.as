@@ -13,6 +13,9 @@ package com.merlinds.miracle_tool.tools.compilers {
 	import flash.events.IOErrorEvent;
 	import flash.events.NativeProcessExitEvent;
 	import flash.events.ProgressEvent;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 
 	public class CompilerSWF extends AbstractTool{
 
@@ -30,20 +33,8 @@ package com.merlinds.miracle_tool.tools.compilers {
 			if(!NativeProcess.isSupported){
 				this.executeErrorCallback(  new IllegalOperationError("NativeProcess not supported.") );
 			}else{
-				var nativeProcessStartupInfo:NativeProcessStartupInfo = new
-						NativeProcessStartupInfo()
-				var args:Vector.<String> = new <String>[ Config.swfCompiler.name ];
-				nativeProcessStartupInfo.executable = Config.flashIDEPath;
-				nativeProcessStartupInfo.workingDirectory = Config.nativeFilesPath;
-				nativeProcessStartupInfo.arguments = args;
-				//
-				_process = new NativeProcess();
-				_process.addEventListener(ProgressEvent.STANDARD_OUTPUT_DATA, onOutputData);
-				_process.addEventListener(ProgressEvent.STANDARD_ERROR_DATA, onErrorData);
-				_process.addEventListener(IOErrorEvent.STANDARD_OUTPUT_IO_ERROR, onIOError);
-				_process.addEventListener(IOErrorEvent.STANDARD_ERROR_IO_ERROR, onIOError);
-				_process.addEventListener(NativeProcessExitEvent.EXIT, onExit);
-				_process.start(nativeProcessStartupInfo);
+				this.prepareJSFL();
+				this.executeCompilation();
 			}
 		}
 
@@ -51,6 +42,35 @@ package com.merlinds.miracle_tool.tools.compilers {
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
+		private function prepareJSFL():void {
+			var jsflFile:File = Config.swfCompiler;
+			var target:File = _model.workDir.resolvePath(jsflFile.name);
+			jsflFile.copyTo(target, true);
+			var stream:FileStream = new FileStream();
+			stream.open(target, FileMode.UPDATE);
+			stream.position = 0;
+			var sctipt:String = "var fileName = '" + _model.workFLA.name + "';\n";
+			stream.writeUTFBytes(sctipt);
+			stream.close();
+			trace(target.nativePath);
+		}
+
+		private function executeCompilation():void{
+			var nativeProcessStartupInfo:NativeProcessStartupInfo = new
+					NativeProcessStartupInfo();
+			var args:Vector.<String> = new <String>[ Config.swfCompiler.name ];
+			nativeProcessStartupInfo.executable = Config.flashIDEPath;
+			nativeProcessStartupInfo.workingDirectory = _model.workDir;
+			nativeProcessStartupInfo.arguments = args;
+			//
+			_process = new NativeProcess();
+			_process.addEventListener(ProgressEvent.STANDARD_OUTPUT_DATA, onOutputData);
+			_process.addEventListener(ProgressEvent.STANDARD_ERROR_DATA, onErrorData);
+			_process.addEventListener(IOErrorEvent.STANDARD_OUTPUT_IO_ERROR, onIOError);
+			_process.addEventListener(IOErrorEvent.STANDARD_ERROR_IO_ERROR, onIOError);
+			_process.addEventListener(NativeProcessExitEvent.EXIT, onExit);
+			_process.start(nativeProcessStartupInfo);
+		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
