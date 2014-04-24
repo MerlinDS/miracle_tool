@@ -31,14 +31,14 @@ package com.merlinds.miracle_tool.tools {
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
-		protected function executeCallback():void{
+		protected final function executeCallback():void{
 			if(_callback is Function){
 				_callback.apply(this);
 			}
 			this.destroy();
 		}
 
-		protected function executeErrorCallback(error:Error):void{
+		protected final function executeErrorCallback(error:Error):void{
 			_errorCallback.apply(this, [error]);
 			this.destroy();
 		}
@@ -56,15 +56,15 @@ package com.merlinds.miracle_tool.tools {
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
-		internal function set model(value:AppModel):void{
+		internal final function set model(value:AppModel):void{
 			_model = value;
 		}
 
-		internal function set callback(value:Function):void {
+		internal final function set callback(value:Function):void {
 			_callback = value;
 		}
 
-		internal function set errorCallback(value:Function):void {
+		internal final function set errorCallback(value:Function):void {
 			_errorCallback = value;
 		}
 

@@ -16,6 +16,8 @@ package com.merlinds.miracle_tool.tools.editor {
 	import flash.display.Stage;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.geom.Rectangle;
 
 	public class EditorLauncher {
@@ -25,6 +27,7 @@ package com.merlinds.miracle_tool.tools.editor {
 		private var _options:NativeWindowInitOptions;
 		private var _model:AppModel;
 		private var _stage:Stage;
+		private var _onClose:Function;
 
 		public function EditorLauncher() {
 
@@ -48,11 +51,12 @@ package com.merlinds.miracle_tool.tools.editor {
 			_options.owner = _stage.nativeWindow;
 		}
 
-		public function execute():void{
+		public function execute(onClose:Function):void{
 			var list:Vector.<NativeWindow> = _stage.nativeWindow.listOwnedWindows();
 			for(var i:int = 0; i < list.length; i++){
 				list[i].close();
 			}
+			_onClose = onClose;
 			this.createWindow();
 		}
 		//} endregion PUBLIC METHODS ===================================================
@@ -72,11 +76,18 @@ package com.merlinds.miracle_tool.tools.editor {
 			var editor:Editor = new Editor(_model);
 			newWindow.stage.addChild(editor);
 			newWindow.activate();
+			newWindow.addEventListener(Event.CLOSE, this.closeHandler);
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		private function closeHandler(event:Event):void {
+			trace("Editor was closed");
+			var target:EventDispatcher = event.target as EventDispatcher;
+			target.removeEventListener(event.type, arguments.callee);
+			_onClose.apply(this);
+		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================
