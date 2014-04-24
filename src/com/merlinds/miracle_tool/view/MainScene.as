@@ -10,6 +10,7 @@ package com.merlinds.miracle_tool.view {
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.services.FileManager;
 	import com.merlinds.miracle_tool.tools.ToolProcessor;
+	import com.merlinds.miracle_tool.tools.editor.EditorLauncher;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -72,7 +73,8 @@ package com.merlinds.miracle_tool.view {
 			_model.instanceName = inputDialog.message.text;
 //
 			_processor.addEventListener(Event.CHANGE, changeHandler);
-			setTimeout(_processor.execute, 0);
+			EditorLauncher.getInstance().execute(function():void{});
+//			setTimeout(_processor.execute, 0);
 		}
 
 		private function changeHandler(event:Event):void {
