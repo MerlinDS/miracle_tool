@@ -60,21 +60,22 @@ package com.merlinds.miracle_tool.view {
 			var fileManager:FileManager = event.target as FileManager;
 			fileManager.removeEventListener(event.type, arguments.callee);
 			_selectButton.visible = false;
-			var inputDialog:InputDialogView = new InputDialogView();
-			inputDialog.addEventListener(Event.SELECT, this.selectAnimationHandler);
-			this.addChild(inputDialog);
+			//TODO: add this after swf parsing
+//			var inputDialog:InputDialogView = new InputDialogView();
+//			inputDialog.addEventListener(Event.SELECT, this.selectAnimationHandler);
+//			this.addChild(inputDialog);
+			this.selectAnimationHandler(new Event(Event.SELECT));
 		}
 
 		private function selectAnimationHandler(event:Event):void {
-			var inputDialog:InputDialogView = event.target as InputDialogView;
+//			var inputDialog:InputDialogView = event.target as InputDialogView;
 			_progressView = new ProgressView();
 			this.addChild(_progressView);
-			this.removeChild(inputDialog);
-			_model.instanceName = inputDialog.message.text;
+//			this.removeChild(inputDialog);
+			_model.instanceName = "test";//inputDialog.message.text;
 //
 			_processor.addEventListener(Event.CHANGE, changeHandler);
-			EditorLauncher.getInstance().execute(function():void{});
-//			setTimeout(_processor.execute, 0);
+			setTimeout(_processor.execute, 0);
 		}
 
 		private function changeHandler(event:Event):void {

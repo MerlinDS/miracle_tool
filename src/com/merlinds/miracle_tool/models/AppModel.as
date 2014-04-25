@@ -57,7 +57,8 @@ package com.merlinds.miracle_tool.models {
 			_workFLA = value;
 			if(_workFLA != null){
 				var fileName:String = _workFLA.name.substr( 0, -workFLA.extension.length ) + "swf";
-				_workSWF = _workFLA.resolvePath(fileName);
+				//swf on the same level as the fla file
+				_workSWF = _workFLA.parent.resolvePath(fileName);
 			}else{
 				_workSWF = null;
 			}
