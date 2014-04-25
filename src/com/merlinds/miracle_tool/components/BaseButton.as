@@ -27,9 +27,6 @@ package com.merlinds.miracle_tool.components {
 		//{region							EVENTS HANDLERS
 		private function updateHandler(event:Event):void {
 			this.removeEventListener(event.type, arguments.callee);
-			if(this.label != null){
-				this.label.text = this.name;
-			}
 		}
 
 		//} endregion EVENTS HANDLERS ==================================================
