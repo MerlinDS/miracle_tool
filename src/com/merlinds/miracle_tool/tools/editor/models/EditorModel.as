@@ -17,21 +17,33 @@ package com.merlinds.miracle_tool.tools.editor.models {
 		private var _target:MovieClip;
 		private var _symbols:Vector.<String>;
 
+		private var _boundsOffset:Number;
+
 		public function EditorModel() {
+			_boundsOffset = 0;
 		}
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function getInstanceFromTarget(name:String):DisplayObject{
 			var result:DisplayObject;
-			return result;
+			try{
+				var clazz:Class = _target.loaderInfo.applicationDomain.getDefinition(name) as Class;
+				result = new clazz() as DisplayObject;
+			}catch(error:Error){
+				trace("Cannot define instance with name", name);
+			}finally{
+				return result;
+			}
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function clear():void {
-
+			_target.loaderInfo.loader.unload();
+			_target = null;
+			_symbols = null;
 		}
 
 		private function parse():void {
@@ -75,6 +87,9 @@ package com.merlinds.miracle_tool.tools.editor.models {
 			return _symbols;
 		}
 
+		public function get boundsOffset():Number {
+			return _boundsOffset;
+		}
 
 //} endregion GETTERS/SETTERS ==================================================
 	}

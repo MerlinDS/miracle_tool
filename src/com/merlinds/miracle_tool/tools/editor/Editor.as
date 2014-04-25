@@ -7,7 +7,10 @@ package com.merlinds.miracle_tool.tools.editor {
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.tools.editor.models.EditorModel;
 
+	import flash.display.Bitmap;
+
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 
 	import flash.display.Graphics;
 
@@ -18,6 +21,9 @@ package com.merlinds.miracle_tool.tools.editor {
 
 		private var _appModel:AppModel;
 		private var _model:EditorModel;
+
+		private var _textureScreen:Bitmap;
+		private var _texturePacker:TexturePacker;
 
 		public function Editor(model:AppModel) {
 			_appModel = model;
@@ -47,6 +53,9 @@ package com.merlinds.miracle_tool.tools.editor {
 			this.drawTile();
 			//start
 			_model = new EditorModel();
+			_textureScreen = new Bitmap();
+			_texturePacker = new TexturePacker(_model);
+			this.addChild(_textureScreen);
 			//TODO add preloader
 			var swfLoader:SWFLoader = new SWFLoader();
 			swfLoader.addEventListener(Event.COMPLETE, this.competeLoaderHandler);
@@ -57,10 +66,18 @@ package com.merlinds.miracle_tool.tools.editor {
 			var swfLoader:SWFLoader = event.target as  SWFLoader;
 			swfLoader.removeEventListener(event.type, this.competeLoaderHandler);
 			_model.target = swfLoader.output;
-			//for test
-			this.addChild(_model.target);
-			var test:* = _model.libraryListing;
-			trace(test);
+			_texturePacker.execute("test");
+			this.addEventListener(Event.ENTER_FRAME, this.enterFrameHandler);
+		}
+
+		private function enterFrameHandler(event:Event):void {
+			if(_texturePacker.complete){
+				this.removeEventListener(event.type, this.enterFrameHandler);
+				trace("All done", _texturePacker.output.width);
+			}else{
+				_texturePacker.enterFrame();
+				_textureScreen.bitmapData = _texturePacker.output;
+			}
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
