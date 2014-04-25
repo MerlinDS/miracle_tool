@@ -56,9 +56,11 @@ package com.merlinds.miracle_tool.tools.editor {
 		private function competeLoaderHandler(event:Event):void {
 			var swfLoader:SWFLoader = event.target as  SWFLoader;
 			swfLoader.removeEventListener(event.type, this.competeLoaderHandler);
-			_model.swf = swfLoader.output;
+			_model.target = swfLoader.output;
 			//for test
-			this.addChild(_model.swf);
+			this.addChild(_model.target);
+			var test:* = _model.libraryListing;
+			trace(test);
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
