@@ -8,8 +8,6 @@ package com.merlinds.miracle_tool.tools.editor {
 
 	import flash.display.NativeWindow;
 
-	import flash.display.NativeWindow;
-
 	import flash.display.NativeWindowInitOptions;
 	import flash.display.NativeWindowSystemChrome;
 	import flash.display.NativeWindowType;

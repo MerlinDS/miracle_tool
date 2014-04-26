@@ -23,7 +23,8 @@ package com.merlinds.miracle_tool.tools.editor {
 		private var _appModel:AppModel;
 		private var _model:EditorModel;
 
-		private var _textureScreen:Bitmap;
+		private var _tile:BitmapData;
+		private var _textureScreen:Sprite;
 		private var _texturePacker:TexturePacker;
 
 		private var _window:Window;
@@ -40,26 +41,22 @@ package com.merlinds.miracle_tool.tools.editor {
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
-		private function drawTile():void{
-			var g:Graphics = this.graphics;
-			var tile:BitmapData = new PSTile();
-			g.beginBitmapFill(tile);
-			g.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight);
-			g.endFill();
-		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 		private function initHandler(event:Event):void {
 			this.removeEventListener(event.type, initHandler);
-			this.drawTile();
+			this.graphics.beginFill(0x333333);
+			this.graphics.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight);
+			this.graphics.endFill();
 			//start
+			_tile = new PSTile();
 			_model = new EditorModel();
-			_textureScreen = new Bitmap();
+			_textureScreen = new Sprite();
 			_texturePacker = new TexturePacker(_model);
 			this.addChild(_textureScreen);
-			//TODO add preloader
+			//TODO add progress bar
 			var swfLoader:SWFLoader = new SWFLoader();
 			swfLoader.addEventListener(Event.COMPLETE, this.competeLoaderHandler);
 			swfLoader.load(_appModel.workSWF);
@@ -86,7 +83,20 @@ package com.merlinds.miracle_tool.tools.editor {
 				trace("All done", _model.output.width);
 			}else{
 				_texturePacker.enterFrame();
-				_textureScreen.bitmapData = _model.output;
+				//clear old view
+				_textureScreen.removeChildren();
+				_textureScreen.graphics.clear();
+				//draw tiles
+				var g:Graphics = _textureScreen.graphics;
+				g.lineStyle(1);
+				g.beginBitmapFill(_tile);
+				g.drawRect(0, 0, _model.output.width, _model.output.height);
+				g.endFill();
+				//draw output
+				_textureScreen.addChild(new Bitmap(_model.output));
+				//centring
+				_textureScreen.x = this.stage.stageWidth - _textureScreen.width >> 1;
+				_textureScreen.y = this.stage.stageHeight - _textureScreen.height >> 1;
 			}
 		}
 		//} endregion EVENTS HANDLERS ==================================================
