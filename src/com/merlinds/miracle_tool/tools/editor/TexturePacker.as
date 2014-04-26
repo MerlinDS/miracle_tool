@@ -4,14 +4,13 @@
  * Time: 21:28
  */
 package com.merlinds.miracle_tool.tools.editor {
-	import avmplus.getQualifiedClassName;
 
 	import com.merlinds.miracle_tool.tools.editor.models.EditorModel;
 
+	import flash.utils.getQualifiedClassName;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
@@ -112,11 +111,12 @@ package com.merlinds.miracle_tool.tools.editor {
 
 			var bottomLeftPoint:Point = new Point(topLeftPoint.x, bottomRightPoint.y);
 
+			element.width = view.width + _model.boundsOffset * 2;
+			element.height = view.height + _model.boundsOffset * 2;
+
 			element.vertexes = new <Number>[topLeftPoint.x, topLeftPoint.y, topRightPoint.x, topRightPoint.y,
 				bottomRightPoint.x, bottomRightPoint.y, bottomLeftPoint.x, bottomLeftPoint.y];
 
-			element.width = view.width + _model.boundsOffset * 2;
-			element.height = view.height + _model.boundsOffset * 2;
 
 			return element;
 		}
@@ -142,13 +142,17 @@ package com.merlinds.miracle_tool.tools.editor {
 			var rect:Rectangle = _packer.quickInsert(element.width, element.height);
 
 			if(rect != null){
-				var matrix:Matrix = new Matrix(1, 0, 0, 1, -element.vertexes[0], -element.vertexes[1]);
-				var bitmapData:BitmapData = new BitmapData(element.width, element.height, true, 0x0);
-				bitmapData.draw(element.view, matrix);
 				//draw output
-				_output.copyPixels(bitmapData, bitmapData.rect, new Point(rect.x + _model.boundsOffset,
-								rect.y + _model.boundsOffset));
-				//TODO get uv position
+				_output.copyPixels(element.bitmapData, element.bitmapData.rect,
+						new Point(rect.x + _model.boundsOffset, rect.y + _model.boundsOffset));
+				//get uv position
+				element.uv = new <Number>[
+					rect.left, rect.top,
+					rect.right, rect.top,
+					rect.right, rect.bottom,
+					rect.left, rect.bottom
+				];
+
 			}
 
 			return rect != null;
@@ -175,6 +179,7 @@ package com.merlinds.miracle_tool.tools.editor {
 	}
 }
 
+import flash.display.BitmapData;
 import flash.display.DisplayObject;
 import flash.geom.Matrix;
 
@@ -183,13 +188,29 @@ class Element{
 
 	public var name:String;
 	public var view:DisplayObject;
-	public var vertexes:Vector.<Number>;
+	public var bitmapData:BitmapData;
 	public var width:Number;
 	public var height:Number;
+	public var uv:Vector.<Number>;
+
+	private var _vertexes:Vector.<Number>;
 
 	public function Element(name:String, view:DisplayObject) {
 		this.view = view;
 		this.name = name;
 		this.view.transform.matrix = CLEAR_MATRIX;
+	}
+
+	public function get vertexes():Vector.<Number> {
+		return _vertexes;
+	}
+
+	public function set vertexes(value:Vector.<Number>):void {
+		_vertexes = value;
+		if(value != null){
+			var matrix:Matrix = new Matrix(1, 0, 0, 1, -vertexes[0], -vertexes[1]);
+			this.bitmapData = new BitmapData(this.width, this.height, true, 0x0);
+			bitmapData.draw(this.view, matrix);
+		}
 	}
 }
