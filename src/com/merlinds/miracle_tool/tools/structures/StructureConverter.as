@@ -34,7 +34,6 @@ package com.merlinds.miracle_tool.tools.structures {
 
 		public function execute():void {
 			trace(this, "execute");
-			_callback = callback;
 			this.selectFile();
 		}
 

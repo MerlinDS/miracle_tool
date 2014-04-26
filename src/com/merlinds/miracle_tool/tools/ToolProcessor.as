@@ -8,6 +8,7 @@ package com.merlinds.miracle_tool.tools {
 	import com.merlinds.miracle_tool.tools.compilers.CompilerATF;
 	import com.merlinds.miracle_tool.tools.compilers.CompilerSWF;
 	import com.merlinds.miracle_tool.tools.editor.EditorTool;
+	import com.merlinds.miracle_tool.tools.parsers.ParserFLA;
 
 	import flash.events.ErrorEvent;
 
@@ -44,7 +45,8 @@ package com.merlinds.miracle_tool.tools {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function prepareTools():void{
-			_tools = new <AbstractTool>[ new CompilerSWF(), new EditorTool(), new CompilerATF() ];
+			_tools = new <AbstractTool>[ new CompilerSWF(), new EditorTool(),
+				new CompilerATF(), new ParserFLA() ];
 			for(var i:int = 0; i < _tools.length; i++){
 				_tools[i].model = _model;
 				_tools[i].callback = this.callback;
