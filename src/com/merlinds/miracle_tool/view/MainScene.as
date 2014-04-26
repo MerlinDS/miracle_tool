@@ -7,10 +7,12 @@ package com.merlinds.miracle_tool.view {
 	import com.bit101.components.PushButton;
 	import com.bit101.components.Style;
 	import com.bit101.components.VBox;
+	import com.merlinds.miracle_tool.Config;
 	import com.merlinds.miracle_tool.components.ProgressView;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.services.FileManager;
 	import com.merlinds.miracle_tool.tools.ToolProcessor;
+	import com.merlinds.miracle_tool.view.components.FlashIDEWarning;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -47,36 +49,31 @@ package com.merlinds.miracle_tool.view {
 			//draw menu
 			Style.setStyle(Style.DARK);
 			_buttonBox = new VBox(this);
-			_buttonBox.addChild( new PushButton(this, 0, 0, "Animation Viewer") );
-			_buttonBox.addChild( new PushButton(this, 0, 0, "Create animation", this.buttonHandler) );
+			new PushButton(_buttonBox, 0, 0, "Animation Viewer").enabled = false;
+			new PushButton(_buttonBox, 0, 0, "Create animation", this.createButtonHandler);
 			_buttonBox.x = this.stage.stageWidth - _buttonBox.width >> 1;
 			_buttonBox.y = this.stage.stageHeight - _buttonBox.height >> 1;
 		}
 
-		private function buttonHandler(event:MouseEvent):void {
-			var fileManager:FileManager = new FileManager(_model);
-			fileManager.browseForFLA();
-			fileManager.addEventListener(Event.COMPLETE, this.fileCompleteHandler);
+		private function createButtonHandler(event:MouseEvent = null):void {
+			if(Config.flashIDEPath == null){
+				new FlashIDEWarning(this, _model, this.createButtonHandler);
+			}else{
+				_buttonBox.visible = false;
+				var fileManager:FileManager = new FileManager(_model);
+				fileManager.addEventListener(Event.COMPLETE, this.fileCompleteHandler);
+				fileManager.browseForFLA();
+			}
 		}
 
 		private function fileCompleteHandler(event:Event):void {
 			var fileManager:FileManager = event.target as FileManager;
 			fileManager.removeEventListener(event.type, arguments.callee);
-			_buttonBox.visible = false;
-			//TODO: add this after swf parsing
-//			var inputDialog:InputDialogView = new InputDialogView();
-//			inputDialog.addEventListener(Event.SELECT, this.selectAnimationHandler);
-//			this.addChild(inputDialog);
 			this.selectAnimationHandler(new Event(Event.SELECT));
 		}
 
 		private function selectAnimationHandler(event:Event):void {
-//			var inputDialog:InputDialogView = event.target as InputDialogView;
-			_progressView = new ProgressView();
-			this.addChild(_progressView);
-//			this.removeChild(inputDialog);
-			_model.instanceName = "test";//inputDialog.message.text;
-//
+			_progressView = new ProgressView(this);
 			_processor.addEventListener(Event.CHANGE, changeHandler);
 			setTimeout(_processor.execute, 0);
 		}

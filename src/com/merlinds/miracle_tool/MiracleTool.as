@@ -13,6 +13,7 @@ package com.merlinds.miracle_tool {
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
 
+	[SWF(backgroundColor="0x333333", frameRate=60)]
 	public class MiracleTool extends Sprite {
 
 		private var _model:AppModel;
@@ -34,7 +35,7 @@ package com.merlinds.miracle_tool {
 		//{region							EVENTS HANDLERS
 		private function initializeHandler(event:Event):void {
 			this.removeEventListener(event.type, this.initializeHandler);
-			new Config("C:\\Program Files\\Adobe\\Adobe Flash CC\\Flash.exe");
+			this.stage.nativeWindow.alwaysInFront = true;
 			this.stage.scaleMode = StageScaleMode.NO_SCALE;
 			this.stage.align = StageAlign.TOP_LEFT;
 

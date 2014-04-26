@@ -4,6 +4,7 @@
  * Time: 16:03
  */
 package com.merlinds.miracle_tool.components {
+	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 
 	public class ProgressView extends ProgressMC {
@@ -12,9 +13,12 @@ package com.merlinds.miracle_tool.components {
 
 		private var _currentState:int;
 
-		public function ProgressView() {
+		public function ProgressView(parent:DisplayObjectContainer = null) {
 			super();
 			this.addEventListener(Event.ADDED_TO_STAGE, addHandler);
+			if(parent != null){
+				parent.addChild(this);
+			}
 		}
 
 

@@ -4,10 +4,11 @@
  * Time: 20:10
  */
 package com.merlinds.miracle_tool {
-	import flash.errors.IllegalOperationError;
 	import flash.filesystem.File;
 
 	public class Config {
+		public static const windowWindth:int = 200;
+		public static const windowHeight:int = 150;
 
 		private static var _flashIDEPath:File;
 		private static var _nativeFilesPath:File;
@@ -34,12 +35,7 @@ package com.merlinds.miracle_tool {
 			}
 		}
 
-		public function Config(flashIDEPath:String) {
-			_flashIDEPath = new File(flashIDEPath);
-			_flashIDEPath.canonicalize();
-			if(!_flashIDEPath.exists){
-				throw new ArgumentError("Cannot found path to Flash.exe");
-			}
+		public function Config() {
 		}
 
 		//==============================================================================
@@ -57,10 +53,11 @@ package com.merlinds.miracle_tool {
 		//==============================================================================
 		//{region							GETTERS/SETTERS
 		public static function get flashIDEPath():File{
-			if(_flashIDEPath == null){
-				throw IllegalOperationError("Config must be initialized first");
-			}
 			return _flashIDEPath;
+		}
+
+		public static function set flashIDEPath(value:File):void{
+			_flashIDEPath = value;
 		}
 
 		public static function get nativeFilesPath():File {
@@ -75,6 +72,7 @@ package com.merlinds.miracle_tool {
 		public static function get png2atf():File {
 			return _png2atf;
 		}
+
 
 //} endregion GETTERS/SETTERS ==================================================
 	}

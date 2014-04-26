@@ -4,6 +4,8 @@
  * Time: 20:31
  */
 package com.merlinds.miracle_tool.models {
+	import com.merlinds.miracle_tool.Config;
+
 	import flash.filesystem.File;
 	import flash.net.SharedObject;
 
@@ -28,12 +30,15 @@ package com.merlinds.miracle_tool.models {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function initialize():void{
+			new Config();
 			_sharedObject = SharedObject.getLocal("save");
 			if(_sharedObject.size == 0){
 				//save initialized directory;
 				this.lastDirectory = null;
 			}else{
 				_lastDirectory = new File(_sharedObject.data.lastDirectory);
+				this.flashIDEPath = _sharedObject.data.flashIDEPath;
+				//"C:\\Program Files\\Adobe\\Adobe Flash CC\\Flash.exe"
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
@@ -87,6 +92,14 @@ package com.merlinds.miracle_tool.models {
 
 		public function set instanceName(value:String):void {
 			_instanceName = value;
+		}
+
+		public function set flashIDEPath(value:String):void{
+			if(value != null){
+				Config.flashIDEPath = new File(value);
+				_sharedObject.data.flashIDEPath = value;
+				_sharedObject.flush();
+			}
 		}
 
 //} endregion GETTERS/SETTERS ==================================================
