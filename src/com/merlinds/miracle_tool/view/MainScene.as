@@ -5,7 +5,6 @@
  */
 package com.merlinds.miracle_tool.view {
 	import com.bit101.components.PushButton;
-	import com.bit101.components.Style;
 	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.Config;
@@ -50,7 +49,6 @@ package com.merlinds.miracle_tool.view {
 		private function addHandler(event:Event):void {
 			this.removeEventListener(event.type, this.addHandler);
 			//draw menu
-			Style.setStyle(Style.DARK);
 			_buttonBox = new VBox(this);
 			new PushButton(_buttonBox, 0, 0, "Animation Viewer").enabled = false;
 			new PushButton(_buttonBox, 0, 0, "Create animation", this.createButtonHandler);
@@ -59,13 +57,21 @@ package com.merlinds.miracle_tool.view {
 		}
 
 		private function createButtonHandler(event:MouseEvent = null):void {
-			if(Config.flashIDEPath == null && _window == null){
-				_window = new FlashIDEWarning(this, _model);
+			if(Config.flashIDEPath == null){
+				if(_window == null)
+					_window = new FlashIDEWarning(this, _model);
+					_window.addEventListener(Event.CLOSE, this.closeHandler);
 			}else{
 				var fileManager:FileManager = new FileManager(_model);
 				fileManager.addEventListener(Event.COMPLETE, this.fileCompleteHandler);
 				fileManager.browseForFLA();
 			}
+		}
+
+		private function closeHandler(event:Event):void {
+			_window.removeEventListener(event.type, arguments.callee);
+			this.removeChild(_window);
+			_window = null;
 		}
 
 		private function fileCompleteHandler(event:Event):void {

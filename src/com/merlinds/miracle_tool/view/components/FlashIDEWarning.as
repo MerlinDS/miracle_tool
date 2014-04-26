@@ -67,13 +67,6 @@ package com.merlinds.miracle_tool.view.components {
 			this.onClose(new MouseEvent(MouseEvent.CLICK));
 		}
 
-		override protected function onClose(event:MouseEvent):void {
-			super.onClose(event);
-			if(this.parent != null){
-				this.parent.removeChild(this);
-			}
-		}
-
 //} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================
