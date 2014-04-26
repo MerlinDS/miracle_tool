@@ -4,6 +4,7 @@
  * Time: 22:39
  */
 package com.merlinds.miracle_tool.tools {
+	import com.merlinds.miracle_tool.components.ErrorWindown;
 	import com.merlinds.miracle_tool.models.AppModel;
 
 	import flash.errors.IllegalOperationError;
@@ -39,6 +40,7 @@ package com.merlinds.miracle_tool.tools {
 		}
 
 		protected final function executeErrorCallback(error:Error):void{
+			new ErrorWindown(error);
 			_errorCallback.apply(this, [error]);
 			this.destroy();
 		}
