@@ -19,6 +19,9 @@ package com.merlinds.miracle_tool.models {
 
 		private var _lastDirectory:File;
 		private var _sharedObject:SharedObject;
+
+		private var _atfMitmap:int = 0;
+
 		public var elements:Vector.<Element>;
 		public var output:BitmapData;
 
@@ -95,6 +98,10 @@ package com.merlinds.miracle_tool.models {
 				_sharedObject.data.flashIDEPath = value;
 				_sharedObject.flush();
 			}
+		}
+
+		public function get atfMitmap():int {
+			return _atfMitmap;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================
