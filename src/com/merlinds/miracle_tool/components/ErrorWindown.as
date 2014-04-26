@@ -7,19 +7,19 @@ package com.merlinds.miracle_tool.components {
 	import com.bit101.components.Text;
 	import com.bit101.components.Window;
 
-	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 
 	public class ErrorWindown extends Window {
 
+		public static var STAGE:Stage;
+
 		private var _error:Error;
 
-		public function ErrorWindown(parent:DisplayObjectContainer, error:Error) {
+		public function ErrorWindown(error:Error) {
 			_error = error;
-			var stage:Stage = parent.stage;
-			var x:int = stage.stageWidth - 200 >> 1;
-			var y:int = stage.stageHeight - 150 >> 1;
-			super(parent, x, y, "Error!!!");
+			var x:int = STAGE.stageWidth - 200 >> 1;
+			var y:int = STAGE.stageHeight - 150 >> 1;
+			super(STAGE, x, y, "Error!!!");
 		}
 
 		//==============================================================================

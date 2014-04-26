@@ -39,6 +39,7 @@ package com.merlinds.miracle_tool {
 			this.stage.scaleMode = StageScaleMode.NO_SCALE;
 			this.stage.align = StageAlign.TOP_LEFT;
 			Style.setStyle(Style.DARK);
+			ErrorWindown.STAGE = this.stage;
 
 			try {
 				var _model:AppModel = new AppModel();
@@ -47,7 +48,7 @@ package com.merlinds.miracle_tool {
 				var scene:MainScene = new MainScene(_model);
 				this.addChild(scene);
 			}catch(error:Error){
-				new ErrorWindown(this, error);
+				new ErrorWindown(error);
 			}
 
 		}

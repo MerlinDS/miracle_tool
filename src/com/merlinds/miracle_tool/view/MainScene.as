@@ -8,6 +8,7 @@ package com.merlinds.miracle_tool.view {
 	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.Config;
+	import com.merlinds.miracle_tool.components.ErrorWindown;
 	import com.merlinds.miracle_tool.components.ProgressView;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.services.FileManager;

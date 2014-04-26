@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.tools.compilers {
 	import com.merlinds.miracle_tool.Config;
+	import com.merlinds.miracle_tool.components.ErrorWindown;
 	import com.merlinds.miracle_tool.tools.AbstractTool;
 
 	import flash.desktop.NativeProcess;
@@ -31,7 +32,10 @@ package com.merlinds.miracle_tool.tools.compilers {
 			super.execute();
 			trace(this, "execute");
 			if(!NativeProcess.isSupported){
-				this.executeErrorCallback(  new IllegalOperationError("NativeProcess not supported.") );
+				var error:IllegalOperationError = new IllegalOperationError("NativeProcess not supported. " +
+						"Cannot execute Flash IDE for swf compiling. ");
+				new ErrorWindown(error);
+				this.executeErrorCallback(error);
 			}else{
 				this.prepareJSFL();
 				this.executeCompilation();
