@@ -20,12 +20,10 @@ package com.merlinds.miracle_tool.view.components {
 
 	public class FlashIDEWarning extends Window {
 
-		private var _callback:Function;
 		private var _model:AppModel;
 
-		public function FlashIDEWarning(parent:DisplayObjectContainer, model:AppModel, callback:Function) {
+		public function FlashIDEWarning(parent:DisplayObjectContainer, model:AppModel) {
 			_model = model;
-			_callback = callback;
 			var stage:Stage = parent.stage;
 			var x:int = stage.stageWidth - Config.windowWindth >> 1;
 			var y:int = stage.stageHeight - Config.windowHeight >> 1;
@@ -67,7 +65,6 @@ package com.merlinds.miracle_tool.view.components {
 			//TODO need Flash.exe validation by it's signature
 			_model.flashIDEPath = file.nativePath;
 			this.onClose(new MouseEvent(MouseEvent.CLICK));
-			_callback.apply(this);
 		}
 
 		override protected function onClose(event:MouseEvent):void {

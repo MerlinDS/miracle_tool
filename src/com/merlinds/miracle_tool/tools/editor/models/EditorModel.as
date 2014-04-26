@@ -15,9 +15,10 @@ package com.merlinds.miracle_tool.tools.editor.models {
 	public class EditorModel {
 
 		private var _target:MovieClip;
-		private var _symbols:Vector.<String>;
+		private var _symbols:Array;
 
 		private var _boundsOffset:Number;
+		private var _instanceName:String;
 
 		public function EditorModel() {
 			_boundsOffset = 0;
@@ -48,7 +49,7 @@ package com.merlinds.miracle_tool.tools.editor.models {
 
 		private function parse():void {
 			//get library info
-			_symbols = new <String>[];
+			_symbols = [];
 			var swf:SWF = new SWF(_target.loaderInfo.bytes);
 			var i:int, j:int, n:int, m:int;
 			n = swf.tags.length;
@@ -83,12 +84,20 @@ package com.merlinds.miracle_tool.tools.editor.models {
 			method.apply(this);
 		}
 
-		public function get libraryListing():Vector.<String>{
+		public function get libraryListing():Array{
 			return _symbols;
 		}
 
 		public function get boundsOffset():Number {
 			return _boundsOffset;
+		}
+
+		public function get instanceName():String {
+			return _instanceName;
+		}
+
+		public function set instanceName(value:String):void {
+			_instanceName = value;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

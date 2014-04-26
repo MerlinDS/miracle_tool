@@ -4,8 +4,10 @@
  * Time: 21:57
  */
 package com.merlinds.miracle_tool.tools.editor {
+	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.tools.editor.models.EditorModel;
+	import com.merlinds.miracle_tool.tools.editor.view.components.SelectAnimationWindow;
 
 	import flash.display.Bitmap;
 
@@ -23,6 +25,8 @@ package com.merlinds.miracle_tool.tools.editor {
 
 		private var _textureScreen:Bitmap;
 		private var _texturePacker:TexturePacker;
+
+		private var _window:Window;
 
 		public function Editor(model:AppModel) {
 			_appModel = model;
@@ -65,7 +69,14 @@ package com.merlinds.miracle_tool.tools.editor {
 			var swfLoader:SWFLoader = event.target as  SWFLoader;
 			swfLoader.removeEventListener(event.type, this.competeLoaderHandler);
 			_model.target = swfLoader.output;
-			_texturePacker.execute("test");
+			_window = new SelectAnimationWindow(this, _model);
+			_window.addEventListener(Event.CLOSE, this.selectAnimationHandler);
+		}
+
+		private function selectAnimationHandler(event:Event):void {
+			_window.removeEventListener(event.type, this.selectAnimationHandler);
+			this.removeChild(_window);
+			_texturePacker.execute(_model.instanceName);
 			this.addEventListener(Event.ENTER_FRAME, this.enterFrameHandler);
 		}
 

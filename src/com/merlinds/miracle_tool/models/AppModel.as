@@ -17,8 +17,6 @@ package com.merlinds.miracle_tool.models {
 		private var _lastDirectory:File;
 		private var _sharedObject:SharedObject;
 
-		private var _instanceName:String;
-
 		public function AppModel() {
 			this.initialize();
 		}
@@ -84,14 +82,6 @@ package com.merlinds.miracle_tool.models {
 			}
 			_sharedObject.data.lastDirectory = _lastDirectory.nativePath;
 			_sharedObject.flush();
-		}
-
-		public function get instanceName():String {
-			return _instanceName;
-		}
-
-		public function set instanceName(value:String):void {
-			_instanceName = value;
 		}
 
 		public function set flashIDEPath(value:String):void{

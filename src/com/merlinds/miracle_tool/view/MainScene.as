@@ -7,11 +7,13 @@ package com.merlinds.miracle_tool.view {
 	import com.bit101.components.PushButton;
 	import com.bit101.components.Style;
 	import com.bit101.components.VBox;
+	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.Config;
 	import com.merlinds.miracle_tool.components.ProgressView;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.services.FileManager;
 	import com.merlinds.miracle_tool.tools.ToolProcessor;
+	import com.merlinds.miracle_tool.tools.editor.view.components.SelectAnimationWindow;
 	import com.merlinds.miracle_tool.view.components.FlashIDEWarning;
 
 	import flash.display.Sprite;
@@ -25,6 +27,8 @@ package com.merlinds.miracle_tool.view {
 		private var _progressView:ProgressView;
 		private var _processor:ToolProcessor;
 		private var _model:AppModel;
+
+		private var _window:Window;
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -56,10 +60,9 @@ package com.merlinds.miracle_tool.view {
 		}
 
 		private function createButtonHandler(event:MouseEvent = null):void {
-			if(Config.flashIDEPath == null){
-				new FlashIDEWarning(this, _model, this.createButtonHandler);
+			if(Config.flashIDEPath == null && _window == null){
+				_window = new FlashIDEWarning(this, _model);
 			}else{
-				_buttonBox.visible = false;
 				var fileManager:FileManager = new FileManager(_model);
 				fileManager.addEventListener(Event.COMPLETE, this.fileCompleteHandler);
 				fileManager.browseForFLA();
@@ -69,12 +72,10 @@ package com.merlinds.miracle_tool.view {
 		private function fileCompleteHandler(event:Event):void {
 			var fileManager:FileManager = event.target as FileManager;
 			fileManager.removeEventListener(event.type, arguments.callee);
-			this.selectAnimationHandler(new Event(Event.SELECT));
-		}
-
-		private function selectAnimationHandler(event:Event):void {
+			_buttonBox.visible = false;
 			_progressView = new ProgressView(this);
 			_processor.addEventListener(Event.CHANGE, changeHandler);
+			//TODO need .fla validation by it's signature
 			setTimeout(_processor.execute, 0);
 		}
 

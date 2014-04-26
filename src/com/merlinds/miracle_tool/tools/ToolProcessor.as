@@ -30,8 +30,7 @@ package com.merlinds.miracle_tool.tools {
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function execute():void {
-			trace("Execute processing for file", _model.workFLA.name,
-					"and target", _model.instanceName);
+			trace("Execute processing for file", _model.workFLA.name);
 			if(_currentTool < 0){
 				this.nextTool();
 			}else{
