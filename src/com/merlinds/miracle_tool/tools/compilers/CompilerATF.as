@@ -1,51 +1,54 @@
 /**
  * User: MerlinDS
- * Date: 24.04.2014
- * Time: 22:38
+ * Date: 26.04.2014
+ * Time: 16:45
  */
 package com.merlinds.miracle_tool.tools.compilers {
 	import com.merlinds.miracle_tool.Config;
 
+	import flash.events.Event;
+
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.utils.ByteArray;
 
-	public class CompilerSWF extends AbstractCompiler{
+	public class CompilerATF extends AbstractCompiler {
 
-		public function CompilerSWF() {
+		public function CompilerATF() {
+			super();
 		}
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
-
 		override public function execute():void {
 			super.execute();
-			this.prepareJSFL();
-
-			var args:Vector.<String> = new <String>[ Config.swfCompiler.name ];
-			this.executeCompilation(Config.flashIDEPath, _model.workDir, args);
+			this.saveOutputAsPNG();
 		}
-
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
-		private function prepareJSFL():void {
-			var jsflFile:File = Config.swfCompiler;
-			var target:File = _model.workDir.resolvePath(jsflFile.name);
-			jsflFile.copyTo(target, true);
-			var stream:FileStream = new FileStream();
-			stream.open(target, FileMode.UPDATE);
-			stream.position = 0;
-			var sctipt:String = "var fileName = '" + _model.workFLA.name + "';\n";
-			stream.writeUTFBytes(sctipt);
-			stream.close();
-			trace(target.nativePath);
+		private function saveOutputAsPNG():void {
+			var pngBytes:ByteArray = PNGEncoder.encode(_model.output);
+			var fileName:String = _model.workFLA.name;
+			fileName = fileName.substr(0, -_model.workFLA.extension.length) + "png";
+			var file:File = _model.workDir.resolvePath( fileName );
+			var fileStream:FileStream = new FileStream();
+			fileStream.addEventListener(Event.CLOSE, this.closeHandler);
+			fileStream.openAsync(file, FileMode.WRITE);
+			fileStream.writeBytes(pngBytes);
+			fileStream.close();
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		private function closeHandler(event:Event):void {
+			var fileStream:FileStream = event.target as FileStream;
+			fileStream.removeEventListener(event.type, arguments.callee);
+			trace("Ok");
+		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================

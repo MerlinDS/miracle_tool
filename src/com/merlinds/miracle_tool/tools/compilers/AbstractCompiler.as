@@ -15,7 +15,7 @@ package com.merlinds.miracle_tool.tools.compilers {
 	import flash.events.ProgressEvent;
 	import flash.filesystem.File;
 
-	public class AbstractCompiler extends AbstractTool {
+	internal class AbstractCompiler extends AbstractTool {
 
 		private var _process:NativeProcess;
 		private var _nativeProcessStartupInfo:NativeProcessStartupInfo;
