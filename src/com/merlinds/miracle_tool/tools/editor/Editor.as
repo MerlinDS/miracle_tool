@@ -7,6 +7,8 @@ package com.merlinds.miracle_tool.tools.editor {
 	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.tools.editor.models.EditorModel;
+	import com.merlinds.miracle_tool.tools.editor.models.Element;
+	import com.merlinds.miracle_tool.tools.editor.view.components.CompleteWindow;
 	import com.merlinds.miracle_tool.tools.editor.view.components.SelectAnimationWindow;
 
 	import flash.display.Bitmap;
@@ -67,20 +69,30 @@ package com.merlinds.miracle_tool.tools.editor {
 			swfLoader.removeEventListener(event.type, this.competeLoaderHandler);
 			_model.target = swfLoader.output;
 			_window = new SelectAnimationWindow(this, _model);
-			_window.addEventListener(Event.CLOSE, this.selectAnimationHandler);
+			_window.addEventListener(Event.CLOSE, this.closeHandler);
 		}
 
-		private function selectAnimationHandler(event:Event):void {
-			_window.removeEventListener(event.type, this.selectAnimationHandler);
+		private function closeHandler(event:Event):void {
+			_window.removeEventListener(event.type, arguments.callee);
 			this.removeChild(_window);
-			_texturePacker.execute(_model.instanceName);
-			this.addEventListener(Event.ENTER_FRAME, this.enterFrameHandler);
+			if(_window is CompleteWindow){
+				_model.cleanElements();
+				_appModel.output = _model.output.clone();
+				_appModel.elements = _model.elements;
+				_model.destroy();
+				this.stage.nativeWindow.close();
+			}else{
+				_texturePacker.execute(_model.instanceName);
+				this.addEventListener(Event.ENTER_FRAME, this.enterFrameHandler);
+			}
 		}
 
 		private function enterFrameHandler(event:Event):void {
 			if(_texturePacker.complete){
 				this.removeEventListener(event.type, this.enterFrameHandler);
 				trace("All done", _model.output.width);
+				_window = new CompleteWindow(this);
+				_window.addEventListener(Event.CLOSE, this.closeHandler);
 			}else{
 				_texturePacker.enterFrame();
 				//clear old view

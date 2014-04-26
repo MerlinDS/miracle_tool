@@ -52,14 +52,29 @@ package com.merlinds.miracle_tool.tools.editor.models {
 			}
 			return result;
 		}
+
+		public function destroy():void {
+			_output.dispose();
+			this.target = null;
+			_elements = null;
+			_symbols = null;
+		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function clear():void {
-			_target.loaderInfo.loader.unload();
 			_target = null;
 			_symbols = null;
+		}
+
+		public function cleanElements():void{
+			var n:int = _elements.length;
+			for(var i:int = 0; i < n; i++){
+				_elements[i].bitmapData.dispose();
+				_elements[i].bitmapData = null;
+				_elements[i].view = null;
+			}
 		}
 
 		private function parse():void {
@@ -95,7 +110,7 @@ package com.merlinds.miracle_tool.tools.editor.models {
 
 		public function set target(value:MovieClip):void {
 			_target = value;
-			var method:Function = _target == null ? this.clear : this.parse;
+			var method:Function = value == null ? this.clear : this.parse;
 			method.apply(this);
 		}
 
@@ -131,6 +146,7 @@ package com.merlinds.miracle_tool.tools.editor.models {
 		public function set elements(value:Vector.<Element>):void {
 			_elements = value;
 		}
+
 
 //} endregion GETTERS/SETTERS ==================================================
 	}

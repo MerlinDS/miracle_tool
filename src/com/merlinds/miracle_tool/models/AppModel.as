@@ -5,6 +5,9 @@
  */
 package com.merlinds.miracle_tool.models {
 	import com.merlinds.miracle_tool.Config;
+	import com.merlinds.miracle_tool.tools.editor.models.Element;
+
+	import flash.display.BitmapData;
 
 	import flash.filesystem.File;
 	import flash.net.SharedObject;
@@ -16,6 +19,8 @@ package com.merlinds.miracle_tool.models {
 
 		private var _lastDirectory:File;
 		private var _sharedObject:SharedObject;
+		public var elements:Vector.<Element>;
+		public var output:BitmapData;
 
 		public function AppModel() {
 			this.initialize();
