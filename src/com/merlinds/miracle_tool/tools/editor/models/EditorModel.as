@@ -8,6 +8,8 @@ package com.merlinds.miracle_tool.tools.editor.models {
 	import com.codeazur.as3swf.data.SWFSymbol;
 	import com.codeazur.as3swf.tags.TagSymbolClass;
 
+	import flash.display.BitmapData;
+
 	import flash.display.DisplayObject;
 
 	import flash.display.MovieClip;
@@ -19,6 +21,9 @@ package com.merlinds.miracle_tool.tools.editor.models {
 
 		private var _boundsOffset:Number;
 		private var _instanceName:String;
+
+		private var _output:BitmapData;
+		private var _elements:Vector.<Element>;
 
 		public function EditorModel() {
 			_boundsOffset = 0;
@@ -36,6 +41,16 @@ package com.merlinds.miracle_tool.tools.editor.models {
 			}finally{
 				return result;
 			}
+		}
+
+		public function hasElement(name:String):Boolean {
+			var result:Boolean;
+			var i:int, n:int = _elements.length;
+			for(i = 0; i < n; i++){
+				result = _elements[i].name == name;
+				if(result)break;
+			}
+			return result;
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -98,6 +113,23 @@ package com.merlinds.miracle_tool.tools.editor.models {
 
 		public function set instanceName(value:String):void {
 			_instanceName = value;
+		}
+
+
+		public function get output():BitmapData {
+			return _output;
+		}
+
+		public function set output(value:BitmapData):void {
+			_output = value;
+		}
+
+		public function get elements():Vector.<Element> {
+			return _elements;
+		}
+
+		public function set elements(value:Vector.<Element>):void {
+			_elements = value;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

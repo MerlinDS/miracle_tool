@@ -13,7 +13,6 @@ package com.merlinds.miracle_tool.view {
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.services.FileManager;
 	import com.merlinds.miracle_tool.tools.ToolProcessor;
-	import com.merlinds.miracle_tool.tools.editor.view.components.SelectAnimationWindow;
 	import com.merlinds.miracle_tool.view.components.FlashIDEWarning;
 
 	import flash.display.Sprite;

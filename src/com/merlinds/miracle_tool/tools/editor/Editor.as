@@ -83,10 +83,10 @@ package com.merlinds.miracle_tool.tools.editor {
 		private function enterFrameHandler(event:Event):void {
 			if(_texturePacker.complete){
 				this.removeEventListener(event.type, this.enterFrameHandler);
-				trace("All done", _texturePacker.output.width);
+				trace("All done", _model.output.width);
 			}else{
 				_texturePacker.enterFrame();
-				_textureScreen.bitmapData = _texturePacker.output;
+				_textureScreen.bitmapData = _model.output;
 			}
 		}
 		//} endregion EVENTS HANDLERS ==================================================

@@ -6,6 +6,7 @@
 package com.merlinds.miracle_tool.tools.editor {
 
 	import com.merlinds.miracle_tool.tools.editor.models.EditorModel;
+	import com.merlinds.miracle_tool.tools.editor.models.Element;
 
 	import flash.utils.getQualifiedClassName;
 	import flash.display.BitmapData;
@@ -16,10 +17,8 @@ package com.merlinds.miracle_tool.tools.editor {
 
 	public class TexturePacker{
 		private var _model:EditorModel;
-		private var _output:BitmapData;
 
 		private var _target:MovieClip;
-		private var _elements:Vector.<Element>;
 		private var _complete:Boolean;
 
 		private var _outputSize:int;
@@ -47,12 +46,12 @@ package com.merlinds.miracle_tool.tools.editor {
 				_outputSize = Math.pow(2, Math.ceil(
 								Math.log(_outputSize) * Math.LOG2E));
 				//prepare buffer of output
-				_output = new BitmapData(_outputSize, _outputSize, true, 0x00000000);
+				_model.output = new BitmapData(_outputSize, _outputSize, true, 0x00000000);
 				_packer = new MaxRectPacker(_outputSize, _outputSize);
-				var n:int = _elements.length;
+				var n:int = _model.elements.length;
 				_complete = true;
 				for(var i:int = 0; i < n; i++){
-					_complete = this.placeElementToOutput(_elements[i]);
+					_complete = this.placeElementToOutput(_model.elements[i]);
 					if(!_complete){
 						_outputSize++;
 						break;
@@ -65,7 +64,7 @@ package com.merlinds.miracle_tool.tools.editor {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function getElements():void{
-			_elements = new <Element>[];
+			_model.elements = new <Element>[];
 			var element:Element;
 			var elementName:String;
 			var elementView:DisplayObject;
@@ -77,16 +76,16 @@ package com.merlinds.miracle_tool.tools.editor {
 				for(j = 0; j < m; j++){
 					elementView = _target.getChildAt(j);
 					elementName = getQualifiedClassName(elementView);
-					if(!this.hasElement(elementName)){
+					if(!_model.hasElement(elementName)){
 						element = new Element(elementName, elementView);
-						_elements.push(element);
+						_model.elements.push(element);
 					}
 				}
 			}
 			//get bounds of elements
-			n = _elements.length;
+			n = _model.elements.length;
 			for(i = 0; i < n; i++){
-				element = _elements[i];
+				element = _model.elements[i];
 				this.getElementBounds(element);
 				if(_outputSize < element.width){
 					_outputSize = element.width;
@@ -122,28 +121,12 @@ package com.merlinds.miracle_tool.tools.editor {
 		}
 
 		[Inline]
-		private function hasElement(name:String):Boolean {
-			var result:Boolean;
-			var i:int, n:int = _elements.length;
-			for(i = 0; i < n; i++){
-				result = _elements[i].name == name;
-				if(result)break;
-			}
-			return result;
-		}
-
-		private function clear():void{
-			_output.dispose();
-			_output = null;
-		}
-
-		[Inline]
 		private function placeElementToOutput(element:Element):Boolean{
 			var rect:Rectangle = _packer.quickInsert(element.width, element.height);
 
 			if(rect != null){
 				//draw output
-				_output.copyPixels(element.bitmapData, element.bitmapData.rect,
+				_model.output.copyPixels(element.bitmapData, element.bitmapData.rect,
 						new Point(rect.x + _model.boundsOffset, rect.y + _model.boundsOffset));
 				//get uv position
 				element.uv = new <Number>[
@@ -166,51 +149,10 @@ package com.merlinds.miracle_tool.tools.editor {
 		//==============================================================================
 		//{region							GETTERS/SETTERS
 
-		public function get output():BitmapData {
-			return _output;
-		}
-
-
 		public function get complete():Boolean {
 			return _complete;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================
-	}
-}
-
-import flash.display.BitmapData;
-import flash.display.DisplayObject;
-import flash.geom.Matrix;
-
-class Element{
-	private static const CLEAR_MATRIX:Matrix = new Matrix();
-
-	public var name:String;
-	public var view:DisplayObject;
-	public var bitmapData:BitmapData;
-	public var width:Number;
-	public var height:Number;
-	public var uv:Vector.<Number>;
-
-	private var _vertexes:Vector.<Number>;
-
-	public function Element(name:String, view:DisplayObject) {
-		this.view = view;
-		this.name = name;
-		this.view.transform.matrix = CLEAR_MATRIX;
-	}
-
-	public function get vertexes():Vector.<Number> {
-		return _vertexes;
-	}
-
-	public function set vertexes(value:Vector.<Number>):void {
-		_vertexes = value;
-		if(value != null){
-			var matrix:Matrix = new Matrix(1, 0, 0, 1, -vertexes[0], -vertexes[1]);
-			this.bitmapData = new BitmapData(this.width, this.height, true, 0x0);
-			bitmapData.draw(this.view, matrix);
-		}
 	}
 }
