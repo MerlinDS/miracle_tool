@@ -4,13 +4,13 @@
  * Time: 14:50
  */
 package com.merlinds.miracle_tool.view {
-	import com.merlinds.miracle_tool.components.BaseButton;
-	import com.merlinds.miracle_tool.components.InputDialogView;
+	import com.bit101.components.PushButton;
+	import com.bit101.components.Style;
+	import com.bit101.components.VBox;
 	import com.merlinds.miracle_tool.components.ProgressView;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.services.FileManager;
 	import com.merlinds.miracle_tool.tools.ToolProcessor;
-	import com.merlinds.miracle_tool.tools.editor.EditorLauncher;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -18,7 +18,8 @@ package com.merlinds.miracle_tool.view {
 	import flash.utils.setTimeout;
 
 	public class MainScene extends Sprite {
-		private var _selectButton:BaseButton;
+		private var _buttonBox:VBox;
+
 		private var _progressView:ProgressView;
 		private var _processor:ToolProcessor;
 		private var _model:AppModel;
@@ -43,11 +44,13 @@ package com.merlinds.miracle_tool.view {
 
 		private function addHandler(event:Event):void {
 			this.removeEventListener(event.type, this.addHandler);
-			_selectButton = new BaseButton("Select structure");
-			_selectButton.addEventListener(MouseEvent.CLICK, this.buttonHandler);
-			_selectButton.x = this.stage.stageWidth - _selectButton.width >> 1;
-			_selectButton.y = this.stage.stageHeight - _selectButton.height >> 1;
-			this.addChild(_selectButton);
+			//draw menu
+			Style.setStyle(Style.DARK);
+			_buttonBox = new VBox(this);
+			_buttonBox.addChild( new PushButton(this, 0, 0, "Animation Viewer") );
+			_buttonBox.addChild( new PushButton(this, 0, 0, "Create animation", this.buttonHandler) );
+			_buttonBox.x = this.stage.stageWidth - _buttonBox.width >> 1;
+			_buttonBox.y = this.stage.stageHeight - _buttonBox.height >> 1;
 		}
 
 		private function buttonHandler(event:MouseEvent):void {
@@ -59,7 +62,7 @@ package com.merlinds.miracle_tool.view {
 		private function fileCompleteHandler(event:Event):void {
 			var fileManager:FileManager = event.target as FileManager;
 			fileManager.removeEventListener(event.type, arguments.callee);
-			_selectButton.visible = false;
+			_buttonBox.visible = false;
 			//TODO: add this after swf parsing
 //			var inputDialog:InputDialogView = new InputDialogView();
 //			inputDialog.addEventListener(Event.SELECT, this.selectAnimationHandler);
