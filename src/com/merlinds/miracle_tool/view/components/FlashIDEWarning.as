@@ -62,7 +62,7 @@ package com.merlinds.miracle_tool.view.components {
 
 		private function selectHandler(event:Event):void{
 			var file:File = event.target as File;
-			//TODO need Flash.exe validation by it's signature
+			//TODO LQ-37 need Flash.exe validation by it's signature
 			_model.flashIDEPath = file.nativePath;
 			this.onClose(new MouseEvent(MouseEvent.CLICK));
 		}

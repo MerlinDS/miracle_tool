@@ -17,9 +17,9 @@ package com.merlinds.miracle_tool.tools.parsers {
 		override public function execute():void {
 			super.execute();
 			trace("OK. Lets do it!");
-			//TODO: Ask the user for necessity of FLA parsing
-			//TODO: Parse FLA file in need
-			//TODO: At first FLA file need to be downloaded, that unzip it and parse
+			//TODO: LQ-25 Ask the user for necessity of FLA parsing
+			//TODO: LQ-25 Parse FLA file in need
+			//TODO: LQ-25 At first FLA file need to be downloaded, that unzip it and parse
 		}
 
 //} endregion PUBLIC METHODS ===================================================

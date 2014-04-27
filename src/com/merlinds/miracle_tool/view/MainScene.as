@@ -81,7 +81,7 @@ package com.merlinds.miracle_tool.view {
 			_buttonBox.visible = false;
 			_progressView = new ProgressView(this);
 			_processor.addEventListener(Event.CHANGE, changeHandler);
-			//TODO need .fla validation by it's signature
+			//TODO LQ-36 need .fla validation by it's signature
 			setTimeout(_processor.execute, 0);
 		}
 

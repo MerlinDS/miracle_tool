@@ -58,7 +58,6 @@ package com.merlinds.miracle_tool.tools.editor {
 			_textureScreen = new Sprite();
 			_texturePacker = new TexturePacker(_model);
 			this.addChild(_textureScreen);
-			//TODO add progress bar
 			var swfLoader:SWFLoader = new SWFLoader();
 			swfLoader.addEventListener(Event.COMPLETE, this.competeLoaderHandler);
 			swfLoader.load(_appModel.workSWF);

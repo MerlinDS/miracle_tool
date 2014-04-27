@@ -54,7 +54,6 @@ package com.merlinds.miracle_tool.tools.structures {
 				var zip:ZipFile = new ZipFile(bytes);
 				var entry:ZipEntry = zip.getEntry("DOMDocument.xml");
 				if(entry == null){
-					//TODO show error
 				}else{
 					var symbols:Vector.<ZipEntry> = new <ZipEntry>[];
 					//parse domDocument
