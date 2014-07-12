@@ -40,8 +40,9 @@ package com.merlinds.miracle_tool.views.alerts {
 					var child:DisplayObject = _dialogs.getChildAt(i);
 					child.x = this.width - child.width >> 1;
 					child.y = this.height - child.height >> 1;
+					_modalBlocker.visible = (child as DialogWindow).modal;
 				}
-				_dialogs.visible =  true;
+				this.visible =  true;
 			}
 		}
 
