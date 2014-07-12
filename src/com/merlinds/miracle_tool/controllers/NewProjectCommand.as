@@ -33,7 +33,7 @@ package com.merlinds.miracle_tool.controllers {
 				this.dispatch(new DialogEvent(DialogEvent.PROJECT_SETTINGS, actionVO));
 			}else{
 				//create project view and add it to stage
-				trace("Create");
+				trace("Create", this.event.body.projectName);
 			}
 			//TODO:Check for existing project
 		}

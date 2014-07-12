@@ -4,6 +4,7 @@
  * Time: 23:17
  */
 package com.merlinds.miracle_tool.views.alerts.dialogs {
+
 	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
 
 	import flash.display.DisplayObjectContainer;
@@ -11,19 +12,26 @@ package com.merlinds.miracle_tool.views.alerts.dialogs {
 	public class ProjectSettingDialog extends DialogWindow {
 
 		public function ProjectSettingDialog(parent:DisplayObjectContainer, xpos:Number = 0, ypos:Number = 0) {
-			super(parent, xpos, ypos, "Project settings dialog");
+			super(parent, xpos, ypos, "Project settings");
 		}
-
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
+		override protected function initialize():void {
+			this.addInput("projectName", "Project Name");
+			this.addInput("sceneWidth", "Screen width");
+			this.addInput("sceneHeight", "Screen height");
+			this.addButton("Create", DialogWindow.ACCEPT);
+		}
+
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================

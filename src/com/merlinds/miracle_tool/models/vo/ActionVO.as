@@ -19,7 +19,7 @@ package com.merlinds.miracle_tool.models.vo {
 		}
 
 		public function toString():String {
-			return "[ActionVO(title = " + _title+ ", action = " + _event + ", type = " + _type + ")]";
+			return "[ActionVO(type = " + _type + ")]";
 		}
 		//} endregion PUBLIC METHODS ===================================================
 

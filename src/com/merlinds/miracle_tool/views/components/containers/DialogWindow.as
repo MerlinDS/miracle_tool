@@ -4,6 +4,11 @@
  * Time: 23:19
  */
 package com.merlinds.miracle_tool.views.components.containers {
+	import com.bit101.components.HBox;
+	import com.bit101.components.InputText;
+	import com.bit101.components.Label;
+	import com.bit101.components.PushButton;
+	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
 
 	import flash.display.DisplayObjectContainer;
@@ -19,14 +24,16 @@ package com.merlinds.miracle_tool.views.components.containers {
 		private var _closeReason:String;
 		private var _data:*;
 
+		private var _body:VBox;
+		private var _controls:Object;
 
 		public function DialogWindow(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0, title:String = "Window") {
 			super(parent, xpos, ypos, title);
+			_controls = {};
+			_body = new VBox(this);
 			_closeReason = DENY;
-			this.setSize(400, 300);
-			this.hasCloseButton = true;
-			this.hasMinimizeButton = false;
 			this.initialize();
+			this.postInitialize();
 		}
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -39,8 +46,43 @@ package com.merlinds.miracle_tool.views.components.containers {
 			//abstract
 		}
 
+		private function postInitialize():void{
+			this.setSize(_body.width, _body.height + this.titleBar.height + 10);
+			this.hasMinimizeButton = false;
+			this.hasCloseButton = true;
+		}
+
+		protected final function addInput(name:String, label:String):void{
+			var field:HBox = new HBox();
+			var input:InputText = new InputText(field);
+			input.width = 150;
+			new Label(field, 0, 0, label);
+			_body.addChild(field);
+			_controls[name] = input;
+		}
+
+		protected final function addButton(label:String, closeReason:String = ACCEPT):void{
+			var callback:Function = function(event:MouseEvent):void{
+				event.target.removeEventListener(event.type, arguments.callee);
+				close(closeReason);
+			};
+			var button:PushButton = new PushButton(_body, 0, 0, label, callback);
+			button.x = _body.width - button.width >> 1;
+		}
+
 		protected final function close(closeReason:String, data:* = null):void{
 			_closeReason = closeReason;
+			if(data == null){
+				//collect data from created fields
+				data = {};
+				for(var name:String in _controls){
+					var control:Object = _controls[name];
+					if(control is InputText){
+						data[name] = control.text;
+					}
+					//TODO add else controls that will be created automatically
+				}
+			}
 			_data = data;
 			this.onClose(new MouseEvent(MouseEvent.CLICK));
 		}
@@ -49,7 +91,7 @@ package com.merlinds.miracle_tool.views.components.containers {
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 
-		override protected function onClose(event:MouseEvent):void {
+		override protected final function onClose(event:MouseEvent):void {
 			if(_closeCallback is Function){
 				_closeCallback.apply(this, [_closeReason, _data]);
 			}
