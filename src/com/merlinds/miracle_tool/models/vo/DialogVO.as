@@ -1,25 +1,23 @@
 /**
  * User: MerlinDS
  * Date: 12.07.2014
- * Time: 22:21
+ * Time: 23:21
  */
 package com.merlinds.miracle_tool.models.vo {
-	public class ActionVO {
+	public class DialogVO {
 
-		private var _title:String;
-		private var _event:Class;
+		private var _clazz:Class;
 		private var _type:String;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-
-		public function ActionVO(title:String, event:Class, type:String) {
-			_title = title;
-			_event = event;
+		/**
+		 * Value Object for dialog windows
+		 * @param clazz
+		 * @param type Event type that must create dialog
+		 */
+		public function DialogVO(clazz:Class, type:String) {
+			_clazz = clazz;
 			_type = type;
-		}
-
-		public function toString():String {
-			return "[ActionVO(title = " + _title+ ", action = " + _event + ", type = " + _type + ")]";
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -34,18 +32,13 @@ package com.merlinds.miracle_tool.models.vo {
 		//==============================================================================
 		//{region							GETTERS/SETTERS
 
-		public function get title():String {
-			return _title;
-		}
-
-		public function get event():Class {
-			return _event;
+		public function get clazz():Class {
+			return _clazz;
 		}
 
 		public function get type():String {
 			return _type;
 		}
-
-//} endregion GETTERS/SETTERS ==================================================
+		//} endregion GETTERS/SETTERS ==================================================
 	}
 }

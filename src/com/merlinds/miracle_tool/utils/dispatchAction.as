@@ -10,14 +10,14 @@ package com.merlinds.miracle_tool.utils {
 
 	import org.robotlegs.base.ContextEvent;
 
-	public function dispatchAction(vo:ActionVO, dispatchMethod:Function):void {
+	public function dispatchAction(vo:ActionVO, dispatchMethod:Function, body:Object = null):void {
 		if(vo == null || !(dispatchMethod is Function)){
 			warning(dispatchAction, "dispatchAction", "For action dispatching " +
 					"need action value object and dispatch method");
 		}else{
 			try{
-				var eventClass:Class = vo.action;
-				var event:ContextEvent = new eventClass(vo.type);
+				var eventClass:Class = vo.event;
+				var event:ContextEvent = new eventClass(vo.type, body);
 				dispatchMethod.apply(null, [event]);
 			}catch (err:Error){
 				error(dispatchAction, "dispatchAction", err);

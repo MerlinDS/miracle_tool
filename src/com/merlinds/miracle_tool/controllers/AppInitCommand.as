@@ -6,8 +6,11 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
+	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
+	import com.merlinds.miracle_tool.models.vo.DialogVO;
+	import com.merlinds.miracle_tool.views.alerts.dialogs.ProjectSettingDialog;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -24,6 +27,7 @@ package com.merlinds.miracle_tool.controllers {
 		override public function execute():void {
 			log(this, "execute");
 			this.initializeMenuActions();
+			this.initializeDialogs();
 		}
 
 		//} endregion PUBLIC METHODS ===================================================
@@ -31,17 +35,27 @@ package com.merlinds.miracle_tool.controllers {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function initializeMenuActions():void {
-			this.addAction(NewProjectCommand, ActionEvent, ActionEvent.NEW_PROJECT, "New...");
-			this.addAction(OpenProjectCommand, ActionEvent, ActionEvent.OPEN_PROJECT, "Open...");
-			this.addAction(CloseProjectCommand, ActionEvent, ActionEvent.CLOSE_PROJECT, "Close...");
-			this.addAction(SaveProjectCommand, ActionEvent, ActionEvent.SAVE_PROJECT, "Save As...");
-			this.addAction(OpenSettingCommand, ActionEvent, ActionEvent.OPEN_SETTINGS, "Settings...");
-			this.addAction(OpenHelpCommand, ActionEvent, ActionEvent.OPEN_HELP, "Help...");
+			this.mapAction(NewProjectCommand, ActionEvent, ActionEvent.NEW_PROJECT, "New...");
+			this.mapAction(OpenProjectCommand, ActionEvent, ActionEvent.OPEN_PROJECT, "Open...");
+			this.mapAction(CloseProjectCommand, ActionEvent, ActionEvent.CLOSE_PROJECT, "Close...");
+			this.mapAction(SaveProjectCommand, ActionEvent, ActionEvent.SAVE_PROJECT, "Save As...");
+			this.mapAction(OpenSettingCommand, ActionEvent, ActionEvent.OPEN_SETTINGS, "Settings...");
+			this.mapAction(OpenHelpCommand, ActionEvent, ActionEvent.OPEN_HELP, "Help...");
 		}
 
-		private function addAction(command:Class, event:Class, type:String, title:String):void {
+		private function initializeDialogs():void {
+			this.mapDialog(ProjectSettingDialog, DialogEvent.PROJECT_SETTINGS);
+		}
+		//utilities
+		[Inline]
+		private function mapAction(command:Class, event:Class, type:String, title:String):void {
 			this.commandMap.mapEvent(type, command, event);
 			_model.menuActions.push(new ActionVO(title, event, type));
+		}
+
+		[Inline]
+		private function mapDialog(clazz:Class, type:String):void {
+			_model.dialogs.push( new DialogVO(clazz, type ));
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 

@@ -1,34 +1,33 @@
 /**
  * User: MerlinDS
  * Date: 12.07.2014
- * Time: 22:21
+ * Time: 23:05
  */
-package com.merlinds.miracle_tool.models {
+package com.merlinds.miracle_tool.events {
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
-	import com.merlinds.miracle_tool.models.vo.DialogVO;
-	import com.merlinds.unitls.structures.SearchUtils;
 
-	import org.robotlegs.mvcs.Actor;
+	import flash.events.Event;
 
-	public class AppModel extends Actor {
+	import org.robotlegs.base.ContextEvent;
 
-		private var _menuActions:Vector.<ActionVO>;
-		private var _dialogs:Vector.<DialogVO>;
+	public class DialogEvent extends ContextEvent {
 
-		public function AppModel() {
-			_dialogs = new <DialogVO>[];
-			_menuActions = new <ActionVO>[];
-			super();
-		}
+		public static const PROJECT_SETTINGS:String = "AlertEvent::PROJECT_SETTINGS";
 
+		private var _action:ActionVO;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function getActionByType(type:String):ActionVO {
-			return SearchUtils.findInVector(_menuActions, "type", type);
+		public function DialogEvent(type:String, action:ActionVO, body:* = null) {
+			super(type, body);
+			_action = action;
 		}
 
-		public function getDialogByType(type:String):DialogVO {
-			return SearchUtils.findInVector(_dialogs, "type", type);
+		override public function clone():Event {
+			return new DialogEvent(type, action, body);
+		}
+
+		override public function toString():String {
+			return this.formatToString("DialogEvent", "type", "action", "body");
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -43,12 +42,8 @@ package com.merlinds.miracle_tool.models {
 		//==============================================================================
 		//{region							GETTERS/SETTERS
 
-		public function get menuActions():Vector.<ActionVO> {
-			return _menuActions;
-		}
-
-		public function get dialogs():Vector.<DialogVO> {
-			return _dialogs;
+		public function get action():ActionVO {
+			return _action;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================
