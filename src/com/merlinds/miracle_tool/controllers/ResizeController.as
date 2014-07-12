@@ -74,6 +74,8 @@ package com.merlinds.miracle_tool.controllers {
 			_stage = value;
 			if(_stage != null){
 				_stage.addEventListener(Event.RESIZE, this.resizeHandler);
+				//initial resize
+				_stage.dispatchEvent(new Event(Event.RESIZE));
 			}
 		}
 

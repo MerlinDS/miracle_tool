@@ -1,31 +1,25 @@
 /**
  * User: MerlinDS
  * Date: 12.07.2014
- * Time: 21:35
+ * Time: 22:56
  */
-package com.merlinds.miracle_tool.views {
-	import com.merlinds.miracle_tool.utils.dispatchAction;
-	import com.merlinds.miracle_tool.views.components.controls.ActionButton;
+package com.merlinds.miracle_tool.controllers {
+	import com.merlinds.debug.log;
 
-	import flash.events.MouseEvent;
+	import org.robotlegs.mvcs.Command;
 
-	import org.robotlegs.mvcs.Mediator;
-
-	public class AppMenuMediator extends Mediator {
+	public class OpenProjectCommand extends Command {
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function AppMenuMediator() {
+		public function OpenProjectCommand() {
 			super();
 		}
 
-		override public function onRegister():void {
-			this.addViewListener(MouseEvent.CLICK, this.mouseClickHandler);
+		override public function execute():void {
+			log(this, "execute");
 		}
 
-		override public function onRemove():void {
-			this.removeViewListener(MouseEvent.CLICK, this.mouseClickHandler);
-		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
@@ -34,12 +28,6 @@ package com.merlinds.miracle_tool.views {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
-		private function mouseClickHandler(event:MouseEvent):void {
-			var target:Object = event.target;
-			if(target is ActionButton){
-				dispatchAction((target as ActionButton).action, this.dispatch);
-			}
-		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================

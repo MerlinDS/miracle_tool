@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
+	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.views.AppMenuMediator;
 	import com.merlinds.miracle_tool.views.AppMenuView;
 	import com.merlinds.miracle_tool.views.alerts.AlertMediator;
@@ -44,6 +45,7 @@ package com.merlinds.miracle_tool.controllers {
 		//{region						PRIVATE\PROTECTED METHODS
 		private function modelsMapping():void {
 			log(this, "modelsMapping");
+			this.injector.mapSingleton(AppModel);
 		}
 
 		private function controllersMapping():void {
@@ -51,7 +53,8 @@ package com.merlinds.miracle_tool.controllers {
 			//map controllers
 			this.injector.mapSingleton(ResizeController);
 			//map commands
-			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, ViewInitializerCommand, ContextEvent, true);
+			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, AppInitCommand, ContextEvent, true);
+			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, ViewInitCommand, ContextEvent, true);
 		}
 
 		private function viewsMapping():void {
