@@ -52,9 +52,9 @@ package com.merlinds.miracle_tool.views.components.containers {
 			this.hasCloseButton = true;
 		}
 
-		protected final function addInput(name:String, label:String):void{
+		protected final function addInput(name:String, label:String, text:String = ""):void{
 			var field:HBox = new HBox();
-			var input:InputText = new InputText(field);
+			var input:InputText = new InputText(field, 0, 0, text);
 			input.width = 150;
 			new Label(field, 0, 0, label);
 			_body.addChild(field);

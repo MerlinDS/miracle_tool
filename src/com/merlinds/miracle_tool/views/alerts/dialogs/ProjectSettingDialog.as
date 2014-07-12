@@ -22,8 +22,8 @@ package com.merlinds.miracle_tool.views.alerts.dialogs {
 		//{region						PRIVATE\PROTECTED METHODS
 		override protected function initialize():void {
 			this.addInput("projectName", "Project Name");
-			this.addInput("sceneWidth", "Screen width");
-			this.addInput("sceneHeight", "Screen height");
+			this.addInput("sceneWidth", "Screen width", "1024");
+			this.addInput("sceneHeight", "Screen height", "768");
 			this.addButton("Create", DialogWindow.ACCEPT);
 		}
 

@@ -10,6 +10,8 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
 
+	import flash.geom.Point;
+
 	import org.robotlegs.mvcs.Command;
 
 	public class NewProjectCommand extends Command {
@@ -33,7 +35,15 @@ package com.merlinds.miracle_tool.controllers {
 				this.dispatch(new DialogEvent(DialogEvent.PROJECT_SETTINGS, actionVO));
 			}else{
 				//create project view and add it to stage
-				trace("Create", this.event.body.projectName);
+				var projectName:String = this.event.body.projectName;
+				if(projectName == null || projectName.length == 0){
+					projectName = "Miracle project_" + new Date().time;//create unique name for project
+				}
+				var sceneSize:Point = new Point(this.event.body.sceneWidth, this.event.body.sceneHeight);
+				//quote size to normal
+				sceneSize.x = sceneSize.x <= 0 ? 1024 : sceneSize.x;
+				sceneSize.y = sceneSize.y <= 0 ? 768 : sceneSize.y;
+				log(this, "execute", "Create project:", projectName, ", Scene size = ", sceneSize);
 			}
 			//TODO:Check for existing project
 		}
