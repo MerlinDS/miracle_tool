@@ -2,22 +2,20 @@
 <module type="Flex" version="4">
   <component name="FlexBuildConfigurationManager" active="miracle_tool">
     <configurations>
-      <configuration name="miracle_tool" target-platform="Desktop" pure-as="true" main-class="com.merlinds.miracle_tool.MiracleTool" output-file="MiracleTool.swf" output-folder="$MODULE_DIR$/bin">
+      <configuration name="miracle_tool" target-platform="Desktop" pure-as="true" main-class="com.merlinds.miracle_tool.Main" output-file="miracle_tool.swf" output-folder="$MODULE_DIR$/bin">
         <dependencies>
           <entries>
-            <entry library-id="25ff0b74-a4d2-4c78-aff3-da545be7ccde">
+            <entry library-id="888ff86a-9fd4-4bcf-ad08-4be85d2332f5">
+              <dependency linkage="Merged" />
+            </entry>
+            <entry module-name="miracle" build-configuration-name="miracle">
               <dependency linkage="Merged" />
             </entry>
           </entries>
           <sdk name="AIR 4.0" />
         </dependencies>
         <compiler-options />
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/com/merlinds/miracle_tool/MiracleTool-app.xml" package-file-name="Miracle Editor">
-          <files-to-package>
-            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/com/merlinds/miracle_tool/nativeapp" path-in-package="com/merlinds/miracle_tool/nativeapp" />
-          </files-to-package>
-          <AirSigningOptions keystore-path="$MODULE_DIR$/../loonyquack_assets/keys/android/loonyquack.p12" />
-        </packaging-air-desktop>
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/com/merlinds/miracle_tool/Main-app.xml" package-file-name="miracle_tool" />
         <packaging-android />
         <packaging-ios />
       </configuration>
@@ -29,14 +27,14 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/assets" />
       <excludeFolder url="file://$MODULE_DIR$/bin" />
     </content>
     <orderEntry type="jdk" jdkName="AIR 4.0" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="libs" level="project" />
     <orderEntry type="module-library" exported="">
       <library type="flex">
-        <properties id="25ff0b74-a4d2-4c78-aff3-da545be7ccde" />
+        <properties id="888ff86a-9fd4-4bcf-ad08-4be85d2332f5" />
         <CLASSES>
           <root url="file://$MODULE_DIR$/libs" />
         </CLASSES>
@@ -45,6 +43,7 @@
         <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="miracle" exported="" />
   </component>
 </module>
 
