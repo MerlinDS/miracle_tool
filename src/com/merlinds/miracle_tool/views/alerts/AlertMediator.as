@@ -46,6 +46,7 @@ package com.merlinds.miracle_tool.views.alerts {
 				var dialogVO:DialogVO = this.appModel.getDialogByType(_currentEvent.type);
 				_currentDialog = new dialogVO.clazz(this.viewComponent);
 				_currentDialog.closeCallback = this.closeHandler;
+				_currentDialog.modal = true;
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
@@ -58,9 +59,12 @@ package com.merlinds.miracle_tool.views.alerts {
 			this.showDialog();
 		}
 
-		private function closeHandler():void {
+		private function closeHandler(closeReason:String, data:* = null):void {
+			if(closeReason == DialogWindow.ACCEPT){
+				//Only if user accept dialog properties
+				dispatchAction(_currentEvent.action, this.dispatch, data);
+			}
 			this.viewComponent.removeChild(_currentDialog);
-			dispatchAction(_currentEvent.action, this.dispatch, _currentDialog.data);
 			_currentDialog = null;
 			_currentEvent = null;
 			this.showDialog();//Show nex dialog

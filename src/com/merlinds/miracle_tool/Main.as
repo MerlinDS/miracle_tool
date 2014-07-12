@@ -5,8 +5,6 @@
  */
 package com.merlinds.miracle_tool {
 
-	import com.merlinds.miracle_tool.views.AppView;
-
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -33,9 +31,7 @@ package com.merlinds.miracle_tool {
 			this.removeEventListener(event.type, this.initialize);
 			this.stage.scaleMode = StageScaleMode.NO_SCALE;
 			this.stage.align = StageAlign.TOP_LEFT;
-			var appView:AppView = new AppView();
-			new ApplicationContext(appView);
-			this.addChild(appView);
+			new ApplicationContext(this);
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 

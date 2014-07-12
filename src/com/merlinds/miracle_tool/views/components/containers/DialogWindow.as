@@ -11,10 +11,22 @@ package com.merlinds.miracle_tool.views.components.containers {
 
 	public class DialogWindow extends Window {
 
+		public static const ACCEPT:String = "accept";
+		public static const DENY:String = "deny";
+
+		private var _modal:Boolean;
 		private var _closeCallback:Function;
+		private var _closeReason:String;
+		private var _data:*;
+
 
 		public function DialogWindow(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0, title:String = "Window") {
 			super(parent, xpos, ypos, title);
+			_closeReason = DENY;
+			this.setSize(400, 300);
+			this.hasCloseButton = true;
+			this.hasMinimizeButton = false;
+			this.initialize();
 		}
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -23,16 +35,25 @@ package com.merlinds.miracle_tool.views.components.containers {
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
+		protected function initialize():void{
+			//abstract
+		}
+
+		protected final function close(closeReason:String, data:* = null):void{
+			_closeReason = closeReason;
+			_data = data;
+			this.onClose(new MouseEvent(MouseEvent.CLICK));
+		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 
 		override protected function onClose(event:MouseEvent):void {
-			super.onClose(event);
 			if(_closeCallback is Function){
-				_closeCallback.apply(this);
+				_closeCallback.apply(this, [_closeReason, _data]);
 			}
+			super.onClose(event);
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
@@ -43,9 +64,16 @@ package com.merlinds.miracle_tool.views.components.containers {
 			_closeCallback = value;
 		}
 
-		public function get data():* {
-			return null;
+		public function get modal():Boolean {
+			return _modal;
 		}
+
+		public function set modal(value:Boolean):void {
+			_modal = value;
+			this.draggable = !_modal;
+			this.hasMinimizeButton = !_modal;
+		}
+
 //} endregion GETTERS/SETTERS ==================================================
 	}
 }

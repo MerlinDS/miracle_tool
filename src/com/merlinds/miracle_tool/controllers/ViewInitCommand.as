@@ -7,8 +7,8 @@ package com.merlinds.miracle_tool.controllers {
 	import com.bit101.components.Style;
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.models.AppModel;
-	import com.merlinds.miracle_tool.view.interfaces.IResizable;
 	import com.merlinds.miracle_tool.views.AppMenuView;
+	import com.merlinds.miracle_tool.views.AppView;
 	import com.merlinds.miracle_tool.views.alerts.AlertView;
 
 	import org.robotlegs.mvcs.Command;
@@ -30,9 +30,10 @@ package com.merlinds.miracle_tool.controllers {
 			//setup style
 			Style.setStyle(Style.DARK);
 			//create views of the application and add it to stage and to resize controller
-			this.resizeController.addInstance( this.contextView as IResizable );
-			this.resizeController.addInstance( new AlertView(this.contextView) );
-			this.resizeController.addInstance( new AppMenuView(this.contextView, model.menuActions) );
+			var appView:AppView = new AppView(this.contextView);
+			this.resizeController.addInstance( appView );
+			this.resizeController.addInstance( new AlertView( this.contextView ) );//upper than all other views
+			this.resizeController.addInstance( new AppMenuView( appView , model.menuActions) );
 			//add stage to resize controller for it's initialization
 			this.resizeController.stage = this.contextView.stage;
 		}

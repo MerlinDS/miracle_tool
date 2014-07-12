@@ -4,13 +4,11 @@
  * Time: 21:40
  */
 package com.merlinds.miracle_tool.views {
-	import com.bit101.components.HBox;
 	import com.bit101.components.VBox;
 	import com.merlinds.miracle_tool.view.interfaces.IResizable;
 	import com.merlinds.miracle_tool.views.project.ProjectView;
 
 	import flash.display.DisplayObject;
-
 	import flash.display.DisplayObjectContainer;
 
 	public class AppView extends VBox implements IResizable{
