@@ -29,6 +29,9 @@ package com.merlinds.miracle_tool.controllers {
 		public function addInstance(instace:IResizable):void {
 			if(!this.hasInstance(instace)){
 				_instances.push(instace);
+				if(_stage != null){
+					instace.setSize(_stage.stageWidth, _stage.stageHeight);
+				}
 			}else{
 				warning(this, "addInstance", "instance already added");
 			}

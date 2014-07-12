@@ -1,22 +1,24 @@
 /**
  * User: MerlinDS
- * Date: 12.07.2014
- * Time: 21:39
+ * Date: 13.07.2014
+ * Time: 1:51
  */
-package com.merlinds.miracle_tool.views.project {
-	import com.bit101.components.Window;
+package com.merlinds.miracle_tool.models {
+	import flash.geom.Point;
 
-	import flash.display.DisplayObjectContainer;
+	import org.robotlegs.mvcs.Actor;
 
-	public class ToolView extends Window {
+	public class ProjectModel extends Actor {
+
+		private var _name:String;
+		private var _sceneSize:Point;
+
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function ToolView(parent:DisplayObjectContainer = null) {
-			super(parent, 0, 0, "Tools");
-			this.setSize(130, 400);
-			this.hasCloseButton = false;
-			this.hasMinimizeButton = false;
-			this.draggable = false;
+		public function ProjectModel(name:String, sceneSize:Point) {
+			_name = name;
+			_sceneSize = sceneSize;
+			super();
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -30,6 +32,14 @@ package com.merlinds.miracle_tool.views.project {
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
-		//} endregion GETTERS/SETTERS ==================================================
+		public function get name():String {
+			return _name;
+		}
+
+		public function get sceneSize():Point {
+			return _sceneSize;
+		}
+
+//} endregion GETTERS/SETTERS ==================================================
 	}
 }

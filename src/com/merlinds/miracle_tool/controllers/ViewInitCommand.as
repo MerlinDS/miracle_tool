@@ -36,6 +36,7 @@ package com.merlinds.miracle_tool.controllers {
 			this.resizeController.addInstance( new AppMenuView( appView , model.menuActions) );
 			//add stage to resize controller for it's initialization
 			this.resizeController.stage = this.contextView.stage;
+			this.injector.mapValue(AppView, appView);
 		}
 
 		//} endregion PUBLIC METHODS ===================================================

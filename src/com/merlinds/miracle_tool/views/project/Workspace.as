@@ -1,46 +1,40 @@
 /**
  * User: MerlinDS
- * Date: 12.07.2014
- * Time: 21:39
+ * Date: 13.07.2014
+ * Time: 2:09
  */
 package com.merlinds.miracle_tool.views.project {
-	import com.bit101.components.HBox;
-	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.view.interfaces.IResizable;
 
-	import flash.display.DisplayObject;
+	import flash.display.BitmapData;
+
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 
-	public class ProjectView extends Window implements IResizable{
+	public class Workspace extends Sprite implements IResizable{
 
-		private var _body:HBox;
-		private var _tools:DisplayObject;
-		private var _workspace:IResizable;
+		[Embed(source="../../../../../../assets/backgound.png", mimeType="image/png")]
+		private static var Background:Class;
+
+		private var _bg:BitmapData;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function ProjectView(name:String, parent:DisplayObjectContainer = null) {
-			//
-			super(parent, 0, 0, "Project: " + name);
-			this.hasCloseButton = true;
-			this.hasMinimizeButton = false;
-			this.draggable = false;
-			_body = new HBox(this);
-			_workspace = new Workspace(_body);
-			_tools = new ToolView(_body);
+		public function Workspace(parent:DisplayObjectContainer) {
+			super();
+			_bg = new Background().bitmapData;
+			parent.addChild(this);
+		}
+
+		public function setSize(w:Number, h:Number):void {
+			this.graphics.clear();
+			this.graphics.beginBitmapFill(_bg);
+			this.graphics.drawRect(0, 0, w, h);
+			this.graphics.endFill();
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
-
-		override public function setSize(w:Number, h:Number):void {
-			if(_body != null && _workspace != null){
-				_body.setSize(w , h);
-				_workspace.setSize(w -_tools.width , h);
-			}
-			super.setSize(w, h);
-		}
-
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
