@@ -72,10 +72,10 @@
         <!--<resizable></resizable>-->
 
         <!-- The window's initial width in pixels. Optional. -->
-        <!--<width></width>-->
+        <width>1024</width>
 
         <!-- The window's initial height in pixels. Optional. -->
-        <!--<height></height>-->
+        <height>768</height>
 
         <!-- The window's initial x position. Optional. -->
         <!--<x></x>-->
@@ -99,7 +99,7 @@
         <!--<fullScreen></fullScreen>-->
 
         <!-- The render mode for the app (either auto, cpu, gpu, or direct). Optional. Default auto -->
-        <!--<renderMode></renderMode>-->
+        <renderMode>direct</renderMode>
 
         <!-- Whether the default direct mode rendering context allocates storage for depth and stencil buffers.  Optional.  Default false. -->
         <!--<depthAndStencil></depthAndStencil>-->

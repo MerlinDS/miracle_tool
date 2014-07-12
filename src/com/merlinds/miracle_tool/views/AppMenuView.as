@@ -1,26 +1,21 @@
 /**
  * User: MerlinDS
- * Date: 04.04.2014
- * Time: 15:48
+ * Date: 12.07.2014
+ * Time: 21:39
  */
-package com.merlinds.miracle_tool {
+package com.merlinds.miracle_tool.views {
+	import com.bit101.components.Panel;
+	import com.merlinds.miracle_tool.view.interfaces.IResizable;
 
-	import com.merlinds.miracle_tool.views.AppView;
+	import flash.display.DisplayObjectContainer;
 
-	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
-	import flash.events.Event;
-
-	[SWF(backgroundColor="0x333333", frameRate=60)]
-	public class Main extends Sprite {
-
+	public class AppMenuView extends Panel implements IResizable{
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function Main() {
-			super ();
-			this.addEventListener(Event.ADDED_TO_STAGE, this.initialize);
+		public function AppMenuView(parent:DisplayObjectContainer = null) {
+			super(parent, 0, 0);
 		}
+
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
@@ -29,14 +24,6 @@ package com.merlinds.miracle_tool {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
-		private function initialize(event:Event):void {
-			this.removeEventListener(event.type, this.initialize);
-			this.stage.scaleMode = StageScaleMode.NO_SCALE;
-			this.stage.align = StageAlign.TOP_LEFT;
-			var appView:AppView = new AppView();
-			new ApplicationContext(appView);
-			this.addChild(appView);
-		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================

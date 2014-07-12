@@ -1,26 +1,28 @@
 /**
  * User: MerlinDS
- * Date: 04.04.2014
- * Time: 15:48
+ * Date: 12.07.2014
+ * Time: 21:36
  */
-package com.merlinds.miracle_tool {
+package com.merlinds.miracle_tool.views.project {
+	import org.robotlegs.mvcs.Mediator;
 
-	import com.merlinds.miracle_tool.views.AppView;
-
-	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
-	import flash.events.Event;
-
-	[SWF(backgroundColor="0x333333", frameRate=60)]
-	public class Main extends Sprite {
+	public class ToolsMediator extends Mediator {
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function Main() {
-			super ();
-			this.addEventListener(Event.ADDED_TO_STAGE, this.initialize);
+		public function ToolsMediator() {
+			super();
 		}
+
+
+		override public function onRegister():void {
+			super.onRegister();
+		}
+
+		override public function onRemove():void {
+			super.onRemove();
+		}
+
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
@@ -29,14 +31,6 @@ package com.merlinds.miracle_tool {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
-		private function initialize(event:Event):void {
-			this.removeEventListener(event.type, this.initialize);
-			this.stage.scaleMode = StageScaleMode.NO_SCALE;
-			this.stage.align = StageAlign.TOP_LEFT;
-			var appView:AppView = new AppView();
-			new ApplicationContext(appView);
-			this.addChild(appView);
-		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================

@@ -5,6 +5,14 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
+	import com.merlinds.miracle_tool.views.AppMenuMediator;
+	import com.merlinds.miracle_tool.views.AppMenuView;
+	import com.merlinds.miracle_tool.views.alerts.AlertMediator;
+	import com.merlinds.miracle_tool.views.alerts.AlertView;
+	import com.merlinds.miracle_tool.views.project.ProjectMediator;
+	import com.merlinds.miracle_tool.views.project.ProjectView;
+	import com.merlinds.miracle_tool.views.project.ToolView;
+	import com.merlinds.miracle_tool.views.project.ToolsMediator;
 
 	import flash.utils.setTimeout;
 
@@ -40,11 +48,18 @@ package com.merlinds.miracle_tool.controllers {
 
 		private function controllersMapping():void {
 			log(this, "controllersMapping");
+			//map controllers
+			this.injector.mapSingleton(ResizeController);
+			//map commands
 			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, ViewInitializerCommand, ContextEvent, true);
 		}
 
 		private function viewsMapping():void {
 			log(this, "viewsMapping");
+			this.mediatorMap.mapView(AppMenuView, AppMenuMediator);
+			this.mediatorMap.mapView(ProjectView, ProjectMediator);
+			this.mediatorMap.mapView(ToolView, ToolsMediator);
+			this.mediatorMap.mapView(AlertView, AlertMediator);
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
