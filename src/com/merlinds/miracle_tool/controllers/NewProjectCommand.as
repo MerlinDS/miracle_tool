@@ -46,7 +46,6 @@ package com.merlinds.miracle_tool.controllers {
 				//parse event
 				if(event.body == null){
 					//open project setting dialog
-					StatusBar.log("Open Project settings");
 					var actionVO:ActionVO = this.appModel.getActionByType(this.event.type);
 					this.dispatch(new DialogEvent(DialogEvent.PROJECT_SETTINGS, actionVO));
 				}else{

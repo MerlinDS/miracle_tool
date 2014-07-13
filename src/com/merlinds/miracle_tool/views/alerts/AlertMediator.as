@@ -9,6 +9,7 @@ package com.merlinds.miracle_tool.views.alerts {
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.vo.DialogVO;
 	import com.merlinds.miracle_tool.utils.dispatchAction;
+	import com.merlinds.miracle_tool.view.logger.StatusBar;
 	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
 	import com.merlinds.unitls.structures.QueueFIFO;
 
@@ -47,6 +48,7 @@ package com.merlinds.miracle_tool.views.alerts {
 				_currentDialog = new dialogVO.clazz(this.viewComponent);
 				_currentDialog.closeCallback = this.closeHandler;
 				_currentDialog.modal = true;
+				StatusBar.log(_currentDialog.title, "was opened");
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
@@ -60,6 +62,7 @@ package com.merlinds.miracle_tool.views.alerts {
 		}
 
 		private function closeHandler(closeReason:String, data:* = null):void {
+			StatusBar.log(_currentDialog.title, "was closed with", closeReason);
 			if(closeReason == DialogWindow.ACCEPT){
 				//Only if user accept dialog properties
 				dispatchAction(_currentEvent.action, this.dispatch, data);
