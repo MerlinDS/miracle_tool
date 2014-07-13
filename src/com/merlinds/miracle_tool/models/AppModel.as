@@ -14,6 +14,7 @@ package com.merlinds.miracle_tool.models {
 
 		private var _menuActions:Vector.<ActionVO>;
 		private var _dialogs:Vector.<DialogVO>;
+		private var _activeTool:String;
 
 		public function AppModel() {
 			_dialogs = new <DialogVO>[];
@@ -49,6 +50,14 @@ package com.merlinds.miracle_tool.models {
 
 		public function get dialogs():Vector.<DialogVO> {
 			return _dialogs;
+		}
+
+		public function get activeTool():String {
+			return _activeTool;
+		}
+
+		public function set activeTool(value:String):void {
+			_activeTool = value;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

@@ -1,32 +1,29 @@
 /**
  * User: MerlinDS
- * Date: 12.07.2014
- * Time: 21:37
+ * Date: 13.07.2014
+ * Time: 14:20
  */
-package com.merlinds.miracle_tool.views.project {
-	import com.merlinds.miracle_tool.events.EditorEvent;
-	import com.merlinds.miracle_tool.models.ProjectModel;
-	import com.merlinds.miracle_tool.view.logger.StatusBar;
+package com.merlinds.miracle_tool.events {
+	import flash.events.Event;
 
-	import org.robotlegs.mvcs.Mediator;
+	import org.robotlegs.base.ContextEvent;
 
-	public class ProjectMediator extends Mediator {
+	public class EditorEvent extends ContextEvent {
 
-		[Inject]
-		public var model:ProjectModel;
+		public static const PROJECT_OPEN:String = "EditorEvent::PROJECT_OPEN";
+		public static const PROJECT_CLOSED:String = "EditorEvent::PROJECT_CLOSED";
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function ProjectMediator() {
-			super();
+		public function EditorEvent(type:String, body:* = null) {
+			super(type, body);
 		}
 
-		override public function onRegister():void {
-			StatusBar.log("Project", model.name, "was created");
-			this.dispatch(new EditorEvent(EditorEvent.PROJECT_OPEN));
+		override public function clone():Event {
+			return new DialogEvent(type, body);
 		}
 
-		override public function onRemove():void {
-			this.dispatch(new EditorEvent(EditorEvent.PROJECT_CLOSED));
+		override public function toString():String {
+			return this.formatToString("EditorEvent", "type", "body");
 		}
 		//} endregion PUBLIC METHODS ===================================================
 

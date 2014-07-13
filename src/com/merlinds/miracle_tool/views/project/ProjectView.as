@@ -8,13 +8,11 @@ package com.merlinds.miracle_tool.views.project {
 	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.view.interfaces.IResizable;
 
-	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 
 	public class ProjectView extends Window implements IResizable{
 
 		private var _body:HBox;
-		private var _tools:DisplayObject;
 		private var _workspace:IResizable;
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -26,7 +24,6 @@ package com.merlinds.miracle_tool.views.project {
 			this.draggable = false;
 			_body = new HBox(this);
 			_workspace = new Workspace(_body);
-			_tools = new ToolView(_body);
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -36,7 +33,6 @@ package com.merlinds.miracle_tool.views.project {
 		override public function setSize(w:Number, h:Number):void {
 			if(_body != null && _workspace != null){
 				_body.setSize(w , h);
-				_workspace.setSize(w -_tools.width , h);
 			}
 			super.setSize(w, h);
 		}
