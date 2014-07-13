@@ -7,6 +7,7 @@ package com.merlinds.miracle_tool.views.project {
 	import com.bit101.components.Component;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
+	import com.merlinds.miracle_tool.view.logger.StatusBar;
 
 	import flash.events.MouseEvent;
 
@@ -50,6 +51,7 @@ package com.merlinds.miracle_tool.views.project {
 
 		private function clickHandler(event:MouseEvent):void {
 			_model.activeTool = this.viewComponent.activeTool;
+			StatusBar.log("Change tools to", _model.activeTool);
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 

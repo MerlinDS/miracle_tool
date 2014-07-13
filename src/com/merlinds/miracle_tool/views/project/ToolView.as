@@ -40,7 +40,7 @@ package com.merlinds.miracle_tool.views.project {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function initialize():void {
-			this.y = 40;
+			this.y = 50;
 			super .setSize(30, 100);
 			_body = new VBox(this);
 			_body.x = 30 - 21 >> 1;
