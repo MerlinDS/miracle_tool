@@ -4,6 +4,8 @@
  * Time: 15:54
  */
 package com.merlinds.miracle_tool.views.widgets {
+	import com.merlinds.miracle_tool.events.EditorEvent;
+
 	public class ProjectInfoMediator extends WidgetMediator {
 
 		//==============================================================================
@@ -19,6 +21,10 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		override protected function editorHandler(event:EditorEvent):void {
+			this.data = this.projectModel.infoVO;
+			super.editorHandler(event);
+		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================

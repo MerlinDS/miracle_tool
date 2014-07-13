@@ -17,12 +17,12 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.views.project.ToolsMediator;
 	import com.merlinds.miracle_tool.views.widgets.ItemInfo;
 	import com.merlinds.miracle_tool.views.widgets.ItemInfoMediator;
-	import com.merlinds.miracle_tool.views.widgets.ProjectInfo;
+	import com.merlinds.miracle_tool.views.widgets.ProjectInfoView;
 	import com.merlinds.miracle_tool.views.widgets.ProjectInfoMediator;
 	import com.merlinds.miracle_tool.views.widgets.PublishTools;
 	import com.merlinds.miracle_tool.views.widgets.PublishToolsMediator;
-	import com.merlinds.miracle_tool.views.widgets.SheetTools;
-	import com.merlinds.miracle_tool.views.widgets.SheetTools;
+	import com.merlinds.miracle_tool.views.widgets.SheetToolsView;
+	import com.merlinds.miracle_tool.views.widgets.SheetToolsView;
 	import com.merlinds.miracle_tool.views.widgets.SheetToolsMediator;
 
 	import flash.utils.setTimeout;
@@ -61,7 +61,6 @@ package com.merlinds.miracle_tool.controllers {
 		private function controllersMapping():void {
 			log(this, "controllersMapping");
 			//map controllers
-			this.injector.mapValue(ProjectModel, new ProjectModel(ProjectModel.EMPTY, null));//Hak for injector
 			this.injector.mapSingleton(ResizeController);
 			//map commands
 			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, AppInitCommand, ContextEvent, true);
@@ -75,9 +74,9 @@ package com.merlinds.miracle_tool.controllers {
 			this.mediatorMap.mapView(ToolView, ToolsMediator);
 			this.mediatorMap.mapView(AlertView, AlertMediator);
 			//widgets
-			this.mediatorMap.mapView(ProjectInfo, ProjectInfoMediator);
+			this.mediatorMap.mapView(ProjectInfoView, ProjectInfoMediator);
 			this.mediatorMap.mapView(ItemInfo, ItemInfoMediator);
-			this.mediatorMap.mapView(SheetTools, SheetToolsMediator);
+			this.mediatorMap.mapView(SheetToolsView, SheetToolsMediator);
 			this.mediatorMap.mapView(PublishTools, PublishToolsMediator);
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================

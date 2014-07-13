@@ -32,6 +32,7 @@ package com.merlinds.miracle_tool.views.project {
 			StatusBar.log("Project", model.name, "was created");
 			this.dispatch(new EditorEvent(EditorEvent.PROJECT_OPEN));
 			this.addViewListener(Event.CLOSE, this.closeHandler);
+
 		}
 
 		override public function onRemove():void {

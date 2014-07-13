@@ -22,12 +22,12 @@ package com.merlinds.miracle_tool.views.widgets {
 			super();
 		}
 
-		override public function onRegister():void {
+		override public final function onRegister():void {
 			this.addContextListener(EditorEvent.PROJECT_OPEN, this.editorHandler);
 			this.addContextListener(EditorEvent.PROJECT_CLOSED, this.editorHandler);
 		}
 
-		override public function onRemove():void{
+		override public final function onRemove():void{
 			this.removeContextListener(EditorEvent.PROJECT_OPEN, this.editorHandler);
 			this.removeContextListener(EditorEvent.PROJECT_CLOSED, this.editorHandler);
 		}
@@ -40,8 +40,8 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
-		private function editorHandler(event:EditorEvent):void {
-			this.viewComponent.enabled = event.type == EditorEvent.PROJECT_OPEN;
+		protected function editorHandler(event:EditorEvent):void {
+//			this.viewComponent.enabled = event.type == EditorEvent.PROJECT_OPEN;
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
