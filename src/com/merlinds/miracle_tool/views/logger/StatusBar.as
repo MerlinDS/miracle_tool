@@ -3,12 +3,12 @@
  * Date: 13.07.2014
  * Time: 3:22
  */
-package com.merlinds.miracle_tool.view.logger {
+package com.merlinds.miracle_tool.views.logger {
 	import com.bit101.components.HBox;
 	import com.bit101.components.IndicatorLight;
 	import com.bit101.components.Label;
 	import com.bit101.components.Panel;
-	import com.merlinds.miracle_tool.view.interfaces.IResizable;
+	import com.merlinds.miracle_tool.views.interfaces.IResizable;
 
 	import flash.display.DisplayObjectContainer;
 

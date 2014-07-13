@@ -3,7 +3,7 @@
  * Date: 12.07.2014
  * Time: 21:53
  */
-package com.merlinds.miracle_tool.view.interfaces {
+package com.merlinds.miracle_tool.views.interfaces {
 
 	public interface IResizable {
 		//==============================================================================

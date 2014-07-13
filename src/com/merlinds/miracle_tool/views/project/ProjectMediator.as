@@ -10,7 +10,7 @@ package com.merlinds.miracle_tool.views.project {
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
 	import com.merlinds.miracle_tool.utils.dispatchAction;
-	import com.merlinds.miracle_tool.view.logger.StatusBar;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
 	import flash.events.Event;
 

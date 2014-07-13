@@ -7,7 +7,7 @@ package com.merlinds.miracle_tool.views.project {
 	import com.bit101.components.Component;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
-	import com.merlinds.miracle_tool.view.logger.StatusBar;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
 	import flash.events.MouseEvent;
 

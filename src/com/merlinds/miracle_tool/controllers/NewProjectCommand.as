@@ -10,7 +10,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
-	import com.merlinds.miracle_tool.view.logger.StatusBar;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 	import com.merlinds.miracle_tool.views.AppView;
 	import com.merlinds.miracle_tool.views.project.ProjectView;
 

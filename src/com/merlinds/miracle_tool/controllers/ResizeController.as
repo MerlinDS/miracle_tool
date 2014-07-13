@@ -5,8 +5,8 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.warning;
-	import com.merlinds.miracle_tool.view.interfaces.IResizable;
-	import com.merlinds.miracle_tool.view.logger.StatusBar;
+	import com.merlinds.miracle_tool.views.interfaces.IResizable;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
 	import flash.display.Stage;
 	import flash.events.Event;

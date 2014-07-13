@@ -4,7 +4,7 @@
  * Time: 21:38
  */
 package com.merlinds.miracle_tool.views.alerts {
-	import com.merlinds.miracle_tool.view.interfaces.IResizable;
+	import com.merlinds.miracle_tool.views.interfaces.IResizable;
 	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
 
 	import flash.display.DisplayObject;

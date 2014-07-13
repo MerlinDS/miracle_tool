@@ -5,7 +5,7 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
-	import com.merlinds.miracle_tool.view.logger.StatusBar;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
 	import org.robotlegs.mvcs.Command;
 

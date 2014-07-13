@@ -9,7 +9,7 @@ package com.merlinds.miracle_tool.views.alerts {
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.vo.DialogVO;
 	import com.merlinds.miracle_tool.utils.dispatchAction;
-	import com.merlinds.miracle_tool.view.logger.StatusBar;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
 	import com.merlinds.unitls.structures.QueueFIFO;
 

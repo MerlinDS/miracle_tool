@@ -7,7 +7,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.bit101.components.Style;
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.models.AppModel;
-	import com.merlinds.miracle_tool.view.logger.StatusBar;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 	import com.merlinds.miracle_tool.views.AppMenuView;
 	import com.merlinds.miracle_tool.views.AppView;
 	import com.merlinds.miracle_tool.views.alerts.AlertView;

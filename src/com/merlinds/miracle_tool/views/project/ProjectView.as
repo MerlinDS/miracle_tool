@@ -6,7 +6,7 @@
 package com.merlinds.miracle_tool.views.project {
 	import com.bit101.components.HBox;
 	import com.bit101.components.Window;
-	import com.merlinds.miracle_tool.view.interfaces.IResizable;
+	import com.merlinds.miracle_tool.views.interfaces.IResizable;
 
 	import flash.display.DisplayObjectContainer;
 

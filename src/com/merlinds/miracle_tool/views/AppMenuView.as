@@ -7,7 +7,7 @@ package com.merlinds.miracle_tool.views {
 	import com.bit101.components.HBox;
 	import com.bit101.components.Label;
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
-	import com.merlinds.miracle_tool.view.interfaces.IResizable;
+	import com.merlinds.miracle_tool.views.interfaces.IResizable;
 	import com.merlinds.miracle_tool.views.components.controls.ActionButton;
 
 	import flash.display.DisplayObjectContainer;

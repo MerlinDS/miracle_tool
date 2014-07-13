@@ -7,7 +7,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.debug.warning;
 	import com.merlinds.miracle_tool.models.ProjectModel;
-	import com.merlinds.miracle_tool.view.logger.StatusBar;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 	import com.merlinds.miracle_tool.views.AppView;
 
 	import org.robotlegs.mvcs.Command;
