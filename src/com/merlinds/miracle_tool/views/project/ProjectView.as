@@ -4,7 +4,6 @@
  * Time: 21:39
  */
 package com.merlinds.miracle_tool.views.project {
-	import com.bit101.components.HBox;
 	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.views.interfaces.IResizable;
 
@@ -12,8 +11,6 @@ package com.merlinds.miracle_tool.views.project {
 
 	public class ProjectView extends Window implements IResizable{
 
-		private var _body:HBox;
-		private var _workspace:IResizable;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectView(name:String, parent:DisplayObjectContainer = null) {
@@ -22,8 +19,6 @@ package com.merlinds.miracle_tool.views.project {
 			this.hasCloseButton = true;
 			this.hasMinimizeButton = false;
 			this.draggable = false;
-			_body = new HBox(this);
-			_workspace = new Workspace(_body);
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -31,9 +26,6 @@ package com.merlinds.miracle_tool.views.project {
 		//{region						PRIVATE\PROTECTED METHODS
 
 		override public function setSize(w:Number, h:Number):void {
-			if(_body != null && _workspace != null){
-				_body.setSize(w , h);
-			}
 			super.setSize(w, h);
 		}
 

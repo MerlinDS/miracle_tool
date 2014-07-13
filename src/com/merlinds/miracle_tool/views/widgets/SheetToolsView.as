@@ -11,6 +11,7 @@ package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.miracle_tool.models.vo.SheetToolsVO;
 
 	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 
 	public class SheetToolsView extends WidgetWindow {
@@ -48,7 +49,7 @@ package com.merlinds.miracle_tool.views.widgets {
 		//{region							EVENTS HANDLERS
 		private function buttonHandler(event:MouseEvent):void{
 			_action = event.target == _sourceAttach ? 0 : 1;
-//			this.dispatchEvent(event);
+			this.dispatchEvent(new Event(Event.SELECT));
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
@@ -60,6 +61,7 @@ package com.merlinds.miracle_tool.views.widgets {
 				var vo:SheetToolsVO = value as SheetToolsVO;
 				_numElements.text = vo.numElements.toString();
 				_size.text = vo.size.toString();
+				_sources.removeAll();
 				while(vo.sources.length){
 					_sources.addItem(vo.sources.pop());
 				}

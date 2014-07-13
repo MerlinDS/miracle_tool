@@ -27,7 +27,6 @@ package com.merlinds.miracle_tool.views.project {
 			super();
 			_bg = new Background().bitmapData;
 			parent.addChild(this);
-			_fps = new FPSMeter(this);
 		}
 
 		public function setSize(w:Number, h:Number):void {

@@ -10,6 +10,8 @@ package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
+	import flash.events.Event;
+
 	import flash.events.MouseEvent;
 
 	public class SheetToolsMediator extends WidgetMediator {
@@ -25,7 +27,7 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		override public function onRegister():void {
 			super.onRegister();
-			this.addViewListener(MouseEvent.CLICK, this.clickHandler);
+			this.addViewListener(Event.SELECT, this.selectHandler);
 			this.addContextListener(EditorEvent.ANIMATION_ATTACHED, this.editorHandler);
 			this.addContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
 		}
@@ -33,7 +35,7 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		override public function onRemove():void {
 			super.onRemove();
-			this.removeViewListener(MouseEvent.CLICK, this.clickHandler);
+			this.removeViewListener(Event.SELECT, this.selectHandler);
 			this.removeContextListener(EditorEvent.ANIMATION_ATTACHED, this.editorHandler);
 			this.removeContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
 		}
@@ -57,10 +59,10 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
-		private function clickHandler(event:MouseEvent):void {
+		private function selectHandler(event:Event):void {
 			if(this.viewComponent.data > 0 && this.projectModel.elements.length == 0){
 				var text:String = "Can not attach animation till no sources was attached";
-				warning(this, "clickHandler", text);
+				warning(this, "selectHandler", text);
 				StatusBar.warning(text);
 			}else{
 				var method:Function = this.viewComponent.data == 0

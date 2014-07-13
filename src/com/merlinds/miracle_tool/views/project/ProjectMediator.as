@@ -32,6 +32,7 @@ package com.merlinds.miracle_tool.views.project {
 			StatusBar.log("Project", model.name, "was created");
 			this.dispatch(new EditorEvent(EditorEvent.PROJECT_OPEN));
 			this.addViewListener(Event.CLOSE, this.closeHandler);
+			this.addContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
 
 		}
 
@@ -51,6 +52,10 @@ package com.merlinds.miracle_tool.views.project {
 		private function closeHandler(event:Event):void {
 			var vo:ActionVO = this.appModel.getActionByType(ActionEvent.CLOSE_PROJECT);
 			dispatchAction(vo, this.dispatch);
+		}
+
+		private function editorHandler(event:EditorEvent):void {
+			//TODO add sheet view to the project view and execute packer command
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
