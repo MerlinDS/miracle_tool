@@ -1,41 +1,35 @@
 /**
  * User: MerlinDS
- * Date: 12.07.2014
- * Time: 22:56
+ * Date: 13.07.2014
+ * Time: 15:58
  */
-package com.merlinds.miracle_tool.controllers {
-	import com.merlinds.debug.log;
-	import com.merlinds.debug.warning;
+package com.merlinds.miracle_tool.views.widgets {
+	import com.merlinds.miracle_tool.events.EditorEvent;
+	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
-	import com.merlinds.miracle_tool.views.logger.StatusBar;
-	import com.merlinds.miracle_tool.views.AppView;
 
-	import org.robotlegs.mvcs.Command;
+	import org.robotlegs.mvcs.Mediator;
 
-	public class CloseProjectCommand extends Command {
+	internal class WidgetMediator extends Mediator {
 
 		[Inject]
-		public var appView:AppView;
+		public var appModel:AppModel;
 		[Inject]
 		public var projectModel:ProjectModel;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-
-		public function CloseProjectCommand() {
+		public function WidgetMediator() {
 			super();
 		}
 
-		override public function execute():void {
-			if(this.projectModel.name != ProjectModel.EMPTY)
-			{
-				log(this, "execute");
-				this.injector.unmap(ProjectModel);
-				this.appView.removeProject();
-				this.injector.mapValue(ProjectModel, new ProjectModel(ProjectModel.EMPTY, null));
-			}else{
-				warning(this, "execute", "Trying to close empty project");
-				StatusBar.warning("Trying to close empty project");
-			}
+		override public function onRegister():void {
+			this.addContextListener(EditorEvent.PROJECT_OPEN, this.editorHandler);
+			this.addContextListener(EditorEvent.PROJECT_CLOSED, this.editorHandler);
+		}
+
+		override public function onRemove():void{
+			this.removeContextListener(EditorEvent.PROJECT_OPEN, this.editorHandler);
+			this.removeContextListener(EditorEvent.PROJECT_CLOSED, this.editorHandler);
 		}
 
 		//} endregion PUBLIC METHODS ===================================================
@@ -46,10 +40,16 @@ package com.merlinds.miracle_tool.controllers {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		private function editorHandler(event:EditorEvent):void {
+			this.viewComponent.enabled = event.type == EditorEvent.PROJECT_OPEN;
+		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
+		protected function set data(value:Object):void{
+			this.viewComponent.data = value;
+		}
 		//} endregion GETTERS/SETTERS ==================================================
 	}
 }

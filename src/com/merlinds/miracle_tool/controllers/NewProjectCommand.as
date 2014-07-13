@@ -25,6 +25,8 @@ package com.merlinds.miracle_tool.controllers {
 		[Inject]
 		public var appModel:AppModel;
 		[Inject]
+		public var projectModel:ProjectModel;
+		[Inject]
 		public var appView:AppView;
 		[Inject]
 		public var resizeController:ResizeController;
@@ -38,7 +40,7 @@ package com.merlinds.miracle_tool.controllers {
 
 		override public function execute():void {
 			log(this, "execute", event);
-			if(this.injector.hasMapping(ProjectModel)){
+			if(this.projectModel.name != ProjectModel.EMPTY){
 				//need to save and remove project
 				//TODO:Check for existing project
 				StatusBar.warning("New project is exist");
@@ -62,6 +64,7 @@ package com.merlinds.miracle_tool.controllers {
 					log(this, "execute", "Create project:", projectName, ", Scene size = ", sceneSize);
 					//create model for project
 					var model:ProjectModel = new ProjectModel(projectName, sceneSize);
+					this.injector.unmap(ProjectModel);
 					this.injector.mapValue(ProjectModel, model);
 					//create view for project
 					var view:ProjectView = new ProjectView(model.name, this.appView);

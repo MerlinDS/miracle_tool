@@ -1,25 +1,14 @@
 /**
  * User: MerlinDS
  * Date: 13.07.2014
- * Time: 1:51
+ * Time: 15:54
  */
-package com.merlinds.miracle_tool.models {
-	import flash.geom.Point;
-
-	import org.robotlegs.mvcs.Actor;
-
-	public class ProjectModel extends Actor {
-
-		public static const EMPTY:String = 'Empty';
-
-		private var _name:String;
-		private var _sceneSize:Point;
+package com.merlinds.miracle_tool.views.widgets {
+	public class ProjectInfoMediator extends WidgetMediator {
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function ProjectModel(name:String, sceneSize:Point) {
-			_name = name;
-			_sceneSize = sceneSize;
+		public function ProjectInfoMediator() {
 			super();
 		}
 		//} endregion PUBLIC METHODS ===================================================
@@ -34,13 +23,6 @@ package com.merlinds.miracle_tool.models {
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
-		public function get name():String {
-			return _name;
-		}
-
-		public function get sceneSize():Point {
-			return _sceneSize;
-		}
-//} endregion GETTERS/SETTERS ==================================================
+		//} endregion GETTERS/SETTERS ==================================================
 	}
 }

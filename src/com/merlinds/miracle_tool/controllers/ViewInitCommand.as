@@ -12,6 +12,9 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.views.AppView;
 	import com.merlinds.miracle_tool.views.alerts.AlertView;
 	import com.merlinds.miracle_tool.views.project.ToolView;
+	import com.merlinds.miracle_tool.views.widgets.ProjectWidgets;
+
+	import flash.display.DisplayObjectContainer;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -37,6 +40,7 @@ package com.merlinds.miracle_tool.controllers {
 			this.resizeController.addInstance( new AlertView( this.contextView ) );//upper than all other views
 			this.resizeController.addInstance( new AppMenuView( appView , model.menuActions) );
 			this.resizeController.addInstance( new ToolView( this.contextView ) );
+			this.resizeController.addInstance( new ProjectWidgets( this.contextView ));
 			this.resizeController.addInstance( new StatusBar( this.contextView ) );
 			//add stage to resize controller for it's initialization
 			this.resizeController.stage = this.contextView.stage;

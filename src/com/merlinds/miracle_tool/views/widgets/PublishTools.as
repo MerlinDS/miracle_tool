@@ -1,31 +1,30 @@
 /**
  * User: MerlinDS
  * Date: 13.07.2014
- * Time: 1:51
+ * Time: 15:01
  */
-package com.merlinds.miracle_tool.models {
-	import flash.geom.Point;
+package com.merlinds.miracle_tool.views.widgets {
+	import com.bit101.components.CheckBox;
+	import com.bit101.components.PushButton;
 
-	import org.robotlegs.mvcs.Actor;
+	import flash.display.DisplayObjectContainer;
 
-	public class ProjectModel extends Actor {
-
-		public static const EMPTY:String = 'Empty';
-
-		private var _name:String;
-		private var _sceneSize:Point;
-
+	public class PublishTools extends WidgetWindow {
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function ProjectModel(name:String, sceneSize:Point) {
-			_name = name;
-			_sceneSize = sceneSize;
-			super();
+		public function PublishTools(parent:DisplayObjectContainer = null) {
+			super(parent, 0, 0, "Publish Tools");
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
+		override protected function initialize():void{
+			new PushButton(this, 0, 0, "Publish");
+			new CheckBox(this, 0, 0, "Change publish settings").selected = true;
+			new PushButton(this, 0, 0, "Preview");
+
+		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
@@ -34,13 +33,6 @@ package com.merlinds.miracle_tool.models {
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
-		public function get name():String {
-			return _name;
-		}
-
-		public function get sceneSize():Point {
-			return _sceneSize;
-		}
-//} endregion GETTERS/SETTERS ==================================================
+		//} endregion GETTERS/SETTERS ==================================================
 	}
 }

@@ -6,6 +6,7 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.models.AppModel;
+	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.views.AppMenuMediator;
 	import com.merlinds.miracle_tool.views.AppMenuView;
 	import com.merlinds.miracle_tool.views.alerts.AlertMediator;
@@ -14,6 +15,15 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.views.project.ProjectView;
 	import com.merlinds.miracle_tool.views.project.ToolView;
 	import com.merlinds.miracle_tool.views.project.ToolsMediator;
+	import com.merlinds.miracle_tool.views.widgets.ItemInfo;
+	import com.merlinds.miracle_tool.views.widgets.ItemInfoMediator;
+	import com.merlinds.miracle_tool.views.widgets.ProjectInfo;
+	import com.merlinds.miracle_tool.views.widgets.ProjectInfoMediator;
+	import com.merlinds.miracle_tool.views.widgets.PublishTools;
+	import com.merlinds.miracle_tool.views.widgets.PublishToolsMediator;
+	import com.merlinds.miracle_tool.views.widgets.SheetTools;
+	import com.merlinds.miracle_tool.views.widgets.SheetTools;
+	import com.merlinds.miracle_tool.views.widgets.SheetToolsMediator;
 
 	import flash.utils.setTimeout;
 
@@ -51,6 +61,7 @@ package com.merlinds.miracle_tool.controllers {
 		private function controllersMapping():void {
 			log(this, "controllersMapping");
 			//map controllers
+			this.injector.mapValue(ProjectModel, new ProjectModel(ProjectModel.EMPTY, null));//Hak for injector
 			this.injector.mapSingleton(ResizeController);
 			//map commands
 			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, AppInitCommand, ContextEvent, true);
@@ -63,6 +74,11 @@ package com.merlinds.miracle_tool.controllers {
 			this.mediatorMap.mapView(ProjectView, ProjectMediator);
 			this.mediatorMap.mapView(ToolView, ToolsMediator);
 			this.mediatorMap.mapView(AlertView, AlertMediator);
+			//widgets
+			this.mediatorMap.mapView(ProjectInfo, ProjectInfoMediator);
+			this.mediatorMap.mapView(ItemInfo, ItemInfoMediator);
+			this.mediatorMap.mapView(SheetTools, SheetToolsMediator);
+			this.mediatorMap.mapView(PublishTools, PublishToolsMediator);
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
