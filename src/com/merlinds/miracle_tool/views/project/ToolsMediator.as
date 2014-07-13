@@ -26,11 +26,14 @@ package com.merlinds.miracle_tool.views.project {
 
 		override public function onRegister():void {
 			this.addContextListener(EditorEvent.PROJECT_OPEN, this.editorHandler);
+			this.addContextListener(EditorEvent.PROJECT_CLOSED, this.editorHandler);
 			this.addViewListener(MouseEvent.CLICK, this.clickHandler);
 		}
 
 		override public function onRemove():void {
-			super.onRemove();
+			this.removeContextListener(EditorEvent.PROJECT_OPEN, this.editorHandler);
+			this.removeContextListener(EditorEvent.PROJECT_CLOSED, this.editorHandler);
+			this.removeViewListener(MouseEvent.CLICK, this.clickHandler);
 		}
 
 		//} endregion PUBLIC METHODS ===================================================

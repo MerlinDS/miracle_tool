@@ -4,9 +4,15 @@
  * Time: 21:37
  */
 package com.merlinds.miracle_tool.views.project {
+	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
+	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
+	import com.merlinds.miracle_tool.models.vo.ActionVO;
+	import com.merlinds.miracle_tool.utils.dispatchAction;
 	import com.merlinds.miracle_tool.view.logger.StatusBar;
+
+	import flash.events.Event;
 
 	import org.robotlegs.mvcs.Mediator;
 
@@ -14,6 +20,8 @@ package com.merlinds.miracle_tool.views.project {
 
 		[Inject]
 		public var model:ProjectModel;
+		[Inject]
+		public var appModel:AppModel;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectMediator() {
@@ -23,9 +31,12 @@ package com.merlinds.miracle_tool.views.project {
 		override public function onRegister():void {
 			StatusBar.log("Project", model.name, "was created");
 			this.dispatch(new EditorEvent(EditorEvent.PROJECT_OPEN));
+			this.addViewListener(Event.CLOSE, this.closeHandler);
 		}
 
 		override public function onRemove():void {
+			this.removeViewListener(Event.CLOSE, this.closeHandler);
+			StatusBar.log("Project", model.name, "was closed");
 			this.dispatch(new EditorEvent(EditorEvent.PROJECT_CLOSED));
 		}
 		//} endregion PUBLIC METHODS ===================================================
@@ -36,6 +47,10 @@ package com.merlinds.miracle_tool.views.project {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		private function closeHandler(event:Event):void {
+			var vo:ActionVO = this.appModel.getActionByType(ActionEvent.CLOSE_PROJECT);
+			dispatchAction(vo, this.dispatch);
+		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================

@@ -47,6 +47,7 @@ package com.merlinds.miracle_tool.views.project {
 			_body.y = 5;
 			_activeTool = new ToolButton(_body, this.getIcon(0), "Pointer");
 			_activeTool.addEventListener(MouseEvent.CLICK, this.buttonClick);
+			_activeTool.enabled = false;
 			new ToolButton(_body, this.getIcon(3), "Hand").addEventListener(MouseEvent.CLICK, this.buttonClick);
 			new ToolButton(_body, this.getIcon(1), "Crop").addEventListener(MouseEvent.CLICK, this.buttonClick);
 			new ToolButton(_body, this.getIcon(2), "Zoom").addEventListener(MouseEvent.CLICK, this.buttonClick);

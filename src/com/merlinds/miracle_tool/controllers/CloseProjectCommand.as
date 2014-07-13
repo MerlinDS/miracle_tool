@@ -5,22 +5,34 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
+	import com.merlinds.debug.warning;
+	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.view.logger.StatusBar;
+	import com.merlinds.miracle_tool.views.AppView;
 
 	import org.robotlegs.mvcs.Command;
 
 	public class CloseProjectCommand extends Command {
 
+		[Inject]
+		public var appView:AppView;
 		//==============================================================================
 		//{region							PUBLIC METHODS
+
 		public function CloseProjectCommand() {
 			super();
 		}
 
-
 		override public function execute():void {
-			log(this, "execute");
-			StatusBar.warning("CloseProjectCommand not yet implemented");
+			if(this.injector.hasMapping(ProjectModel))
+			{
+				log(this, "execute");
+				this.injector.unmap(ProjectModel);
+				this.appView.removeProject();
+			}else{
+				warning(this, "execute", "Trying to close empty project");
+				StatusBar.warning("Trying to close empty project");
+			}
 		}
 
 		//} endregion PUBLIC METHODS ===================================================

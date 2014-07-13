@@ -30,6 +30,15 @@ package com.merlinds.miracle_tool.views {
 			}
 			return super.addChild(child);
 		}
+
+		public function removeProject():DisplayObject{
+			var result:DisplayObject;
+			if(_project != null && _project.parent == this){
+				result = super .removeChild(_project);
+				_project = null;
+			}
+			return result;
+		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
