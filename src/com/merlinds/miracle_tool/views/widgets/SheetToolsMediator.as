@@ -4,18 +4,40 @@
  * Time: 15:57
  */
 package com.merlinds.miracle_tool.views.widgets {
+	import com.merlinds.debug.warning;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.vo.SheetToolsVO;
+	import com.merlinds.miracle_tool.services.FileSystemService;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
-	import flash.filesystem.File;
+	import flash.events.MouseEvent;
 
 	public class SheetToolsMediator extends WidgetMediator {
 
+		[Inject]
+		public var fileSystemService:FileSystemService;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function SheetToolsMediator() {
 			super();
 		}
+
+
+		override public function onRegister():void {
+			super.onRegister();
+			this.addViewListener(MouseEvent.CLICK, this.clickHandler);
+			this.addContextListener(EditorEvent.ANIMATION_ATTACHED, this.editorHandler);
+			this.addContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
+		}
+
+
+		override public function onRemove():void {
+			super.onRemove();
+			this.removeViewListener(MouseEvent.CLICK, this.clickHandler);
+			this.removeContextListener(EditorEvent.ANIMATION_ATTACHED, this.editorHandler);
+			this.removeContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
+		}
+
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
@@ -28,12 +50,25 @@ package com.merlinds.miracle_tool.views.widgets {
 					this.projectModel.elements.length,
 					this.projectModel.sheetSize
 			);
+
 		}
 
-//} endregion PRIVATE\PROTECTED METHODS ========================================
+		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		private function clickHandler(event:MouseEvent):void {
+			if(this.viewComponent.data > 0 && this.projectModel.elements.length == 0){
+				var text:String = "Can not attach animation till no sources was attached";
+				warning(this, "clickHandler", text);
+				StatusBar.warning(text);
+			}else{
+				var method:Function = this.viewComponent.data == 0
+					? this.fileSystemService.readSource
+					: this.fileSystemService.readAnimation;
+				method.apply(this);
+			}
+		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================

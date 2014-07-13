@@ -55,6 +55,10 @@ package com.merlinds.miracle_tool.views.widgets {
 		public function set data(value:Object):void{
 
 		}
+
+		public function get data():Object {
+			return null;
+		}
 //} endregion GETTERS/SETTERS ==================================================
 	}
 }

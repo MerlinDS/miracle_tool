@@ -5,8 +5,11 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
+	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
+	import com.merlinds.miracle_tool.services.DecodeService;
+	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.views.AppMenuMediator;
 	import com.merlinds.miracle_tool.views.AppMenuView;
 	import com.merlinds.miracle_tool.views.alerts.AlertMediator;
@@ -56,6 +59,8 @@ package com.merlinds.miracle_tool.controllers {
 		private function modelsMapping():void {
 			log(this, "modelsMapping");
 			this.injector.mapSingleton(AppModel);
+			this.injector.mapSingleton(FileSystemService);
+			this.injector.mapSingleton(DecodeService);
 		}
 
 		private function controllersMapping():void {
@@ -65,6 +70,8 @@ package com.merlinds.miracle_tool.controllers {
 			//map commands
 			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, AppInitCommand, ContextEvent, true);
 			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, ViewInitCommand, ContextEvent, true);
+			//
+			this.commandMap.mapEvent(EditorEvent.FILE_READ, FileDecodeCommand, EditorEvent);
 		}
 
 		private function viewsMapping():void {

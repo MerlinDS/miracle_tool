@@ -11,6 +11,7 @@ package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.miracle_tool.models.vo.SheetToolsVO;
 
 	import flash.display.DisplayObjectContainer;
+	import flash.events.MouseEvent;
 
 	public class SheetToolsView extends WidgetWindow {
 
@@ -19,6 +20,7 @@ package com.merlinds.miracle_tool.views.widgets {
 		private var _numElements:Label;
 		private var _sourceAttach:PushButton;
 		private var _animationAttach:PushButton;
+		private var _action:int;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function SheetToolsView(parent:DisplayObjectContainer = null) {
@@ -29,8 +31,8 @@ package com.merlinds.miracle_tool.views.widgets {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		override protected function initialize():void{
-			_sourceAttach = new PushButton(this, 0, 0, "Attach new texture");
-			_animationAttach = new PushButton(this, 0, 0, "Attach new animation");
+			_sourceAttach = new PushButton(this, 0, 0, "Attach new texture", this.buttonHandler);
+			_animationAttach = new PushButton(this, 0, 0, "Attach new animation", this.buttonHandler);
 			_sources = new List(this, 0, 0);
 			var line:HBox = new HBox(this);
 			new Label(line, 0, 0, "Sheet size =");
@@ -44,6 +46,10 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		private function buttonHandler(event:MouseEvent):void{
+			_action = event.target == _sourceAttach ? 0 : 1;
+//			this.dispatchEvent(event);
+		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================
@@ -65,6 +71,10 @@ package com.merlinds.miracle_tool.views.widgets {
 					_animationAttach.enabled = true;
 				}
 			}
+		}
+
+		override public function get data():Object {
+			return _action;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

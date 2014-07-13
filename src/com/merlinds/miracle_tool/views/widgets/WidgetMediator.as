@@ -22,12 +22,12 @@ package com.merlinds.miracle_tool.views.widgets {
 			super();
 		}
 
-		override public final function onRegister():void {
+		override public function onRegister():void {
 			this.addContextListener(EditorEvent.PROJECT_OPEN, this.editorHandler);
 			this.addContextListener(EditorEvent.PROJECT_CLOSED, this.editorHandler);
 		}
 
-		override public final function onRemove():void{
+		override public function onRemove():void{
 			this.removeContextListener(EditorEvent.PROJECT_OPEN, this.editorHandler);
 			this.removeContextListener(EditorEvent.PROJECT_CLOSED, this.editorHandler);
 		}

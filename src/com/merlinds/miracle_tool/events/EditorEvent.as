@@ -12,6 +12,10 @@ package com.merlinds.miracle_tool.events {
 
 		public static const PROJECT_OPEN:String = "EditorEvent::PROJECT_OPEN";
 		public static const PROJECT_CLOSED:String = "EditorEvent::PROJECT_CLOSED";
+		//Attaches
+		public static const SOURCE_ATTACHED:String = "EditorEvent::SOURCE_ATTACHED";
+		public static const ANIMATION_ATTACHED:String = "EditorEvent::ANIMATION_ATTACHED";
+		public static const FILE_READ:String = "EditorEvent::FILE_READ";
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function EditorEvent(type:String, body:* = null) {
