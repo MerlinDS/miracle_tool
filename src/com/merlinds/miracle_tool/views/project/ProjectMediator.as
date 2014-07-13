@@ -4,10 +4,15 @@
  * Time: 21:37
  */
 package com.merlinds.miracle_tool.views.project {
+	import com.merlinds.miracle_tool.models.ProjectModel;
+	import com.merlinds.miracle_tool.view.logger.StatusBar;
+
 	import org.robotlegs.mvcs.Mediator;
 
 	public class ProjectMediator extends Mediator {
 
+		[Inject]
+		public var model:ProjectModel;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectMediator() {
@@ -16,6 +21,7 @@ package com.merlinds.miracle_tool.views.project {
 
 		override public function onRegister():void {
 			super.onRegister();
+			StatusBar.log("Project", model.name, "was created");
 		}
 
 		override public function onRemove():void {

@@ -16,6 +16,7 @@ package com.merlinds.miracle_tool.views.project {
 
 
 		override public function onRegister():void {
+			trace("Ok");
 			super.onRegister();
 		}
 

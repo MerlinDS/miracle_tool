@@ -4,6 +4,9 @@
  * Time: 2:09
  */
 package com.merlinds.miracle_tool.views.project {
+	import com.bit101.components.FPSMeter;
+	import com.bit101.components.Window;
+	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.view.interfaces.IResizable;
 
 	import flash.display.BitmapData;
@@ -17,12 +20,14 @@ package com.merlinds.miracle_tool.views.project {
 		private static var Background:Class;
 
 		private var _bg:BitmapData;
+		private var _fps:FPSMeter;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function Workspace(parent:DisplayObjectContainer) {
 			super();
 			_bg = new Background().bitmapData;
 			parent.addChild(this);
+			_fps = new FPSMeter(this);
 		}
 
 		public function setSize(w:Number, h:Number):void {

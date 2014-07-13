@@ -6,6 +6,7 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.warning;
 	import com.merlinds.miracle_tool.view.interfaces.IResizable;
+	import com.merlinds.miracle_tool.view.logger.StatusBar;
 
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -62,7 +63,7 @@ package com.merlinds.miracle_tool.controllers {
 			var n:int = _instances.length;
 			for(var i:int = 0; i < n; i++){
 				var instance:IResizable = _instances[i];
-				instance.setSize(_stage.stageWidth, _stage.stageHeight);
+				instance.setSize(_stage.stageWidth, _stage.stageHeight - StatusBar.height);
 			}
 		}
 		//} endregion EVENTS HANDLERS ==================================================

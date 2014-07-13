@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
+	import com.merlinds.miracle_tool.view.logger.StatusBar;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -19,6 +20,7 @@ package com.merlinds.miracle_tool.controllers {
 
 		override public function execute():void {
 			log(this, "execute");
+			StatusBar.warning("CloseProjectCommand not yet implemented");
 		}
 
 		//} endregion PUBLIC METHODS ===================================================

@@ -10,6 +10,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
+	import com.merlinds.miracle_tool.view.logger.StatusBar;
 	import com.merlinds.miracle_tool.views.AppView;
 	import com.merlinds.miracle_tool.views.project.ProjectView;
 
@@ -40,14 +41,17 @@ package com.merlinds.miracle_tool.controllers {
 			if(this.injector.hasMapping(ProjectModel)){
 				//need to save and remove project
 				//TODO:Check for existing project
+				StatusBar.warning("New project is exist");
 			}else{
 				//parse event
 				if(event.body == null){
 					//open project setting dialog
+					StatusBar.log("Open Project settings");
 					var actionVO:ActionVO = this.appModel.getActionByType(this.event.type);
 					this.dispatch(new DialogEvent(DialogEvent.PROJECT_SETTINGS, actionVO));
 				}else{
 					//create project view and add it to stage
+					StatusBar.log("Create project");
 					var projectName:String = this.event.body.projectName;
 					if(projectName == null || projectName.length == 0){
 						projectName = "Miracle project_" + new Date().time;//create unique name for project
