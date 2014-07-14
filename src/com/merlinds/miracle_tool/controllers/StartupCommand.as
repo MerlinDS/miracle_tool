@@ -19,7 +19,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.views.project.ProjectView;
 	import com.merlinds.miracle_tool.views.project.ToolView;
 	import com.merlinds.miracle_tool.views.project.ToolsMediator;
-	import com.merlinds.miracle_tool.views.widgets.ItemInfo;
+	import com.merlinds.miracle_tool.views.widgets.ItemInfoView;
 	import com.merlinds.miracle_tool.views.widgets.ItemInfoMediator;
 	import com.merlinds.miracle_tool.views.widgets.ProjectInfoView;
 	import com.merlinds.miracle_tool.views.widgets.ProjectInfoMediator;
@@ -85,7 +85,7 @@ package com.merlinds.miracle_tool.controllers {
 			this.mediatorMap.mapView(AlertView, AlertMediator);
 			//widgets
 			this.mediatorMap.mapView(ProjectInfoView, ProjectInfoMediator);
-			this.mediatorMap.mapView(ItemInfo, ItemInfoMediator);
+			this.mediatorMap.mapView(ItemInfoView, ItemInfoMediator);
 			this.mediatorMap.mapView(SheetToolsView, SheetToolsMediator);
 			this.mediatorMap.mapView(PublishTools, PublishToolsMediator);
 		}

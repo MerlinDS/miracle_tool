@@ -125,6 +125,7 @@ package com.merlinds.miracle_tool.views.project {
 		private function mouseHandler(event:MouseEvent):void {
 			if(this.appModel.activeTool == "Pointer"){
 				var target:DisplayObject = event.target as DisplayObject;
+				var selected:ElementVO;
 				var n:int = this.projectModel.sources.length;
 				for(var i:int = 0; i < n; i++){
 					var source:SourceVO = this.projectModel.sources[i];
@@ -132,8 +133,10 @@ package com.merlinds.miracle_tool.views.project {
 					for(var j:int = 0; j < m; j++){
 						var element:ElementVO = source.elements[j];
 						element.selected = element.view == target;
+						if(element.selected)selected = element;
 					}
 				}
+				this.dispatch(new EditorEvent(EditorEvent.SELECT_ITEM, selected));
 			}else if(this.appModel.activeTool == "Hand"){
 				if(event.type == MouseEvent.MOUSE_DOWN)
 				{

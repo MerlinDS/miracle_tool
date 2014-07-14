@@ -10,7 +10,6 @@ package com.merlinds.miracle_tool.models.vo {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
-	import flash.geom.Rectangle;
 
 	public class ElementVO {
 
@@ -18,15 +17,19 @@ package com.merlinds.miracle_tool.models.vo {
 		public var name:String;
 		public var view:DisplayObject;
 		public var bitmapData:BitmapData;
+		public var x:Number;
+		public var y:Number;
 		public var width:Number;
 		public var height:Number;
 		public var uv:Vector.<Number>;
+		public var indexes:Vector.<int>;
 
 		private var _vertexes:Vector.<Number>;
 
 		public function ElementVO(name:String, view:DisplayObject) {
 			this.view = view;
 			this.name = name;
+			this.indexes = new <int>[0, 3, 1, 2, 1, 3];
 			this.view.transform.matrix = CLEAR_MATRIX;
 		}
 

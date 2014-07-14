@@ -89,6 +89,7 @@ package com.merlinds.miracle_tool.views.widgets {
 					source.selected = false;
 				}
 			}
+			this.dispatch(new EditorEvent(EditorEvent.SELECT_ITEM));
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 

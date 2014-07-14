@@ -18,7 +18,6 @@ package com.merlinds.miracle_tool.controllers.placers {
 
 
 		override public function calculateStep(complete:Boolean = false):void {
-			trace("calculateStep");
 			if(!this.complete){
 				//nearest power of 2
 				this.outputSize = Math.pow(2, Math.ceil(
@@ -55,6 +54,8 @@ package com.merlinds.miracle_tool.controllers.placers {
 					rect.right, rect.bottom,
 					rect.left, rect.bottom
 				];
+				element.x = rect.left;
+				element.y = rect.top;
 			}
 
 			return rect != null;

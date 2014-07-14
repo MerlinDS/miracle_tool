@@ -18,6 +18,7 @@ package com.merlinds.miracle_tool.events {
 		public static const FILE_READ:String = "EditorEvent::FILE_READ";
 		//Tools
 		public static const PLACE_ITEMS:String = "EditorEvent::PLACE_ITEMS";
+		public static const SELECT_ITEM:String = "EditorEvent::SELECT_ITEM";
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function EditorEvent(type:String, body:* = null) {
