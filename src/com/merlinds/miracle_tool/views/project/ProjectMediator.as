@@ -4,11 +4,13 @@
  * Time: 21:37
  */
 package com.merlinds.miracle_tool.views.project {
+	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
+	import com.merlinds.miracle_tool.models.vo.SourceVO;
 	import com.merlinds.miracle_tool.utils.dispatchAction;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
@@ -55,6 +57,9 @@ package com.merlinds.miracle_tool.views.project {
 		}
 
 		private function editorHandler(event:EditorEvent):void {
+			log(this, "editorHandler");
+			var source:SourceVO = this.model.inProgress;
+			this.contextView.addChild(source.source);
 			//TODO add sheet view to the project view and execute packer command
 		}
 		//} endregion EVENTS HANDLERS ==================================================

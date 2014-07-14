@@ -67,7 +67,7 @@ package com.merlinds.miracle_tool.controllers {
 					break;
 			}
 			if(method is Function){
-				method.apply(this, [_byteArray, _target.name]);
+				method.apply(this, [_byteArray]);
 			}
 		}
 

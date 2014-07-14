@@ -17,9 +17,12 @@ package com.merlinds.miracle_tool.models {
 
 		private var _name:String;
 		private var _sceneSize:Point;
-		private var _sheetSize:Point;
 
 		private var _sources:Vector.<SourceVO>;
+		private var _inProgress:int;
+
+		private var _boundsOffset:int;
+		private var _outputSize:int;
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -27,24 +30,23 @@ package com.merlinds.miracle_tool.models {
 			_name = name;
 			_sceneSize = sceneSize;
 			_sources = new <SourceVO>[];
-			_sheetSize = new Point();
+			_boundsOffset = 0;
 			super();
 		}
 
 		public function addSource(file:File):void {
-			var find:Boolean;
 			var n:int = _sources.length;
 			for(var i:int = 0; i < n; i++){
 				var source:SourceVO = _sources[i];
-				find = source.file.nativePath == file.nativePath;
-				if(find)break;
+				if(source.file.nativePath == file.nativePath)break;
 			}
-			if(!find){
+			if(i >= n){
 				_sources.push(new SourceVO(file));
 			}else
 			{
 				//TODO update exist source
 			}
+			_inProgress = i;
 
 		}
 		//} endregion PUBLIC METHODS ===================================================
@@ -76,13 +78,24 @@ package com.merlinds.miracle_tool.models {
 		}
 
 		public function get sheetSize():Point {
-			return _sheetSize;
+			return new Point(_outputSize, _outputSize);
 		}
 
-		public function get elements():Vector.<Object> {
-			return null;
+		public function get inProgress():SourceVO{
+			return _inProgress < 0 ? null : _sources[ _inProgress ];
 		}
 
-//} endregion GETTERS/SETTERS ==================================================
+		public function get boundsOffset():int {
+			return _boundsOffset;
+		}
+
+		public function get outputSize():int {
+			return _outputSize;
+		}
+
+		public function set outputSize(value:int):void {
+			_outputSize = value;
+		}
+		//} endregion GETTERS/SETTERS ==================================================
 	}
 }

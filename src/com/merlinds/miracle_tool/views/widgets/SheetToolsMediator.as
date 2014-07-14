@@ -4,6 +4,7 @@
  * Time: 15:57
  */
 package com.merlinds.miracle_tool.views.widgets {
+	import com.merlinds.debug.log;
 	import com.merlinds.debug.warning;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.vo.SheetToolsVO;
@@ -45,6 +46,7 @@ package com.merlinds.miracle_tool.views.widgets {
 		//{region						PRIVATE\PROTECTED METHODS
 
 		override protected function editorHandler(event:EditorEvent):void {
+			log(this, "editorHandler");
 			super.editorHandler(event);
 			var sources:Array = [];
 			var numElements:Vector.<int> = new <int>[];
@@ -62,7 +64,7 @@ package com.merlinds.miracle_tool.views.widgets {
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 		private function selectHandler(event:Event):void {
-			if(this.viewComponent.data > 0 && this.projectModel.elements.length == 0){
+			if(this.viewComponent.data > 0 && this.projectModel.sources.length == 0){
 				var text:String = "Can not attach animation till no sources was attached";
 				warning(this, "selectHandler", text);
 				StatusBar.warning(text);

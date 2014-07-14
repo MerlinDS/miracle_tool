@@ -19,20 +19,14 @@ package com.merlinds.miracle_tool.services {
 
 	public class DecodeService extends Actor {
 
-		private var _output:Object;
-		private var _currentName:String;
-		private var _inProgress:Boolean;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function DecodeService() {
-			_output = {};
 			super();
 		}
 
-		public function decodeSource(bytes:ByteArray, name:String):void{
+		public function decodeSource(bytes:ByteArray):void{
 			log(this, "decodeSource");
-			_output[name] = null;
-			_inProgress = true;
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, this.loaderCompleteHandler);
 			var loaderContext:LoaderContext = new LoaderContext(false);
@@ -40,24 +34,12 @@ package com.merlinds.miracle_tool.services {
 			loader.loadBytes(bytes, loaderContext);
 		}
 
-		public function decodeAnimation(bytes:ByteArray, name:String):void{
+		public function decodeAnimation(bytes:ByteArray):void{
 			log(this, "decodeAnimation");
-			_output[name] = null;
-			_inProgress = true;
 		}
 
-		public function decodeProject(bytes:ByteArray, name:String):void{
+		public function decodeProject(bytes:ByteArray):void{
 			log(this, "decodeProject");
-			_output[name] = null;
-			_inProgress = true;
-		}
-
-		public function clear():void {
-			if(_inProgress == false){
-				_output = null;
-			}else{
-				warning(this, "clear", "Can not clear when service in active stage.");
-			}
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -70,22 +52,12 @@ package com.merlinds.miracle_tool.services {
 		private function loaderCompleteHandler(event:Event):void {
 			var loaderInfo:LoaderInfo = event.target as LoaderInfo;
 			loaderInfo.removeEventListener(event.type, this.loaderCompleteHandler);
-			_output[_currentName] = loaderInfo.content;
-			this.dispatch(new EditorEvent(EditorEvent.SOURCE_ATTACHED));
+			this.dispatch(new EditorEvent(EditorEvent.SOURCE_ATTACHED, loaderInfo.content));
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
-
-		public function get output():Object {
-			return _output;
-		}
-
-		public function inProgress():Boolean {
-			return _inProgress;
-		}
-
 //} endregion GETTERS/SETTERS ==================================================
 	}
 }
