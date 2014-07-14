@@ -40,7 +40,6 @@ package com.merlinds.miracle_tool.controllers {
 			var source:SourceVO = this.projectModel.inProgress;
 			_target = this.event.body;
 			if(_target){
-				source.source = _target;
 				_elements = source.elements;
 				_target = _target.getChildAt(0) as MovieClip;
 				this.getElements();

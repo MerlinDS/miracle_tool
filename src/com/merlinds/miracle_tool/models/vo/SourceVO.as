@@ -10,7 +10,6 @@ package com.merlinds.miracle_tool.models.vo {
 	public class SourceVO {
 
 		private var _file:File;
-		private var _source:DisplayObject;
 		private var _elements:Vector.<ElementVO>;
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -37,14 +36,6 @@ package com.merlinds.miracle_tool.models.vo {
 
 		public function get file():File {
 			return _file;
-		}
-
-		public function get source():DisplayObject {
-			return _source;
-		}
-
-		public function set source(value:DisplayObject):void {
-			_source = value;
 		}
 
 		public function get elements():Vector.<ElementVO> {

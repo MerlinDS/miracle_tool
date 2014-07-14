@@ -7,6 +7,8 @@ package com.merlinds.miracle_tool.views.project {
 	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.views.interfaces.IResizable;
 
+	import flash.display.DisplayObject;
+
 	import flash.display.DisplayObjectContainer;
 
 	public class ProjectView extends Window implements IResizable{
@@ -29,7 +31,12 @@ package com.merlinds.miracle_tool.views.project {
 			super.setSize(w, h);
 		}
 
-		//} endregion PRIVATE\PROTECTED METHODS ========================================
+		override public function addChild(child:DisplayObject):DisplayObject {
+			this.content.removeChildren();
+			return this.content.addChild(child);
+		}
+
+//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS

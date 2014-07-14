@@ -23,6 +23,7 @@ package com.merlinds.miracle_tool.models {
 
 		private var _boundsOffset:int;
 		private var _outputSize:int;
+		private var _zoom:Number = 1;
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -96,6 +97,15 @@ package com.merlinds.miracle_tool.models {
 		public function set outputSize(value:int):void {
 			_outputSize = value;
 		}
-		//} endregion GETTERS/SETTERS ==================================================
+
+		public function get zoom():Number {
+			return _zoom;
+		}
+
+		public function set zoom(value:Number):void {
+			_zoom = value;
+		}
+
+//} endregion GETTERS/SETTERS ==================================================
 	}
 }

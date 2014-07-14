@@ -83,6 +83,13 @@ package com.merlinds.miracle_tool.controllers {
 			}
 		}
 
+		public function get width():Number {
+			return _stage != null ? _stage.stageWidth : 0;
+		}
+
+		public function get height():Number {
+			return _stage != null ? _stage.stageHeight - StatusBar.height : 0;
+		}
 		//} endregion GETTERS/SETTERS ==================================================
 	}
 }

@@ -16,6 +16,8 @@ package com.merlinds.miracle_tool.events {
 		public static const SOURCE_ATTACHED:String = "EditorEvent::SOURCE_ATTACHED";
 		public static const ANIMATION_ATTACHED:String = "EditorEvent::ANIMATION_ATTACHED";
 		public static const FILE_READ:String = "EditorEvent::FILE_READ";
+		//Tools
+		public static const PLACE_ITEMS:String = "EditorEvent::PLACE_ITEMS";
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function EditorEvent(type:String, body:* = null) {

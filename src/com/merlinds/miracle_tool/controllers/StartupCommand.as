@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
+	import com.merlinds.miracle_tool.controllers.placers.PlacerCommand;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
@@ -73,6 +74,7 @@ package com.merlinds.miracle_tool.controllers {
 			//
 			this.commandMap.mapEvent(EditorEvent.FILE_READ, FileDecodeCommand, EditorEvent);
 			this.commandMap.mapEvent(EditorEvent.SOURCE_ATTACHED, SWFSeparatorCommand, EditorEvent);
+			this.commandMap.mapEvent(EditorEvent.PLACE_ITEMS, PlacerCommand, EditorEvent);
 		}
 
 		private function viewsMapping():void {
