@@ -18,7 +18,6 @@ package com.merlinds.miracle_tool.views.project {
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
 	import flash.display.DisplayObject;
-
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -36,7 +35,6 @@ package com.merlinds.miracle_tool.views.project {
 		public var resizeController:ResizeController;
 
 		private var _workspace:Workspace;
-		private var _clickPoint:Point;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectMediator() {
@@ -46,18 +44,21 @@ package com.merlinds.miracle_tool.views.project {
 		override public function onRegister():void {
 			StatusBar.log("Project", projectModel.name, "was created");
 			this.addViewListener(Event.CLOSE, this.closeHandler);
+			this.addViewListener(Event.CHANGE, this.changeHandler);
 			this.addViewListener(MouseEvent.MOUSE_DOWN, this.mouseHandler);
 			this.addViewListener(MouseEvent.MOUSE_UP, this.mouseHandler);
 			this.addContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
 			this.addContextListener(EditorEvent.PLACE_ITEMS, this.editorHandler);
 			this.dispatch(new EditorEvent(EditorEvent.PROJECT_OPEN));
-
 		}
 
 		override public function onRemove():void {
 			this.removeViewListener(Event.CLOSE, this.closeHandler);
+			this.removeViewListener(Event.CHANGE, this.changeHandler);
 			this.removeViewListener(MouseEvent.MOUSE_DOWN, this.mouseHandler);
 			this.removeViewListener(MouseEvent.MOUSE_UP, this.mouseHandler);
+			this.removeContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
+			this.removeContextListener(EditorEvent.PLACE_ITEMS, this.editorHandler);
 			StatusBar.log("Project", projectModel.name, "was closed");
 			this.dispatch(new EditorEvent(EditorEvent.PROJECT_CLOSED));
 		}
@@ -85,16 +86,19 @@ package com.merlinds.miracle_tool.views.project {
 			}
 		}
 
-		private function resizeWorkplace():void {
+		private function resizeWorkplace(centered:Boolean = true):void {
 			var sheetSize:Point = this.projectModel.sheetSize;
-			if(this.resizeController.height - 20 < sheetSize.y){
+			if(this.resizeController.height - 20 < sheetSize.y && centered){
 				this.projectModel.zoom = (this.resizeController.height - 20) / sheetSize.y;
 			}
+			this.viewComponent.zoom = this.projectModel.zoom;
 			_workspace.width = sheetSize.x * this.projectModel.zoom;
 			_workspace.height = sheetSize.y * this.projectModel.zoom;
 			_workspace.scale(this.projectModel.zoom);
-			_workspace.x = this.resizeController.width - _workspace.width >> 1;
-			_workspace.y = this.resizeController.height - _workspace.height >> 1;
+			if(centered){
+				_workspace.x = this.resizeController.width - _workspace.width >> 1;
+				_workspace.y = this.resizeController.height - _workspace.height >> 1;
+			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
@@ -139,6 +143,13 @@ package com.merlinds.miracle_tool.views.project {
 				}
 			}else if(this.appModel.activeTool == "Zoom"){
 				trace("Zoom");
+			}
+		}
+
+		private function changeHandler(event:Event):void {
+			if(this.projectModel.zoom != this.viewComponent.zoom){
+				this.projectModel.zoom = this.viewComponent.zoom;
+				this.resizeWorkplace(false);
 			}
 		}
 		//} endregion EVENTS HANDLERS ==================================================

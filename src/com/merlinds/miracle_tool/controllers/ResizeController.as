@@ -31,7 +31,7 @@ package com.merlinds.miracle_tool.controllers {
 			if(!this.hasInstance(instace)){
 				_instances.push(instace);
 				if(_stage != null){
-					instace.setSize(_stage.stageWidth, _stage.stageHeight);
+					instace.setSize(_stage.stageWidth, _stage.stageHeight - StatusBar.height);
 				}
 			}else{
 				warning(this, "addInstance", "instance already added");
