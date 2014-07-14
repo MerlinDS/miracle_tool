@@ -33,7 +33,6 @@ package com.merlinds.miracle_tool.controllers.placers {
 						break;
 					}
 				}
-				trace(complete);
 			}
 			super.calculateStep(complete);
 		}
@@ -49,7 +48,6 @@ package com.merlinds.miracle_tool.controllers.placers {
 			if(rect != null){
 				element.view.x = rect.x + this.boundsOffset;
 				element.view.y = rect.y + this.boundsOffset;
-				trace(element.view.x, element.view.y);
 				//get uv position
 				element.uv = new <Number>[
 					rect.left, rect.top,

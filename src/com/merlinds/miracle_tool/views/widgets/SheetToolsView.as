@@ -21,7 +21,7 @@ package com.merlinds.miracle_tool.views.widgets {
 		private var _numElements:Label;
 		private var _sourceAttach:PushButton;
 		private var _animationAttach:PushButton;
-		private var _action:int;
+		private var _data:Object;
 
 		private var _vo:SheetToolsVO;
 		//==============================================================================
@@ -51,13 +51,15 @@ package com.merlinds.miracle_tool.views.widgets {
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 		private function buttonHandler(event:MouseEvent):void{
-			_action = event.target == _sourceAttach ? 0 : 1;
-			this.dispatchEvent(new Event(Event.SELECT));
+			_data = event.target == _sourceAttach ? 0 : 1;
+			this.dispatchEvent(new Event(Event.OPEN));
 		}
 
 		private function selectHandler(event:Event):void {
 			var numElements:int = _vo.numElements[ _sources.selectedIndex ];
 			_numElements.text = numElements.toString();
+			_data = _sources.selectedItem;
+			this.dispatchEvent(new Event(Event.SELECT_ALL));
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
@@ -71,7 +73,7 @@ package com.merlinds.miracle_tool.views.widgets {
 				_size.text = _vo.size.toString();
 				_sources.removeAll();
 				while(_vo.sources.length){
-					_sources.addItem(_vo.sources.pop());
+					_sources.addItem(_vo.sources.shift());
 				}
 				if(_sources.items.length == 0){
 					_sources.enabled = false;
@@ -84,9 +86,8 @@ package com.merlinds.miracle_tool.views.widgets {
 		}
 
 		override public function get data():Object {
-			return _action;
+			return _data;
 		}
-
 //} endregion GETTERS/SETTERS ==================================================
 	}
 }

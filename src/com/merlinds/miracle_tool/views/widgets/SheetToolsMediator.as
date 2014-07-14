@@ -9,6 +9,7 @@ package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.vo.SheetToolsVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
+	import com.merlinds.miracle_tool.models.vo.SourceVO;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
@@ -27,7 +28,8 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		override public function onRegister():void {
 			super.onRegister();
-			this.addViewListener(Event.SELECT, this.selectHandler);
+			this.addViewListener(Event.OPEN, this.openHandler);
+			this.addViewListener(Event.SELECT_ALL, this.selectHandler);
 			this.addContextListener(EditorEvent.ANIMATION_ATTACHED, this.editorHandler);
 			this.addContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
 		}
@@ -35,7 +37,8 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		override public function onRemove():void {
 			super.onRemove();
-			this.removeViewListener(Event.SELECT, this.selectHandler);
+			this.removeViewListener(Event.OPEN, this.openHandler);
+			this.removeViewListener(Event.SELECT_ALL, this.selectHandler);
 			this.removeContextListener(EditorEvent.ANIMATION_ATTACHED, this.editorHandler);
 			this.removeContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
 		}
@@ -63,7 +66,7 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
-		private function selectHandler(event:Event):void {
+		private function openHandler(event:Event):void {
 			if(this.viewComponent.data > 0 && this.projectModel.sources.length == 0){
 				var text:String = "Can not attach animation till no sources was attached";
 				warning(this, "selectHandler", text);
@@ -73,6 +76,18 @@ package com.merlinds.miracle_tool.views.widgets {
 					? this.fileSystemService.readSource
 					: this.fileSystemService.readAnimation;
 				method.apply(this);
+			}
+		}
+
+		private function selectHandler(event:Event):void {
+			var n:int = this.projectModel.sources.length;
+			for(var i:int = 0; i < n; i++){
+				var source:SourceVO = this.projectModel.sources[i];
+				if(source.name == this.viewComponent.data){
+					source.selected = true;
+				}else{
+					source.selected = false;
+				}
 			}
 		}
 		//} endregion EVENTS HANDLERS ==================================================

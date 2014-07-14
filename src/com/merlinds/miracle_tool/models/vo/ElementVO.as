@@ -7,7 +7,10 @@ package com.merlinds.miracle_tool.models.vo {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 
 	public class ElementVO {
 
@@ -37,12 +40,33 @@ package com.merlinds.miracle_tool.models.vo {
 				var matrix:Matrix = new Matrix(1, 0, 0, 1, -vertexes[0], -vertexes[1]);
 				this.bitmapData = new BitmapData(this.width, this.height, true, 0x0);
 				bitmapData.draw(this.view, matrix);
-				view = new Bitmap(bitmapData);
+				var selector:Bitmap = new Bitmap(new BitmapData(this.width, this.height, true, 0x3300FF00));
+				selector.visible = false;
+				var view:Sprite = new Sprite();
+				view.addChild(selector);
+				view.addChild(new Bitmap(bitmapData));
+				view.name = "element";
+				this.view = view;
 			}
 		}
 
 		public function toString():String {
 			return "[Element(name = " + name + ", vertex = [" + _vertexes + "], uv =[" + uv +"] )]";
+		}
+
+		public function set selected(value:Boolean):void{
+			if(this.view && (this.view as DisplayObjectContainer).numChildren > 1){
+				var selector:DisplayObject = (this.view as DisplayObjectContainer).getChildAt(0);
+				selector.visible = value;
+			}
+		}
+
+		public function get selected():Boolean {
+			if(this.view && (this.view as DisplayObjectContainer).numChildren > 1){
+				var selector:DisplayObject = (this.view as DisplayObjectContainer).getChildAt(0);
+				return selector.visible;
+			}
+			return false;
 		}
 	}
 }

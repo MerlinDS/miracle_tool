@@ -42,6 +42,13 @@ package com.merlinds.miracle_tool.models.vo {
 			return _elements;
 		}
 
+		public function set selected(value:Boolean):void{
+			var n:int =  _elements.length;
+			for(var i:int = 0; i < n; i++){
+				_elements[i].selected = value;
+			}
+		}
+
 //} endregion GETTERS/SETTERS ==================================================
 	}
 }
