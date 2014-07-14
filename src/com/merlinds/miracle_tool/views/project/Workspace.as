@@ -8,7 +8,9 @@ package com.merlinds.miracle_tool.views.project {
 	import com.merlinds.miracle_tool.views.interfaces.IResizable;
 
 	import flash.display.BitmapData;
+	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 
 	public class Workspace extends Component implements IResizable{
 
@@ -16,16 +18,31 @@ package com.merlinds.miracle_tool.views.project {
 		private static var Background:Class;
 
 		private var _bg:BitmapData;
+		private var _body:DisplayObjectContainer;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function Workspace(parent:DisplayObjectContainer) {
 			_bg = new Background().bitmapData;
+			_body = super .addChild(new Sprite()) as DisplayObjectContainer;
 			parent.addChild(this);
 		}
 
 		override public function setSize(w:Number, h:Number):void {
 			this.x = w - this.width >> 1;
-			this.y = h - this.height >> 1;
+			this.y = h - this.height>> 1;
+		}
+
+		override public function addChild(child:DisplayObject):DisplayObject {
+			return _body.addChild(child);
+		}
+
+		public function clear():void {
+			_body.removeChildren();
+		}
+
+		public function scale(value:Number):void {
+			_body.scaleX = value;
+			_body.scaleY = value;
 		}
 		//} endregion PUBLIC METHODS ===================================================
 

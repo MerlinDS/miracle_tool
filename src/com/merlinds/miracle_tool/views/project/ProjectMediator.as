@@ -62,6 +62,7 @@ package com.merlinds.miracle_tool.views.project {
 				_workspace = new Workspace(this.viewComponent as DisplayObjectContainer);
 				this.resizeController.addInstance(_workspace);
 			}
+			_workspace.clear();
 
 			var element:ElementVO;
 			var source:SourceVO;
@@ -78,10 +79,12 @@ package com.merlinds.miracle_tool.views.project {
 
 		private function resizeWorkplace():void {
 			var sheetSize:Point = this.projectModel.sheetSize;
-			_workspace.width = sheetSize.x;
-			_workspace.height = sheetSize.y;
-			_workspace.scaleX = this.projectModel.zoom;
-			_workspace.scaleY = this.projectModel.zoom;
+			if(this.resizeController.height < sheetSize.y){
+				this.projectModel.zoom = 0.5;
+			}
+			_workspace.width = sheetSize.x * this.projectModel.zoom;
+			_workspace.height = sheetSize.y * this.projectModel.zoom;
+			_workspace.scale(this.projectModel.zoom);
 			_workspace.x = this.resizeController.width - _workspace.width >> 1;
 			_workspace.y = this.resizeController.height - _workspace.height >> 1;
 		}
