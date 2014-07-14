@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.models {
 	import com.merlinds.miracle_tool.models.vo.ProjectInfoVO;
+	import com.merlinds.miracle_tool.models.vo.SourceVO;
 
 	import flash.filesystem.File;
 
@@ -14,23 +15,37 @@ package com.merlinds.miracle_tool.models {
 
 	public class ProjectModel extends Actor {
 
-		public static const EMPTY:String = 'Empty';
-
 		private var _name:String;
 		private var _sceneSize:Point;
-		private var _sources:Vector.<File>;
 		private var _sheetSize:Point;
-		private var _elements:Vector.<Object>;
+
+		private var _sources:Vector.<SourceVO>;
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectModel(name:String, sceneSize:Point) {
 			_name = name;
 			_sceneSize = sceneSize;
-			_sources = new <File>[];
-			_elements = new <Object>[];
+			_sources = new <SourceVO>[];
 			_sheetSize = new Point();
 			super();
+		}
+
+		public function addSource(file:File):void {
+			var find:Boolean;
+			var n:int = _sources.length;
+			for(var i:int = 0; i < n; i++){
+				var source:SourceVO = _sources[i];
+				find = source.file.nativePath == file.nativePath;
+				if(find)break;
+			}
+			if(!find){
+				_sources.push(new SourceVO(file));
+			}else
+			{
+				//TODO update exist source
+			}
+
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -56,7 +71,7 @@ package com.merlinds.miracle_tool.models {
 			return new ProjectInfoVO(_name, _sceneSize.toString());
 		}
 
-		public function get sources():Vector.<File> {
+		public function get sources():Vector.<SourceVO> {
 			return _sources;
 		}
 
@@ -65,7 +80,7 @@ package com.merlinds.miracle_tool.models {
 		}
 
 		public function get elements():Vector.<Object> {
-			return _elements;
+			return null;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

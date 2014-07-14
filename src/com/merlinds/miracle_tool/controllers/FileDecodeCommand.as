@@ -74,8 +74,7 @@ package com.merlinds.miracle_tool.controllers {
 		private function saveToProject():void{
 			if(_target != null){
 				log(this, "saveToProject");
-				//TODO: If this file already exist in project, refresh it
-				this.porjectModel.sources.push(_target);
+				this.porjectModel.addSource(_target);
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================

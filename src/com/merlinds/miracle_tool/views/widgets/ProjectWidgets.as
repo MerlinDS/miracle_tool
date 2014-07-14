@@ -4,12 +4,8 @@
  * Time: 14:56
  */
 package com.merlinds.miracle_tool.views.widgets {
-	import com.bit101.components.Component;
 	import com.bit101.components.VBox;
-	import com.bit101.components.Window;
 	import com.merlinds.miracle_tool.views.interfaces.IResizable;
-
-	import flash.display.DisplayObject;
 
 	import flash.display.DisplayObjectContainer;
 

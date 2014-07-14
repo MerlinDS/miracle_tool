@@ -22,6 +22,8 @@ package com.merlinds.miracle_tool.views.widgets {
 		private var _sourceAttach:PushButton;
 		private var _animationAttach:PushButton;
 		private var _action:int;
+
+		private var _vo:SheetToolsVO;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function SheetToolsView(parent:DisplayObjectContainer = null) {
@@ -32,9 +34,10 @@ package com.merlinds.miracle_tool.views.widgets {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		override protected function initialize():void{
+			_sources = new List(this, 0, 0);
+			_sources.addEventListener(Event.SELECT, this.selectHandler);
 			_sourceAttach = new PushButton(this, 0, 0, "Attach new texture", this.buttonHandler);
 			_animationAttach = new PushButton(this, 0, 0, "Attach new animation", this.buttonHandler);
-			_sources = new List(this, 0, 0);
 			var line:HBox = new HBox(this);
 			new Label(line, 0, 0, "Sheet size =");
 			_size = new Label(line, 0, 0, "2048x2048");
@@ -51,6 +54,11 @@ package com.merlinds.miracle_tool.views.widgets {
 			_action = event.target == _sourceAttach ? 0 : 1;
 			this.dispatchEvent(new Event(Event.SELECT));
 		}
+
+		private function selectHandler(event:Event):void {
+			var numElements:int = _vo.numElements[ _sources.selectedIndex ];
+			_numElements.text = numElements.toString();
+		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================
@@ -58,12 +66,12 @@ package com.merlinds.miracle_tool.views.widgets {
 		override public function set data(value:Object):void {
 			this.enabled = value != null;
 			if(this.enabled){
-				var vo:SheetToolsVO = value as SheetToolsVO;
-				_numElements.text = vo.numElements.toString();
-				_size.text = vo.size.toString();
+				_vo = value as SheetToolsVO;
+				_numElements.text = "0";
+				_size.text = _vo.size.toString();
 				_sources.removeAll();
-				while(vo.sources.length){
-					_sources.addItem(vo.sources.pop());
+				while(_vo.sources.length){
+					_sources.addItem(_vo.sources.pop());
 				}
 				if(_sources.items.length == 0){
 					_sources.enabled = false;

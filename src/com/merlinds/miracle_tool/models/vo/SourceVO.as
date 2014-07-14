@@ -1,23 +1,22 @@
 /**
  * User: MerlinDS
- * Date: 13.07.2014
- * Time: 16:42
+ * Date: 14.07.2014
+ * Time: 19:11
  */
 package com.merlinds.miracle_tool.models.vo {
+	import flash.display.DisplayObject;
 	import flash.filesystem.File;
-	import flash.geom.Point;
 
-	public class SheetToolsVO {
+	public class SourceVO {
 
-		public var sources:Array;
-		public var numElements:Vector.<int>;
-		public var size:Point;
+		private var _file:File;
+		private var _source:DisplayObject;
+		private var _elements:Vector.<ElementVO>;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function SheetToolsVO(sources:Array, numElements:Vector.<int>, size:Point) {
-			this.sources = sources;
-			this.numElements = numElements;
-			this.size = size.clone();
+		public function SourceVO(file:File) {
+			_file = file;
+			_elements = new <ElementVO>[];
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -31,6 +30,27 @@ package com.merlinds.miracle_tool.models.vo {
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
-		//} endregion GETTERS/SETTERS ==================================================
+
+		public function get name():String {
+			return _file != null ? _file.name : null;
+		}
+
+		public function get file():File {
+			return _file;
+		}
+
+		public function get source():DisplayObject {
+			return _source;
+		}
+
+		public function set source(value:DisplayObject):void {
+			_source = value;
+		}
+
+		public function get elements():Vector.<ElementVO> {
+			return _elements;
+		}
+
+//} endregion GETTERS/SETTERS ==================================================
 	}
 }

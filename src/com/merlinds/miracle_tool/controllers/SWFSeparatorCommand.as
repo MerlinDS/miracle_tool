@@ -1,24 +1,33 @@
 /**
  * User: MerlinDS
- * Date: 13.07.2014
- * Time: 16:42
+ * Date: 14.07.2014
+ * Time: 19:06
  */
-package com.merlinds.miracle_tool.models.vo {
-	import flash.filesystem.File;
-	import flash.geom.Point;
+package com.merlinds.miracle_tool.controllers {
+	import com.merlinds.debug.log;
+	import com.merlinds.miracle_tool.models.ProjectModel;
+	import com.merlinds.miracle_tool.services.DecodeService;
 
-	public class SheetToolsVO {
+	import org.robotlegs.mvcs.Command;
 
-		public var sources:Array;
-		public var numElements:Vector.<int>;
-		public var size:Point;
+	public class SWFSeparatorCommand extends Command {
+
+		[Inject]
+		public var projectModel:ProjectModel;
+		[Inject]
+		public var decodeService:DecodeService;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function SheetToolsVO(sources:Array, numElements:Vector.<int>, size:Point) {
-			this.sources = sources;
-			this.numElements = numElements;
-			this.size = size.clone();
+		public function SWFSeparatorCommand() {
+			super();
 		}
+
+		override public function execute():void {
+			log(this, "execute");
+			var output:Object = this.decodeService.output;
+			this.decodeService.clear();
+		}
+
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================

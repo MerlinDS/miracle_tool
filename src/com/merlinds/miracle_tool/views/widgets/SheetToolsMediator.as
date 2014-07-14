@@ -7,12 +7,11 @@ package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.debug.warning;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.vo.SheetToolsVO;
+	import com.merlinds.miracle_tool.models.vo.SourceVO;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
 	import flash.events.Event;
-
-	import flash.events.MouseEvent;
 
 	public class SheetToolsMediator extends WidgetMediator {
 
@@ -47,12 +46,15 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		override protected function editorHandler(event:EditorEvent):void {
 			super.editorHandler(event);
-			this.data = new SheetToolsVO(
-					this.projectModel.sources,
-					this.projectModel.elements.length,
-					this.projectModel.sheetSize
-			);
-
+			var sources:Array = [];
+			var numElements:Vector.<int> = new <int>[];
+			var n:int = this.projectModel.sources.length;
+			for(var i:int = 0; i < n; i++){
+				var source:SourceVO = this.projectModel.sources[i];
+				sources.push(source.name);
+				numElements.push(source.elements.length);
+			}
+			this.data = new SheetToolsVO(sources, numElements, this.projectModel.sheetSize);
 		}
 
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
