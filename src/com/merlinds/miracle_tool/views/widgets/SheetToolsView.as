@@ -29,6 +29,10 @@ package com.merlinds.miracle_tool.views.widgets {
 		public function SheetToolsView(parent:DisplayObjectContainer = null) {
 			super(parent, 0, 0, "Sheet Tools");
 		}
+
+		public function cancel():void {
+			_animationAttach.enabled = false;
+		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
@@ -59,6 +63,7 @@ package com.merlinds.miracle_tool.views.widgets {
 			var numElements:int = _vo.numElements[ _sources.selectedIndex ];
 			_numElements.text = numElements.toString();
 			_data = _sources.selectedItem;
+			_animationAttach.enabled = true;
 			this.dispatchEvent(new Event(Event.SELECT_ALL));
 		}
 		//} endregion EVENTS HANDLERS ==================================================
@@ -80,7 +85,6 @@ package com.merlinds.miracle_tool.views.widgets {
 					_animationAttach.enabled = false;
 				}else{
 					_sources.enabled = true;
-					_animationAttach.enabled = true;
 				}
 			}
 		}

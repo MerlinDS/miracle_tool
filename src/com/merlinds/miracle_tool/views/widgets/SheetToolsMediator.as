@@ -15,6 +15,8 @@ package com.merlinds.miracle_tool.views.widgets {
 
 	import flash.events.Event;
 
+	import flash.events.Event;
+
 	public class SheetToolsMediator extends WidgetMediator {
 
 		[Inject]
@@ -30,6 +32,7 @@ package com.merlinds.miracle_tool.views.widgets {
 			super.onRegister();
 			this.addViewListener(Event.OPEN, this.openHandler);
 			this.addViewListener(Event.SELECT_ALL, this.selectHandler);
+			this.addContextListener(EditorEvent.SELECT_ITEM, this.editorHandler);
 			this.addContextListener(EditorEvent.ANIMATION_ATTACHED, this.editorHandler);
 			this.addContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
 		}
@@ -39,6 +42,7 @@ package com.merlinds.miracle_tool.views.widgets {
 			super.onRemove();
 			this.removeViewListener(Event.OPEN, this.openHandler);
 			this.removeViewListener(Event.SELECT_ALL, this.selectHandler);
+			this.removeContextListener(EditorEvent.SELECT_ITEM, this.editorHandler);
 			this.removeContextListener(EditorEvent.ANIMATION_ATTACHED, this.editorHandler);
 			this.removeContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
 		}
@@ -51,15 +55,19 @@ package com.merlinds.miracle_tool.views.widgets {
 		override protected function editorHandler(event:EditorEvent):void {
 			log(this, "editorHandler");
 			super.editorHandler(event);
-			var sources:Array = [];
-			var numElements:Vector.<int> = new <int>[];
-			var n:int = this.projectModel.sources.length;
-			for(var i:int = 0; i < n; i++){
-				var source:SourceVO = this.projectModel.sources[i];
-				sources.push(source.name);
-				numElements.push(source.elements.length);
+			if(event.type == EditorEvent.SELECT_ITEM){
+//				this.viewComponent.cancel();
+			}else{
+				var sources:Array = [];
+				var numElements:Vector.<int> = new <int>[];
+				var n:int = this.projectModel.sources.length;
+				for(var i:int = 0; i < n; i++){
+					var source:SourceVO = this.projectModel.sources[i];
+					sources.push(source.name);
+					numElements.push(source.elements.length);
+				}
+				this.data = new SheetToolsVO(sources, numElements, this.projectModel.sheetSize);
 			}
-			this.data = new SheetToolsVO(sources, numElements, this.projectModel.sheetSize);
 		}
 
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
@@ -83,11 +91,7 @@ package com.merlinds.miracle_tool.views.widgets {
 			var n:int = this.projectModel.sources.length;
 			for(var i:int = 0; i < n; i++){
 				var source:SourceVO = this.projectModel.sources[i];
-				if(source.name == this.viewComponent.data){
-					source.selected = true;
-				}else{
-					source.selected = false;
-				}
+				source.selected = source.name == this.viewComponent.data;
 			}
 			this.dispatch(new EditorEvent(EditorEvent.SELECT_ITEM));
 		}

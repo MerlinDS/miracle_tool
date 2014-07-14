@@ -24,6 +24,7 @@ package com.merlinds.miracle_tool.models {
 		private var _boundsOffset:int;
 		private var _outputSize:int;
 		private var _zoom:Number = 1;
+		private var _sheetSize:Point;
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -32,6 +33,7 @@ package com.merlinds.miracle_tool.models {
 			_sceneSize = sceneSize;
 			_sources = new <SourceVO>[];
 			_boundsOffset = 0;
+			_sheetSize = new Point();
 			super();
 		}
 
@@ -79,7 +81,7 @@ package com.merlinds.miracle_tool.models {
 		}
 
 		public function get sheetSize():Point {
-			return new Point(_outputSize, _outputSize);
+			return _sheetSize;
 		}
 
 		public function get inProgress():SourceVO{
@@ -96,6 +98,8 @@ package com.merlinds.miracle_tool.models {
 
 		public function set outputSize(value:int):void {
 			_outputSize = value;
+			_sheetSize.x = value;
+			_sheetSize.y = value;
 		}
 
 		public function get zoom():Number {

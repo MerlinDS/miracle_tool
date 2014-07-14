@@ -17,7 +17,7 @@ package com.merlinds.miracle_tool.models.vo {
 		public function SheetToolsVO(sources:Array, numElements:Vector.<int>, size:Point) {
 			this.sources = sources;
 			this.numElements = numElements;
-			this.size = size.clone();
+			this.size = size;
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
