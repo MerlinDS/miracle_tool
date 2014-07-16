@@ -1,23 +1,17 @@
 /**
  * User: MerlinDS
- * Date: 14.07.2014
- * Time: 19:11
+ * Date: 16.07.2014
+ * Time: 19:36
  */
 package com.merlinds.miracle_tool.models.vo {
-	import flash.display.DisplayObject;
 	import flash.filesystem.File;
 
-	public class SourceVO {
+	public class AnimetionVO {
 
 		private var _file:File;
-		private var _animations:Vector.<AnimetionVO>;
-		private var _elements:Vector.<ElementVO>;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function SourceVO(file:File) {
-			_file = file;
-			_elements = new <ElementVO>[];
-			_animations = new <AnimetionVO>[];
+		public function AnimetionVO(file:File) {
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -32,31 +26,8 @@ package com.merlinds.miracle_tool.models.vo {
 		//==============================================================================
 		//{region							GETTERS/SETTERS
 
-		public function get name():String {
-			return _file != null ? _file.name : null;
-		}
-
 		public function get file():File {
 			return _file.clone();
-		}
-
-		public function get elements():Vector.<ElementVO> {
-			return _elements;
-		}
-
-		public function get animations():Vector.<AnimetionVO> {
-			return _animations;
-		}
-
-		public function set animations(value:Vector.<AnimetionVO>):void {
-			_animations = value;
-		}
-
-		public function set selected(value:Boolean):void{
-			var n:int =  _elements.length;
-			for(var i:int = 0; i < n; i++){
-				_elements[i].selected = value;
-			}
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

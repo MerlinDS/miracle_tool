@@ -20,6 +20,7 @@ package com.merlinds.miracle_tool.services {
 
 	public class FileSystemService extends Actor {
 
+		private static const PROJECT_EXTENSION:String = ".mtp"; /** Miracle tools project **/
 		[Inject]
 		public var appModel:AppModel;
 
@@ -54,7 +55,20 @@ package com.merlinds.miracle_tool.services {
 
 		}
 
-		public function writeProject():void{
+		public function writeProject(name:String, data:Object):void{
+			log(this, "writeProject", name);
+			_output = new ByteArray();
+			//add signature
+			_output.position = 0;
+			trace(PROJECT_EXTENSION.substr(1).toUpperCase());
+			_output.writeUTFBytes(PROJECT_EXTENSION.substr(1).toUpperCase());
+			_output.position = 4;
+			_output.writeObject(data);
+			name = name + PROJECT_EXTENSION;
+
+			_target = this.appModel.lastFileDirection.resolvePath(name);
+			_target.addEventListener(Event.SELECT, this.selectProjectForSaveHandler);
+			_target.browseForSave("Save project");
 
 		}
 
@@ -90,8 +104,8 @@ package com.merlinds.miracle_tool.services {
 		//{region							EVENTS HANDLERS
 		private function selectSourceHandler(event:Event):void {
 			_target.removeEventListener(event.type, this.selectSourceHandler);
-			log(this, "selectSourceHandler", _target.name);
 			this.appModel.lastFileDirection = _target.parent;
+			log(this, "selectSourceHandler", _target.name);
 			//start to download
 			var fileStream:FileStream = new FileStream();
 			fileStream.addEventListener(Event.COMPLETE, this.completeReadHandler);
@@ -106,6 +120,19 @@ package com.merlinds.miracle_tool.services {
 			fileStream.readBytes(_output);
 			fileStream.close();
 			this.dispatch(new EditorEvent(EditorEvent.FILE_READ));
+		}
+
+		private function selectProjectForSaveHandler(event:Event):void {
+			_target.removeEventListener(event.type, this.selectSourceHandler);
+			this.appModel.lastFileDirection = _target.parent;
+			log(this, "selectProjectForSaveHandler", _target.name);
+			var fileStream:FileStream = new FileStream();
+			fileStream.open(_target, FileMode.WRITE);
+			fileStream.writeBytes(_output);
+			fileStream.close();
+			_output.clear();
+			_output = null;
+			log(this, "selectProjectForSaveHandler", "Project Saved");
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
