@@ -11,6 +11,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
 	import com.merlinds.miracle_tool.models.vo.DialogVO;
 	import com.merlinds.miracle_tool.views.alerts.dialogs.ProjectSettingDialog;
+	import com.merlinds.miracle_tool.views.alerts.dialogs.SaveProjectDialog;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -45,6 +46,7 @@ package com.merlinds.miracle_tool.controllers {
 
 		private function initializeDialogs():void {
 			this.mapDialog(ProjectSettingDialog, DialogEvent.PROJECT_SETTINGS);
+			this.mapDialog(SaveProjectDialog, DialogEvent.SAVE_PROJECT);
 		}
 		//utilities
 		[Inline]

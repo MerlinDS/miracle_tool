@@ -12,6 +12,7 @@ package com.merlinds.miracle_tool.events {
 
 	public class DialogEvent extends ContextEvent {
 
+		public static const SAVE_PROJECT:String = "AlertEvent::SAVE_PROJECT";
 		public static const PROJECT_SETTINGS:String = "AlertEvent::PROJECT_SETTINGS";
 
 		private var _action:ActionVO;

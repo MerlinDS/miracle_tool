@@ -8,6 +8,8 @@ package com.merlinds.miracle_tool.views.components.containers {
 	import com.bit101.components.InputText;
 	import com.bit101.components.Label;
 	import com.bit101.components.PushButton;
+	import com.bit101.components.Text;
+	import com.bit101.components.Text;
 	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
 
@@ -18,6 +20,7 @@ package com.merlinds.miracle_tool.views.components.containers {
 
 		public static const ACCEPT:String = "accept";
 		public static const DENY:String = "deny";
+		public static const CANCEL:String = "cancel";
 
 		private var _modal:Boolean;
 		private var _closeCallback:Function;
@@ -59,6 +62,11 @@ package com.merlinds.miracle_tool.views.components.containers {
 			new Label(field, 0, 0, label);
 			_body.addChild(field);
 			_controls[name] = input;
+		}
+
+		protected final function addText(text:String = ""):void{
+			var field:Text = new Text(_body, 0, 0, text);
+			field.editable = false;
 		}
 
 		protected final function addButton(label:String, closeReason:String = ACCEPT):void{

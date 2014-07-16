@@ -32,10 +32,12 @@ package com.merlinds.miracle_tool.views.alerts {
 		override public function onRegister():void {
 			_queue = new QueueFIFO();
 			this.addContextListener(DialogEvent.PROJECT_SETTINGS, this.dialogEventHandler);
+			this.addContextListener(DialogEvent.SAVE_PROJECT, this.dialogEventHandler);
 		}
 
 		override public function onRemove():void {
 			this.removeContextListener(DialogEvent.PROJECT_SETTINGS, this.dialogEventHandler);
+			this.removeContextListener(DialogEvent.SAVE_PROJECT, this.dialogEventHandler);
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
