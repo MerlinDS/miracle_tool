@@ -7,6 +7,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.debug.warning;
 	import com.merlinds.miracle_tool.models.ProjectModel;
+	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.views.interfaces.IResizable;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
 	import com.merlinds.miracle_tool.views.AppView;
@@ -20,6 +21,8 @@ package com.merlinds.miracle_tool.controllers {
 
 		[Inject]
 		public var appView:AppView;
+		[Inject]
+		public var actionService:ActionService;
 		[Inject]
 		public var resizeController:ResizeController;
 		//==============================================================================
@@ -47,7 +50,7 @@ package com.merlinds.miracle_tool.controllers {
 				this.injector.unmap(ProjectModel);
 				var instance:IResizable = this.appView.removeProject() as IResizable;
 				this.resizeController.removeInstance(instance);
-
+				this.actionService.done();
 			}else{
 				warning(this, "execute", "Trying to close empty project");
 				StatusBar.warning("Trying to close empty project");

@@ -9,6 +9,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
+	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.services.DecodeService;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.views.AppMenuMediator;
@@ -62,6 +63,7 @@ package com.merlinds.miracle_tool.controllers {
 			this.injector.mapSingleton(AppModel);
 			this.injector.mapSingleton(FileSystemService);
 			this.injector.mapSingleton(DecodeService);
+			this.injector.mapSingleton(ActionService);
 		}
 
 		private function controllersMapping():void {

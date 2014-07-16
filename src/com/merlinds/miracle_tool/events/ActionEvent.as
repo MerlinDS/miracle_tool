@@ -21,7 +21,7 @@ package com.merlinds.miracle_tool.events {
 		/** Open application help **/
 		public static const OPEN_HELP:String = "ActionEvent::OPEN_HELP";
 		/** Open application settings **/
-		public static const OPEN_SETTINGS:String = "ActionEvent::OPNE_SETTINGS";
+		public static const OPEN_SETTINGS:String = "ActionEvent::OPEN_SETTINGS";
 
 		//==============================================================================
 		//{region							PUBLIC METHODS

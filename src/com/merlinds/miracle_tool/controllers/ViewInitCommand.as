@@ -6,7 +6,7 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.bit101.components.Style;
 	import com.merlinds.debug.log;
-	import com.merlinds.miracle_tool.models.AppModel;
+	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.views.AppMenuView;
 	import com.merlinds.miracle_tool.views.AppView;
 	import com.merlinds.miracle_tool.views.alerts.AlertView;
@@ -18,7 +18,7 @@ package com.merlinds.miracle_tool.controllers {
 	public class ViewInitCommand extends Command {
 
 		[Inject]
-		public var model:AppModel;
+		public var actionService:ActionService;
 		[Inject]
 		public var resizeController:ResizeController;
 		//==============================================================================
@@ -35,7 +35,7 @@ package com.merlinds.miracle_tool.controllers {
 			var appView:AppView = new AppView(this.contextView);
 			this.resizeController.addInstance( appView );
 			this.resizeController.addInstance( new AlertView( this.contextView ) );//upper than all other views
-			this.resizeController.addInstance( new AppMenuView( appView , model.menuActions) );
+			this.resizeController.addInstance( new AppMenuView( appView , this.actionService.menuActions) );
 			this.resizeController.addInstance( new ToolView( this.contextView ) );
 			this.resizeController.addInstance( new StatusBar( this.contextView ) );
 			//add stage to resize controller for it's initialization

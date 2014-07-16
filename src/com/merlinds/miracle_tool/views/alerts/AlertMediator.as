@@ -8,6 +8,7 @@ package com.merlinds.miracle_tool.views.alerts {
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.vo.DialogVO;
+	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.dispatchAction;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
 	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
@@ -19,6 +20,8 @@ package com.merlinds.miracle_tool.views.alerts {
 
 		[Inject]
 		public var appModel:AppModel;
+		[Inject]
+		public var actionService:ActionService;
 
 		private var _queue:QueueFIFO;
 		private var _currentDialog:DialogWindow;
@@ -65,10 +68,7 @@ package com.merlinds.miracle_tool.views.alerts {
 
 		private function closeHandler(closeReason:String, data:* = null):void {
 			StatusBar.log(_currentDialog.title, "was closed with", closeReason);
-			if(closeReason == DialogWindow.ACCEPT){
-				//Only if user accept dialog properties
-				dispatchAction(_currentEvent.action, this.dispatch, data);
-			}
+			this.actionService.startActions(closeReason, data);
 			this.viewComponent.removeChild(_currentDialog);
 			_currentDialog = null;
 			_currentEvent = null;

@@ -23,6 +23,8 @@ package com.merlinds.miracle_tool.services {
 		private static const PROJECT_EXTENSION:String = ".mtp"; /** Miracle tools project **/
 		[Inject]
 		public var appModel:AppModel;
+		[Inject]
+		public var actionService:ActionService;
 
 		private var _target:File;
 		private var _output:ByteArray;
@@ -133,6 +135,7 @@ package com.merlinds.miracle_tool.services {
 			_output.clear();
 			_output = null;
 			log(this, "selectProjectForSaveHandler", "Project Saved");
+			this.actionService.done();
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 

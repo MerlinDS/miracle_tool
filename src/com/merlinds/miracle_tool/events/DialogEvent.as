@@ -4,8 +4,6 @@
  * Time: 23:05
  */
 package com.merlinds.miracle_tool.events {
-	import com.merlinds.miracle_tool.models.vo.ActionVO;
-
 	import flash.events.Event;
 
 	import org.robotlegs.base.ContextEvent;
@@ -14,21 +12,18 @@ package com.merlinds.miracle_tool.events {
 
 		public static const SAVE_PROJECT:String = "AlertEvent::SAVE_PROJECT";
 		public static const PROJECT_SETTINGS:String = "AlertEvent::PROJECT_SETTINGS";
-
-		private var _action:ActionVO;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function DialogEvent(type:String, action:ActionVO, body:* = null) {
+		public function DialogEvent(type:String, body:* = null) {
 			super(type, body);
-			_action = action;
 		}
 
 		override public function clone():Event {
-			return new DialogEvent(type, action, body);
+			return new DialogEvent(type, body);
 		}
 
 		override public function toString():String {
-			return this.formatToString("DialogEvent", "type", "action", "body");
+			return this.formatToString("DialogEvent", "type", "body");
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -42,10 +37,6 @@ package com.merlinds.miracle_tool.events {
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
-
-		public function get action():ActionVO {
-			return _action;
-		}
 
 //} endregion GETTERS/SETTERS ==================================================
 	}

@@ -23,7 +23,7 @@ package com.merlinds.miracle_tool.views.alerts.dialogs {
 			this.addText("Current project will be closed. Do you want to save it?");
 			this.addButton("Yes", DialogWindow.ACCEPT);
 			this.addButton("No", DialogWindow.DENY);
-			this.addButton("Cancel", DialogWindow.ACCEPT);
+			this.addButton("Cancel", DialogWindow.CANCEL);
 
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================

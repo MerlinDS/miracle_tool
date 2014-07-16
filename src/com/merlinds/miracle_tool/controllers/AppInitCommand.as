@@ -10,6 +10,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
 	import com.merlinds.miracle_tool.models.vo.DialogVO;
+	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.views.alerts.dialogs.ProjectSettingDialog;
 	import com.merlinds.miracle_tool.views.alerts.dialogs.SaveProjectDialog;
 
@@ -18,7 +19,9 @@ package com.merlinds.miracle_tool.controllers {
 	public class AppInitCommand extends Command {
 
 		[Inject]
-		public var _model:AppModel;
+		public var appModel:AppModel;
+		[Inject]
+		public var actionService:ActionService;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function AppInitCommand() {
@@ -52,12 +55,12 @@ package com.merlinds.miracle_tool.controllers {
 		[Inline]
 		private function mapAction(command:Class, event:Class, type:String, title:String):void {
 			this.commandMap.mapEvent(type, command, event);
-			_model.menuActions.push(new ActionVO(title, event, type));
+			this.actionService.menuActions.push(new ActionVO(title, event, type));
 		}
 
 		[Inline]
 		private function mapDialog(clazz:Class, type:String):void {
-			_model.dialogs.push( new DialogVO(clazz, type ));
+			this.appModel.dialogs.push( new DialogVO(clazz, type ));
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 

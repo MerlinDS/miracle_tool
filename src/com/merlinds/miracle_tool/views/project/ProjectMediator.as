@@ -8,12 +8,14 @@ package com.merlinds.miracle_tool.views.project {
 	import com.merlinds.miracle_tool.controllers.ResizeController;
 	import com.merlinds.miracle_tool.controllers.placers.PlacerAlgorithmList;
 	import com.merlinds.miracle_tool.events.ActionEvent;
+	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
 	import com.merlinds.miracle_tool.models.vo.ElementVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
+	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.dispatchAction;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
 
@@ -31,6 +33,8 @@ package com.merlinds.miracle_tool.views.project {
 		public var appModel:AppModel;
 		[Inject]
 		public var projectModel:ProjectModel;
+		[Inject]
+		public var actionService:ActionService;
 		[Inject]
 		public var resizeController:ResizeController;
 
@@ -105,8 +109,9 @@ package com.merlinds.miracle_tool.views.project {
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 		private function closeHandler(event:Event):void {
-			var vo:ActionVO = this.appModel.getActionByType(ActionEvent.CLOSE_PROJECT);
-			dispatchAction(vo, this.dispatch);
+			this.actionService.addAcceptActions(new <String>[ActionEvent.SAVE_PROJECT, ActionEvent.CLOSE_PROJECT]);
+			this.actionService.addDenyActions(new <String>[ActionEvent.CLOSE_PROJECT]);
+			this.dispatch(new DialogEvent(DialogEvent.SAVE_PROJECT));
 		}
 
 		private function editorHandler(event:EditorEvent):void {

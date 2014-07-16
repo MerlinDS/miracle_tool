@@ -6,16 +6,14 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
+	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
-	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.miracle_tool.models.ProjectModel;
-	import com.merlinds.miracle_tool.models.vo.ActionVO;
-	import com.merlinds.miracle_tool.views.logger.StatusBar;
+	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.views.AppView;
+	import com.merlinds.miracle_tool.views.logger.StatusBar;
 	import com.merlinds.miracle_tool.views.project.ProjectView;
 	import com.merlinds.miracle_tool.views.widgets.ProjectWidgets;
-
-	import flash.events.Event;
 
 	import flash.geom.Point;
 
@@ -24,11 +22,11 @@ package com.merlinds.miracle_tool.controllers {
 	public class NewProjectCommand extends Command {
 
 		[Inject]
-		public var appModel:AppModel;
-		[Inject]
 		public var appView:AppView;
 		[Inject]
 		public var resizeController:ResizeController;
+		[Inject]
+		public var actionService:ActionService;
 		[Inject]
 		public var event:ActionEvent;
 		//==============================================================================
@@ -40,15 +38,16 @@ package com.merlinds.miracle_tool.controllers {
 		override public function execute():void {
 			log(this, "execute", event);
 			if(this.injector.hasMapping(ProjectModel)){
-				//need to save and remove project
-				//TODO:Check for existing project
-				StatusBar.warning("New project is exist");
+				this.actionService.addAcceptActions(new <String>[ActionEvent.SAVE_PROJECT,
+					ActionEvent.CLOSE_PROJECT, this.event.type]);
+				this.actionService.addDenyActions(new <String>[ActionEvent.CLOSE_PROJECT, this.event.type]);
+				this.dispatch(new DialogEvent(DialogEvent.SAVE_PROJECT));
 			}else{
 				//parse event
 				if(event.body == null){
 					//open project setting dialog
-					var actionVO:ActionVO = this.appModel.getActionByType(this.event.type);
-					this.dispatch(new DialogEvent(DialogEvent.PROJECT_SETTINGS, actionVO));
+					this.actionService.addAcceptActions(new <String>[this.event.type]);
+					this.dispatch(new DialogEvent(DialogEvent.PROJECT_SETTINGS));
 				}else{
 					//create project view and add it to stage
 					StatusBar.log("Create project");
@@ -68,6 +67,7 @@ package com.merlinds.miracle_tool.controllers {
 					//create view for project
 					var view:ProjectView = new ProjectView(model.name, this.appView);
 					this.resizeController.addInstance(view);
+					this.actionService.done();
 				}
 			}
 		}

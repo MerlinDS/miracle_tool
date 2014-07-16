@@ -19,13 +19,11 @@ package com.merlinds.miracle_tool.models {
 		private var _so:SharedObject;
 		private var _lastFileDirection:File;
 		///
-		private var _menuActions:Vector.<ActionVO>;
 		private var _dialogs:Vector.<DialogVO>;
 		private var _activeTool:String;
 
 		public function AppModel() {
 			_dialogs = new <DialogVO>[];
-			_menuActions = new <ActionVO>[];
 			_so = SharedObject.getLocal("settings");
 			if(_so.size == 0){
 				this.lastFileDirection = File.documentsDirectory;
@@ -37,9 +35,6 @@ package com.merlinds.miracle_tool.models {
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function getActionByType(type:String):ActionVO {
-			return SearchUtils.findInVector(_menuActions, "type", type);
-		}
 
 		public function getDialogByType(type:String):DialogVO {
 			return SearchUtils.findInVector(_dialogs, "type", type);
@@ -56,10 +51,6 @@ package com.merlinds.miracle_tool.models {
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
-
-		public function get menuActions():Vector.<ActionVO> {
-			return _menuActions;
-		}
 
 		public function get dialogs():Vector.<DialogVO> {
 			return _dialogs;

@@ -48,7 +48,6 @@ package com.merlinds.miracle_tool.controllers {
 				}
 				//save data
 				this.fileSystemService.writeProject(model.name, data);
-
 			}else{
 				var warningText:String = "Can not save not exist project";
 				warning(this, warningText);
