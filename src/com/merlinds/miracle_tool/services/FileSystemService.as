@@ -7,6 +7,7 @@ package com.merlinds.miracle_tool.services {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
+	import com.merlinds.unitls.structures.QueueFIFO;
 
 	import flash.events.Event;
 
@@ -20,7 +21,7 @@ package com.merlinds.miracle_tool.services {
 
 	public class FileSystemService extends Actor {
 
-		private static const PROJECT_EXTENSION:String = ".mtp"; /** Miracle tools project **/
+		public static const PROJECT_EXTENSION:String = ".mtp"; /** Miracle tools project **/
 		[Inject]
 		public var appModel:AppModel;
 		[Inject]
@@ -28,10 +29,12 @@ package com.merlinds.miracle_tool.services {
 
 		private var _target:File;
 		private var _output:ByteArray;
+		private var _sourceQueue:QueueFIFO;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function FileSystemService() {
 			super();
+			_sourceQueue = new QueueFIFO();
 		}
 
 		public function readSource():void{
@@ -54,7 +57,21 @@ package com.merlinds.miracle_tool.services {
 		}
 
 		public function readProject():void{
+			log(this, "readAnimation");
+			var filters:Array = [
+				new FileFilter("FLA file", "*" + PROJECT_EXTENSION)
+			];
+			this.selectSource("Open project", filters);
+		}
 
+		public function readProjectSources(sources:Array):void{
+			if(sources != null){
+				log(this, "readProjectSources");
+				while(sources.length > 0){
+					_sourceQueue.push(sources.shift());
+				}
+				this.readProjectSource();
+			}
 		}
 
 		public function writeProject(name:String, data:Object):void{
@@ -100,6 +117,19 @@ package com.merlinds.miracle_tool.services {
 			_target.addEventListener(Event.SELECT, this.selectSourceHandler);
 			_target.browseForOpen(title, filters);
 		}
+
+		private function readProjectSource():void {
+			if(!_sourceQueue.empty)
+			{
+				var source:Object = _sourceQueue.pop();
+				_target = new File(source.file);
+				log(this, "readProjectSource", _target.name);
+				//start to download
+				var fileStream:FileStream = new FileStream();
+				fileStream.addEventListener(Event.COMPLETE, this.completeReadHandler);
+				fileStream.openAsync(_target, FileMode.READ);
+			}
+		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
@@ -122,6 +152,7 @@ package com.merlinds.miracle_tool.services {
 			fileStream.readBytes(_output);
 			fileStream.close();
 			this.dispatch(new EditorEvent(EditorEvent.FILE_READ));
+			this.readProjectSource();
 		}
 
 		private function selectProjectForSaveHandler(event:Event):void {

@@ -74,6 +74,7 @@ package com.merlinds.miracle_tool.controllers {
 			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, AppInitCommand, ContextEvent, true);
 			this.commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, ViewInitCommand, ContextEvent, true);
 			//
+			this.commandMap.mapEvent(EditorEvent.CREATE_PROJECT, CreateProjectCommand, EditorEvent);
 			this.commandMap.mapEvent(EditorEvent.FILE_READ, FileDecodeCommand, EditorEvent);
 			this.commandMap.mapEvent(EditorEvent.SOURCE_ATTACHED, SWFSeparatorCommand, EditorEvent);
 			this.commandMap.mapEvent(EditorEvent.PLACE_ITEMS, PlacerCommand, EditorEvent);

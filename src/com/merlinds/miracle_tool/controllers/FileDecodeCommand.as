@@ -22,8 +22,6 @@ package com.merlinds.miracle_tool.controllers {
 		public var fileSystemService:FileSystemService;
 		[Inject]
 		public var decodeService:DecodeService;
-		[Inject]
-		public var porjectModel:ProjectModel;
 
 		private var _target:File;
 		private var _byteArray:ByteArray;
@@ -49,13 +47,14 @@ package com.merlinds.miracle_tool.controllers {
 			var method:Function;
 			switch (_target.extension){
 				case 'swf': case 'png': case 'jpg':
-				method = this.decodeService.decodeSource;
-				break;
+					method = this.decodeService.decodeSource;
+					break;
 				case 'fla': case 'xml':
-				method = this.decodeService.decodeAnimation;
-				break;
-				case 'mtp':
+					method = this.decodeService.decodeAnimation;
+					break;
+				case FileSystemService.PROJECT_EXTENSION.substr(1):
 					method = this.decodeService.decodeProject;
+					_target = null;
 					break;
 				default :
 					var errorText:String = "Can not decode unknown file type";
@@ -72,9 +71,10 @@ package com.merlinds.miracle_tool.controllers {
 		}
 
 		private function saveToProject():void{
-			if(_target != null){
+			if(_target != null && this.injector.hasMapping(ProjectModel)){
 				log(this, "saveToProject");
-				this.porjectModel.addSource(_target);
+				var projectModel:ProjectModel = this.injector.getInstance(ProjectModel);
+				projectModel.addSource(_target);
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================

@@ -6,14 +6,11 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
-	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
+	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.services.ActionService;
-	import com.merlinds.miracle_tool.views.AppView;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
-	import com.merlinds.miracle_tool.views.project.ProjectView;
-	import com.merlinds.miracle_tool.views.widgets.ProjectWidgets;
 
 	import flash.geom.Point;
 
@@ -21,10 +18,6 @@ package com.merlinds.miracle_tool.controllers {
 
 	public class NewProjectCommand extends Command {
 
-		[Inject]
-		public var appView:AppView;
-		[Inject]
-		public var resizeController:ResizeController;
 		[Inject]
 		public var actionService:ActionService;
 		[Inject]
@@ -60,14 +53,8 @@ package com.merlinds.miracle_tool.controllers {
 					sceneSize.x = sceneSize.x <= 0 ? 1024 : sceneSize.x;
 					sceneSize.y = sceneSize.y <= 0 ? 768 : sceneSize.y;
 					log(this, "execute", "Create project:", projectName, ", Scene size = ", sceneSize);
-					//create model for project
-					var model:ProjectModel = new ProjectModel(projectName, sceneSize);
-					this.injector.mapValue(ProjectModel, model);
-					this.resizeController.addInstance( new ProjectWidgets( this.contextView ));
-					//create view for project
-					var view:ProjectView = new ProjectView(model.name, this.appView);
-					this.resizeController.addInstance(view);
-					this.actionService.done();
+					this.dispatch(new EditorEvent(EditorEvent.CREATE_PROJECT,
+							{projectName:projectName, sceneSize:sceneSize}));
 				}
 			}
 		}

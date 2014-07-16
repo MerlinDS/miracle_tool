@@ -92,6 +92,10 @@ package com.merlinds.miracle_tool.models {
 			return _boundsOffset;
 		}
 
+		public function set boundsOffset(value:int):void {
+			_boundsOffset = value;
+		}
+
 		public function get outputSize():int {
 			return _outputSize;
 		}

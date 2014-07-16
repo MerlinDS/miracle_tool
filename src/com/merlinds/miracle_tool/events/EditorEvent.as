@@ -10,6 +10,7 @@ package com.merlinds.miracle_tool.events {
 
 	public class EditorEvent extends ContextEvent {
 
+		public static const CREATE_PROJECT:String = "EditorEvent::CREATE_PROJECT";
 		public static const PROJECT_OPEN:String = "EditorEvent::PROJECT_OPEN";
 		public static const PROJECT_CLOSED:String = "EditorEvent::PROJECT_CLOSED";
 		//Attaches

@@ -86,7 +86,7 @@ package com.merlinds.miracle_tool.services {
 		}
 
 		private function applyAction():void {
-			if(!_currentQueue.empty){
+			if(_currentQueue != null && !_currentQueue.empty){
 				var actionVO:ActionVO = SearchUtils.findInVector(_menuActions, "type", _currentQueue.pop());
 				dispatchAction(actionVO, this.dispatch, _currentData);
 			}else{

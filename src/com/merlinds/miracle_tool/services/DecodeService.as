@@ -5,14 +5,13 @@
  */
 package com.merlinds.miracle_tool.services {
 	import com.merlinds.debug.log;
-	import com.merlinds.debug.warning;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.system.LoaderContext;
-
 	import flash.utils.ByteArray;
 
 	import org.robotlegs.mvcs.Actor;
@@ -40,6 +39,22 @@ package com.merlinds.miracle_tool.services {
 
 		public function decodeProject(bytes:ByteArray):void{
 			log(this, "decodeProject");
+			bytes.position = 0;
+			var signature:String = String.fromCharCode(bytes[0], bytes[1], bytes[2]);
+			if(signature != "MTP"){
+				//display error
+			}else{
+				bytes.position = 4;
+				var data:Object = bytes.readObject();
+				var sceneSize:Point = new Point(data.sceneSize.x, data.sceneSize.y);
+				var boundsOffset:Number = data.boundsOffset;
+				var sheetSize:Point = new Point(data.sheetSize.x, data.sheetSize.y);
+				this.dispatch(new EditorEvent(EditorEvent.CREATE_PROJECT,
+						{projectName:data.projectName, sceneSize:sceneSize,
+							boundsOffset:boundsOffset, sheetSize:sheetSize,
+							sources:data.sources
+						}));
+			}
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
