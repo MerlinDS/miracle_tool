@@ -10,14 +10,15 @@ package com.merlinds.miracle_tool.models.vo {
 	public class SourceVO {
 
 		private var _file:File;
-		private var _animations:Vector.<AnimetionVO>;
+		private var _animations:Vector.<AnimationVO>;
 		private var _elements:Vector.<ElementVO>;
+		private var _selected:Boolean;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function SourceVO(file:File) {
 			_file = file;
 			_elements = new <ElementVO>[];
-			_animations = new <AnimetionVO>[];
+			_animations = new <AnimationVO>[];
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -44,11 +45,11 @@ package com.merlinds.miracle_tool.models.vo {
 			return _elements;
 		}
 
-		public function get animations():Vector.<AnimetionVO> {
+		public function get animations():Vector.<AnimationVO> {
 			return _animations;
 		}
 
-		public function set animations(value:Vector.<AnimetionVO>):void {
+		public function set animations(value:Vector.<AnimationVO>):void {
 			_animations = value;
 		}
 
@@ -57,6 +58,11 @@ package com.merlinds.miracle_tool.models.vo {
 			for(var i:int = 0; i < n; i++){
 				_elements[i].selected = value;
 			}
+			_selected = value;
+		}
+
+		public function get selected():Boolean{
+			return _selected;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

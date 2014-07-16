@@ -6,12 +6,13 @@
 package com.merlinds.miracle_tool.models.vo {
 	import flash.filesystem.File;
 
-	public class AnimetionVO {
+	public class AnimationVO {
 
 		private var _file:File;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function AnimetionVO(file:File) {
+		public function AnimationVO(file:File) {
+			_file = file;
 		}
 		//} endregion PUBLIC METHODS ===================================================
 

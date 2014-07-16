@@ -7,7 +7,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.debug.warning;
 	import com.merlinds.miracle_tool.models.ProjectModel;
-	import com.merlinds.miracle_tool.models.vo.AnimetionVO;
+	import com.merlinds.miracle_tool.models.vo.AnimationVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
@@ -37,7 +37,7 @@ package com.merlinds.miracle_tool.controllers {
 					var sourceData:Object = {file:source.file.nativePath, animations:[]};
 					var m:int = source.animations.length;
 					for(var j:int = 0; j < m; j++){
-						var animation:AnimetionVO = source.animations[j];
+						var animation:AnimationVO = source.animations[j];
 						sourceData.animations.push(animation.file.nativePath);
 					}
 					data.sources.push(sourceData);
@@ -48,6 +48,7 @@ package com.merlinds.miracle_tool.controllers {
 				}
 				//save data
 				this.fileSystemService.writeProject(model.name, data);
+				model.saved = true;
 			}else{
 				var warningText:String = "Can not save not exist project";
 				warning(this, warningText);

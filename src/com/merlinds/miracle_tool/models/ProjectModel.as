@@ -4,6 +4,7 @@
  * Time: 1:51
  */
 package com.merlinds.miracle_tool.models {
+	import com.merlinds.miracle_tool.models.vo.AnimationVO;
 	import com.merlinds.miracle_tool.models.vo.ProjectInfoVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
 
@@ -25,6 +26,10 @@ package com.merlinds.miracle_tool.models {
 		private var _outputSize:int;
 		private var _zoom:Number = 1;
 		private var _sheetSize:Point;
+
+		private var _saved:Boolean;
+
+		private var _animationInProgress:AnimationVO;
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -50,7 +55,16 @@ package com.merlinds.miracle_tool.models {
 				//TODO update exist source
 			}
 			_inProgress = i;
+		}
 
+		public function addAnimation(file:File):void {
+			var source:SourceVO = this.selected;
+			var n:int = source.animations.length;
+			for(var i:int = 0; i < n; i++){
+				var animation:AnimationVO = source.animations[i];
+				if(animation.file.nativePath == file.nativePath)break;
+			}
+			_animationInProgress = source.animations[i] =new AnimationVO(file);
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -84,8 +98,31 @@ package com.merlinds.miracle_tool.models {
 			return _sheetSize;
 		}
 
+		public function get saved():Boolean {
+			return _saved;
+		}
+
+		public function set saved(value:Boolean):void {
+			_saved = value;
+		}
+
+		public function get selected():SourceVO {
+			var source:SourceVO;
+			var n:int = _sources.length;
+			for(var i:int = 0; i < n; i++){
+				source = _sources[i];
+				if(source.selected)break;
+				source = null;
+			}
+			return source;
+		}
+
 		public function get inProgress():SourceVO{
 			return _inProgress < 0 ? null : _sources[ _inProgress ];
+		}
+
+		public function get animationInProgress():AnimationVO {
+			return _animationInProgress;
 		}
 
 		public function get boundsOffset():int {

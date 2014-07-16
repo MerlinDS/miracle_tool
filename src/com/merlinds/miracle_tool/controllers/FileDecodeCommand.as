@@ -36,20 +36,25 @@ package com.merlinds.miracle_tool.controllers {
 			_target = fileSystemService.target;
 			_byteArray = fileSystemService.output;
 			this.decode();
-			this.saveToProject();
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function decode():void{
+			var projectModel:ProjectModel;
+			if(this.injector.hasMapping(ProjectModel)){
+				projectModel = this.injector.getInstance(ProjectModel);
+			}
 			//decide how to decode file by it's extension
 			var method:Function;
 			switch (_target.extension){
 				case 'swf': case 'png': case 'jpg':
+					projectModel.addSource(_target);
 					method = this.decodeService.decodeSource;
 					break;
 				case 'fla': case 'xml':
+					projectModel.addAnimation(_target);
 					method = this.decodeService.decodeAnimation;
 					break;
 				case FileSystemService.PROJECT_EXTENSION.substr(1):
@@ -67,14 +72,6 @@ package com.merlinds.miracle_tool.controllers {
 			}
 			if(method is Function){
 				method.apply(this, [_byteArray]);
-			}
-		}
-
-		private function saveToProject():void{
-			if(_target != null && this.injector.hasMapping(ProjectModel)){
-				log(this, "saveToProject");
-				var projectModel:ProjectModel = this.injector.getInstance(ProjectModel);
-				projectModel.addSource(_target);
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
