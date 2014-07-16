@@ -80,7 +80,7 @@ package com.merlinds.miracle_tool.services {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function selectSource(title:String, filters:Array = null):void {
-			_target = new File();
+			_target = this.appModel.lastFileDirection;
 			_target.addEventListener(Event.SELECT, this.selectSourceHandler);
 			_target.browseForOpen(title, filters);
 		}
@@ -91,6 +91,7 @@ package com.merlinds.miracle_tool.services {
 		private function selectSourceHandler(event:Event):void {
 			_target.removeEventListener(event.type, this.selectSourceHandler);
 			log(this, "selectSourceHandler", _target.name);
+			this.appModel.lastFileDirection = _target.parent;
 			//start to download
 			var fileStream:FileStream = new FileStream();
 			fileStream.addEventListener(Event.COMPLETE, this.completeReadHandler);
