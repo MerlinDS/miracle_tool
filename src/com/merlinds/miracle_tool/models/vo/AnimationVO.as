@@ -9,10 +9,12 @@ package com.merlinds.miracle_tool.models.vo {
 	public class AnimationVO {
 
 		private var _file:File;
+		private var _timelines:Array;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function AnimationVO(file:File) {
 			_file = file;
+			_timelines = [];
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -29,6 +31,10 @@ package com.merlinds.miracle_tool.models.vo {
 
 		public function get file():File {
 			return _file.clone();
+		}
+
+		public function get timelines():Array {
+			return _timelines;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

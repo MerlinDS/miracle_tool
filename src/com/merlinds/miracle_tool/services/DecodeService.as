@@ -5,7 +5,10 @@
  */
 package com.merlinds.miracle_tool.services {
 	import com.merlinds.debug.log;
+	import com.merlinds.debug.warning;
 	import com.merlinds.miracle_tool.events.EditorEvent;
+
+	import flash.debugger.enterDebugger;
 
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
@@ -13,6 +16,10 @@ package com.merlinds.miracle_tool.services {
 	import flash.geom.Point;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
+
+	import nochump.util.zip.ZipEntry;
+
+	import nochump.util.zip.ZipFile;
 
 	import org.robotlegs.mvcs.Actor;
 
@@ -33,8 +40,31 @@ package com.merlinds.miracle_tool.services {
 			loader.loadBytes(bytes, loaderContext);
 		}
 
-		public function decodeAnimation(bytes:ByteArray):void{
+		public function decodeAnimation(bytes:ByteArray, silent:Boolean = false):Object{
 			log(this, "decodeAnimation");
+			var result:Object = {};
+			//if first symbol is < its XML file in other case it is FLA file
+			bytes.position = 0;
+			if(String.fromCharCode(bytes[0]) == "<"){
+				result = new XML( bytes.readUTFBytes(bytes.length) );
+			}else{
+				//read FLA as zip file
+				var zip:ZipFile = new ZipFile(bytes);
+				const LIBRARY:String = "LIBRARY/";
+				//read all entries from LIBRARY folder
+				var n:int = zip.entries.length;
+				for(var i:int = 0; i < n; i++){
+					var entry:ZipEntry = zip.entries[i];
+					if(!entry.isDirectory() && entry.name.search(LIBRARY) > -1){
+						result [ entry.name.substr(LIBRARY.length) ] =
+						this.decodeAnimation(zip.getInput(entry), true);
+					}
+				}
+			}
+
+			if(!silent)
+				this.dispatch(new EditorEvent(EditorEvent.ANIMATION_ATTACHED, result));
+			return result;
 		}
 
 		public function decodeProject(bytes:ByteArray):void{
