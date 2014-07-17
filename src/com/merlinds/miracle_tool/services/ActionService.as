@@ -21,7 +21,7 @@ package com.merlinds.miracle_tool.services {
 		private var _currentQueue:QueueFIFO;
 		private var _currentData:*;
 
-		private var _menuActions:Vector.<ActionVO>;
+		private var _actions:Vector.<ActionVO>;
 
 		public function ActionService() {
 			super();
@@ -29,24 +29,27 @@ package com.merlinds.miracle_tool.services {
 			_denyQueue = new QueueFIFO();
 			_cancelQueue = new QueueFIFO();
 
-			_menuActions = new <ActionVO>[];
+			_actions = new <ActionVO>[];
 		}
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function addAcceptActions(actions:Vector.<String>):void{
+		public function addAcceptActions(actions:Vector.<String>):ActionService{
 			actions = actions.concat();
 			this.addActions(_acceptQueue, actions);
+			return this;
 		}
 
-		public function addDenyActions(actions:Vector.<String>):void {
+		public function addDenyActions(actions:Vector.<String>):ActionService {
 			actions = actions.concat();
 			this.addActions(_denyQueue, actions);
+			return this;
 		}
 
-		public function addCancelActions(actions:Vector.<String>):void {
+		public function addCancelActions(actions:Vector.<String>):ActionService {
 			actions = actions.concat();
 			this.addActions(_cancelQueue, actions);
+			return this;
 		}
 
 		public function startActions(type:String = DialogWindow.ACCEPT, data:* = null):void {
@@ -87,7 +90,7 @@ package com.merlinds.miracle_tool.services {
 
 		private function applyAction():void {
 			if(_currentQueue != null && !_currentQueue.empty){
-				var actionVO:ActionVO = SearchUtils.findInVector(_menuActions, "type", _currentQueue.pop());
+				var actionVO:ActionVO = SearchUtils.findInVector(_actions, "type", _currentQueue.pop());
 				dispatchAction(actionVO, this.dispatch, _currentData);
 			}else{
 				_currentData = null;
@@ -101,9 +104,10 @@ package com.merlinds.miracle_tool.services {
 
 		//==============================================================================
 		//{region							GETTERS/SETTERS
-		public function get menuActions():Vector.<ActionVO> {
-			return _menuActions;
+		public function get actions():Vector.<ActionVO> {
+			return _actions;
 		}
-		//} endregion GETTERS/SETTERS ==================================================
+
+//} endregion GETTERS/SETTERS ==================================================
 	}
 }

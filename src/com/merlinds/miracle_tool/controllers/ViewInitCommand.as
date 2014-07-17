@@ -35,7 +35,7 @@ package com.merlinds.miracle_tool.controllers {
 			var appView:AppView = new AppView(this.contextView);
 			this.resizeController.addInstance( appView );
 			this.resizeController.addInstance( new AlertView( this.contextView ) );//upper than all other views
-			this.resizeController.addInstance( new AppMenuView( appView , this.actionService.menuActions) );
+			this.resizeController.addInstance( new AppMenuView( appView , this.actionService.actions) );
 			this.resizeController.addInstance( new ToolView( this.contextView ) );
 			this.resizeController.addInstance( new StatusBar( this.contextView ) );
 			//add stage to resize controller for it's initialization

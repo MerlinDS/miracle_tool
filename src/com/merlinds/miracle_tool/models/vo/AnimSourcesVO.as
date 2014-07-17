@@ -1,27 +1,25 @@
 /**
  * User: MerlinDS
- * Date: 12.07.2014
- * Time: 22:21
+ * Date: 17.07.2014
+ * Time: 12:54
  */
 package com.merlinds.miracle_tool.models.vo {
-	public class ActionVO {
+	public dynamic class AnimSourcesVO {
 
-		private var _title:String;
-		private var _event:Class;
-		private var _type:String;
-		private var _inMenu:Boolean;
+		public static const DEFAULT_NAME:String = "animation::default";
+		private var _chosen:Array;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-
-		public function ActionVO(title:String, event:Class, type:String, inMenu:Boolean = false) {
-			_title = title;
-			_event = event;
-			_type = type;
-			_inMenu = inMenu;
-		}
-
-		public function toString():String {
-			return "[ActionVO(type = " + _type + ")]";
+		public function AnimSourcesVO(data:Object) {
+			_chosen = [];
+			if(data is XML){
+				_chosen.push(DEFAULT_NAME);
+				this[DEFAULT_NAME] = data;
+			}else{
+				for(var name:String in data){
+					this[name] = data[name];
+				}
+			}
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -36,20 +34,17 @@ package com.merlinds.miracle_tool.models.vo {
 		//==============================================================================
 		//{region							GETTERS/SETTERS
 
-		public function get title():String {
-			return _title;
+		public function get chosen():Array {
+			return _chosen;
 		}
 
-		public function get event():Class {
-			return _event;
-		}
-
-		public function get type():String {
-			return _type;
-		}
-
-		public function get inMenu():Boolean {
-			return _inMenu;
+		public function get names():Array{
+			var result:Array = [];
+			for(var name:String in this){
+				if(name == "names" || name == "chosen")continue;
+				result.push(name);
+			}
+			return result;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

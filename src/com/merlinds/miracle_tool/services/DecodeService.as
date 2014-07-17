@@ -5,10 +5,9 @@
  */
 package com.merlinds.miracle_tool.services {
 	import com.merlinds.debug.log;
-	import com.merlinds.debug.warning;
+	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
-
-	import flash.debugger.enterDebugger;
+	import com.merlinds.miracle_tool.models.vo.AnimSourcesVO;
 
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
@@ -18,13 +17,11 @@ package com.merlinds.miracle_tool.services {
 	import flash.utils.ByteArray;
 
 	import nochump.util.zip.ZipEntry;
-
 	import nochump.util.zip.ZipFile;
 
 	import org.robotlegs.mvcs.Actor;
 
 	public class DecodeService extends Actor {
-
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function DecodeService() {
@@ -62,8 +59,10 @@ package com.merlinds.miracle_tool.services {
 				}
 			}
 
-			if(!silent)
-				this.dispatch(new EditorEvent(EditorEvent.ANIMATION_ATTACHED, result));
+			if(!silent){
+				result = new AnimSourcesVO(result);
+				this.dispatch(new ActionEvent(ActionEvent.ANIMATION_ATTACH, result));
+			}
 			return result;
 		}
 

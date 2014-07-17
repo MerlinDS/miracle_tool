@@ -12,8 +12,8 @@ package com.merlinds.miracle_tool.views.alerts.dialogs {
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function SaveProjectDialog(parent:DisplayObjectContainer, xpos:Number = 0, ypos:Number = 0) {
-			super(parent, xpos, ypos, "Save project");
+		public function SaveProjectDialog(parent:DisplayObjectContainer, data:Object = null) {
+			super(parent, data, "Save project");
 		}
 		//} endregion PUBLIC METHODS ===================================================
 

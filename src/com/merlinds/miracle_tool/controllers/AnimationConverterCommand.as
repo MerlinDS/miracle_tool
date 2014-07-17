@@ -5,11 +5,14 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
-	import com.merlinds.miracle_tool.events.EditorEvent;
+	import com.merlinds.miracle_tool.events.ActionEvent;
+	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
+	import com.merlinds.miracle_tool.models.vo.AnimSourcesVO;
 	import com.merlinds.miracle_tool.models.vo.AnimationVO;
 	import com.merlinds.miracle_tool.models.vo.CurveVO;
 	import com.merlinds.miracle_tool.models.vo.TimelineVO;
+	import com.merlinds.miracle_tool.services.ActionService;
 
 	import flash.geom.Matrix;
 
@@ -30,7 +33,9 @@ package com.merlinds.miracle_tool.controllers {
 		[Inject]
 		public var projectModel:ProjectModel;
 		[Inject]
-		public var event:EditorEvent;
+		public var actionService:ActionService;
+		[Inject]
+		public var event:ActionEvent;
 
 		private var _animation:AnimationVO;
 		private var _timeline:TimelineVO;
@@ -42,14 +47,22 @@ package com.merlinds.miracle_tool.controllers {
 
 		override public function execute():void {
 			log(this, "execute");
-			_animation = this.projectModel.animationInProgress;
-			var name:String = _animation.file.name;
-			name = name.substr(_animation.file.extension.length);
-			var data:Object = this.event.body;
-			if(data is XML){
-				this.convertXML(data as XML, name);
+			var data:AnimSourcesVO = this.projectModel.tempData;
+			if(data == null){
+				this.projectModel.tempData = this.event.body;
+				this.actionService.addAcceptActions(new <String>[this.event.type]);
+				this.dispatch(new DialogEvent(DialogEvent.CHOOSE_ANIMATION, this.event.body.names));
 			}else{
-				for(name in data){
+				this.projectModel.tempData = null;
+				data.chosen.push(this.event.body["list"]);
+				_animation = this.projectModel.animationInProgress;
+				var name:String;
+				while(data.chosen.length > 0){
+					name = data.chosen.pop();
+					if(name == AnimSourcesVO.DEFAULT_NAME){
+						name = _animation.file.name;
+						name = name.substr(_animation.file.extension.length);
+					}
 					this.convertXML(data[name] as XML, name);
 				}
 			}

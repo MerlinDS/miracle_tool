@@ -34,13 +34,17 @@ package com.merlinds.miracle_tool.views.alerts {
 
 		override public function onRegister():void {
 			_queue = new QueueFIFO();
-			this.addContextListener(DialogEvent.PROJECT_SETTINGS, this.dialogEventHandler);
-			this.addContextListener(DialogEvent.SAVE_PROJECT, this.dialogEventHandler);
+			var n:int = this.appModel.dialogs.length;
+			for(var i:int = 0; i < n; i++){
+				this.addContextListener(this.appModel.dialogs[i].type, this.dialogEventHandler);
+			}
 		}
 
 		override public function onRemove():void {
-			this.removeContextListener(DialogEvent.PROJECT_SETTINGS, this.dialogEventHandler);
-			this.removeContextListener(DialogEvent.SAVE_PROJECT, this.dialogEventHandler);
+			var n:int = this.appModel.dialogs.length;
+			for(var i:int = 0; i < n; i++){
+				this.removeContextListener(this.appModel.dialogs[i].type, this.dialogEventHandler);
+			}
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -50,7 +54,7 @@ package com.merlinds.miracle_tool.views.alerts {
 			if(_currentDialog == null && !_queue.empty){
 				_currentEvent = _queue.pop();
 				var dialogVO:DialogVO = this.appModel.getDialogByType(_currentEvent.type);
-				_currentDialog = new dialogVO.clazz(this.viewComponent);
+				_currentDialog = new dialogVO.clazz(this.viewComponent, _currentEvent.body);
 				_currentDialog.closeCallback = this.closeHandler;
 				_currentDialog.modal = true;
 				StatusBar.log(_currentDialog.title, "was opened");

@@ -12,6 +12,7 @@ package com.merlinds.miracle_tool.events {
 
 		public static const SAVE_PROJECT:String = "AlertEvent::SAVE_PROJECT";
 		public static const PROJECT_SETTINGS:String = "AlertEvent::PROJECT_SETTINGS";
+		public static const CHOOSE_ANIMATION:String = "AlertEvent::CHOOSE_ANIMATION";
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function DialogEvent(type:String, body:* = null) {

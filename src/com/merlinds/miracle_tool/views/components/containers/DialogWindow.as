@@ -7,6 +7,7 @@ package com.merlinds.miracle_tool.views.components.containers {
 	import com.bit101.components.HBox;
 	import com.bit101.components.InputText;
 	import com.bit101.components.Label;
+	import com.bit101.components.List;
 	import com.bit101.components.PushButton;
 	import com.bit101.components.Text;
 	import com.bit101.components.Text;
@@ -14,6 +15,7 @@ package com.merlinds.miracle_tool.views.components.containers {
 	import com.bit101.components.Window;
 
 	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 
 	public class DialogWindow extends Window {
@@ -30,11 +32,13 @@ package com.merlinds.miracle_tool.views.components.containers {
 		private var _body:VBox;
 		private var _controls:Object;
 
-		public function DialogWindow(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0, title:String = "Window") {
-			super(parent, xpos, ypos, title);
+		public function DialogWindow(parent:DisplayObjectContainer = null,
+		                             data:Object = null, title:String = "Window") {
+			super(parent, 0, 0, title);
 			_controls = {};
 			_body = new VBox(this);
 			_closeReason = DENY;
+			_data = data;
 			this.initialize();
 			this.postInitialize();
 		}
@@ -69,6 +73,13 @@ package com.merlinds.miracle_tool.views.components.containers {
 			field.editable = false;
 		}
 
+		protected final function addList(value:Array = null):void{
+			if(value == null){
+				value = _data;
+			}
+			_controls["list"] = new List(_body, 0, 0, value);
+		}
+
 		protected final function addButton(label:String, closeReason:String = ACCEPT):void{
 			var callback:Function = function(event:MouseEvent):void{
 				event.target.removeEventListener(event.type, arguments.callee);
@@ -87,6 +98,8 @@ package com.merlinds.miracle_tool.views.components.containers {
 					var control:Object = _controls[name];
 					if(control is InputText){
 						data[name] = control.text;
+					}else if(control is List){
+						data[name] = control.selectedItem;
 					}
 					//TODO add else controls that will be created automatically
 				}

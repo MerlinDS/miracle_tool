@@ -11,6 +11,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
 	import com.merlinds.miracle_tool.models.vo.DialogVO;
 	import com.merlinds.miracle_tool.services.ActionService;
+	import com.merlinds.miracle_tool.views.alerts.dialogs.ChooseAnimationDialog;
 	import com.merlinds.miracle_tool.views.alerts.dialogs.ProjectSettingDialog;
 	import com.merlinds.miracle_tool.views.alerts.dialogs.SaveProjectDialog;
 
@@ -45,17 +46,19 @@ package com.merlinds.miracle_tool.controllers {
 			this.mapAction(SaveProjectCommand, ActionEvent, ActionEvent.SAVE_PROJECT, "Save As...");
 			this.mapAction(OpenSettingCommand, ActionEvent, ActionEvent.OPEN_SETTINGS, "Settings...");
 			this.mapAction(OpenHelpCommand, ActionEvent, ActionEvent.OPEN_HELP, "Help...");
+			this.mapAction(AnimationConverterCommand, ActionEvent, ActionEvent.ANIMATION_ATTACH, null, false);
 		}
 
 		private function initializeDialogs():void {
 			this.mapDialog(ProjectSettingDialog, DialogEvent.PROJECT_SETTINGS);
 			this.mapDialog(SaveProjectDialog, DialogEvent.SAVE_PROJECT);
+			this.mapDialog(ChooseAnimationDialog, DialogEvent.CHOOSE_ANIMATION);
 		}
 		//utilities
 		[Inline]
-		private function mapAction(command:Class, event:Class, type:String, title:String):void {
+		private function mapAction(command:Class, event:Class, type:String, title:String, inMenu:Boolean = true):void {
 			this.commandMap.mapEvent(type, command, event);
-			this.actionService.menuActions.push(new ActionVO(title, event, type));
+			this.actionService.actions.push(new ActionVO(title, event, type, inMenu));
 		}
 
 		[Inline]

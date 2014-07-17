@@ -23,6 +23,8 @@ package com.merlinds.miracle_tool.events {
 		/** Open application settings **/
 		public static const OPEN_SETTINGS:String = "ActionEvent::OPEN_SETTINGS";
 
+		public static const ANIMATION_ATTACH:String = "ActionEvent::ANIMATION_ATTACH";
+
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ActionEvent(type:String, body:* = null) {

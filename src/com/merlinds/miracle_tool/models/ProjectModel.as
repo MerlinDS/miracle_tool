@@ -31,6 +31,7 @@ package com.merlinds.miracle_tool.models {
 
 		private var _animationInProgress:AnimationVO;
 
+		public var tempData:*;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectModel(name:String, sceneSize:Point) {

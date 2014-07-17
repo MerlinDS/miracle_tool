@@ -1,37 +1,34 @@
 /**
  * User: MerlinDS
- * Date: 12.07.2014
- * Time: 23:17
+ * Date: 17.07.2014
+ * Time: 13:08
  */
 package com.merlinds.miracle_tool.views.alerts.dialogs {
-
 	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
 
 	import flash.display.DisplayObjectContainer;
 
-	public class ProjectSettingDialog extends DialogWindow {
+	public class ChooseAnimationDialog extends DialogWindow {
+
 
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function ProjectSettingDialog(parent:DisplayObjectContainer, data:Object = null) {
-			super(parent, data, "Project settings");
+		public function ChooseAnimationDialog(parent:DisplayObjectContainer, data:Object = null) {
+			super(parent, data, "Choose animation");
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		override protected function initialize():void {
-			this.addInput("projectName", "Project Name");
-			this.addInput("sceneWidth", "Screen width", "1024");
-			this.addInput("sceneHeight", "Screen height", "768");
-			this.addButton("Create", DialogWindow.ACCEPT);
+			this.addList();
+			this.addButton("Choose", DialogWindow.ACCEPT);
 		}
 
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
-
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================
