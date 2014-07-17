@@ -13,6 +13,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
 
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
 
@@ -38,11 +39,14 @@ package com.merlinds.miracle_tool.controllers {
 		override public function execute():void {
 			log(this, "execute");
 			var source:SourceVO = this.projectModel.inProgress;
-			_target = this.event.body;
-			if(_target){
+			var container:DisplayObjectContainer = this.event.body;
+			if(container != null){
 				_elements = source.elements;
-				_target = _target.getChildAt(0) as MovieClip;
-				this.getElements();
+				var n:int = container.numChildren;
+				for(var i:int = 0; i < n; i++){
+					_target = container.getChildAt(i) as MovieClip;
+					this.getElements();
+				}
 				this.projectModel.outputSize = _outputSize;
 				log(this, "execute", "End separation");
 			}
