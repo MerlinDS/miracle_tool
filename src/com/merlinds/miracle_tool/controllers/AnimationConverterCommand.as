@@ -167,8 +167,8 @@ package com.merlinds.miracle_tool.controllers {
 					var m:int = pointsList.length();
 					for(var j:int = 0; j < m; j++){
 						curve.addPoint(
-										pointsList[j].@x != undefined ? pointsList[j].@x : 0,
-										pointsList[j].@y != undefined ? pointsList[j].@y : 0
+							pointsList[j].@x != undefined ? pointsList[j].@x : 0,
+							pointsList[j].@y != undefined ? pointsList[j].@y : 0
 						);
 					}
 				}

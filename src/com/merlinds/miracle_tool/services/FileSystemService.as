@@ -92,15 +92,11 @@ package com.merlinds.miracle_tool.services {
 		}
 
 		public function writeTexture():void{
-
+			log(this, "writeTexture");
 		}
 
-		public function writeTimelien():void{
-
-		}
-
-		public function writeMesh():void{
-
+		public function writeTimeline():void{
+			log(this, "writeTimeline");
 		}
 
 		public function clear():void {

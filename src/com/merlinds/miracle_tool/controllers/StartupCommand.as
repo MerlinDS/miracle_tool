@@ -24,7 +24,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.views.widgets.ItemInfoMediator;
 	import com.merlinds.miracle_tool.views.widgets.ProjectInfoView;
 	import com.merlinds.miracle_tool.views.widgets.ProjectInfoMediator;
-	import com.merlinds.miracle_tool.views.widgets.PublishTools;
+	import com.merlinds.miracle_tool.views.widgets.PublishToolsView;
 	import com.merlinds.miracle_tool.views.widgets.PublishToolsMediator;
 	import com.merlinds.miracle_tool.views.widgets.SheetToolsView;
 	import com.merlinds.miracle_tool.views.widgets.SheetToolsView;
@@ -90,7 +90,7 @@ package com.merlinds.miracle_tool.controllers {
 			this.mediatorMap.mapView(ProjectInfoView, ProjectInfoMediator);
 			this.mediatorMap.mapView(ItemInfoView, ItemInfoMediator);
 			this.mediatorMap.mapView(SheetToolsView, SheetToolsMediator);
-			this.mediatorMap.mapView(PublishTools, PublishToolsMediator);
+			this.mediatorMap.mapView(PublishToolsView, PublishToolsMediator);
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 

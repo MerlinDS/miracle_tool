@@ -1,29 +1,28 @@
 /**
  * User: MerlinDS
- * Date: 13.07.2014
- * Time: 15:01
+ * Date: 18.07.2014
+ * Time: 15:06
  */
-package com.merlinds.miracle_tool.views.widgets {
-	import com.bit101.components.CheckBox;
-	import com.bit101.components.PushButton;
+package com.merlinds.miracle_tool.views.alerts.dialogs {
+	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
 
 	import flash.display.DisplayObjectContainer;
 
-	public class PublishTools extends WidgetWindow {
+	public class PublishSettingsDialog  extends DialogWindow {
+
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function PublishTools(parent:DisplayObjectContainer = null) {
-			super(parent, 0, 0, "Publish Tools");
+		public function PublishSettingsDialog(parent:DisplayObjectContainer, data:Object = null) {
+			super(parent, data, "Publish settings");
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
-		override protected function initialize():void{
-			new PushButton(this, 0, 0, "Publish");
-			new CheckBox(this, 0, 0, "Change publish settings").selected = true;
-			new PushButton(this, 0, 0, "Preview");
-
+		override protected function initialize():void {
+			this.addInput("projectName", "Project Name");
+			this.addInput("size", "Screen size", "1024");
+			this.addButton("Create", DialogWindow.ACCEPT);
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 

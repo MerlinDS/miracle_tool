@@ -9,11 +9,8 @@ package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.vo.SheetToolsVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
-	import com.merlinds.miracle_tool.models.vo.SourceVO;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
-
-	import flash.events.Event;
 
 	import flash.events.Event;
 

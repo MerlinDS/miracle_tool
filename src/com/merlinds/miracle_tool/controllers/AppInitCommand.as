@@ -11,6 +11,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.vo.ActionVO;
 	import com.merlinds.miracle_tool.models.vo.DialogVO;
 	import com.merlinds.miracle_tool.services.ActionService;
+	import com.merlinds.miracle_tool.views.alerts.dialogs.PublishSettingsDialog;
 	import com.merlinds.miracle_tool.views.alerts.dialogs.ChooseAnimationDialog;
 	import com.merlinds.miracle_tool.views.alerts.dialogs.ProjectSettingDialog;
 	import com.merlinds.miracle_tool.views.alerts.dialogs.SaveProjectDialog;
@@ -47,12 +48,14 @@ package com.merlinds.miracle_tool.controllers {
 			this.mapAction(OpenSettingCommand, ActionEvent, ActionEvent.OPEN_SETTINGS, "Settings...");
 			this.mapAction(OpenHelpCommand, ActionEvent, ActionEvent.OPEN_HELP, "Help...");
 			this.mapAction(AnimationConverterCommand, ActionEvent, ActionEvent.ANIMATION_ATTACH, null, false);
+			this.mapAction(PublishCommand, ActionEvent, ActionEvent.PUBLISHING, null, false);
 		}
 
 		private function initializeDialogs():void {
 			this.mapDialog(ProjectSettingDialog, DialogEvent.PROJECT_SETTINGS);
 			this.mapDialog(SaveProjectDialog, DialogEvent.SAVE_PROJECT);
 			this.mapDialog(ChooseAnimationDialog, DialogEvent.CHOOSE_ANIMATION);
+			this.mapDialog(PublishSettingsDialog, DialogEvent.PUBLISH_SETTINGS);
 		}
 		//utilities
 		[Inline]

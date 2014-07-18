@@ -36,7 +36,8 @@ package com.merlinds.miracle_tool.views {
 			var n:int = actions.length;
 			for(var i:int = 0; i < n; i++){
 				var action:ActionVO = actions[i];
-				new ActionButton(this, action.title, this.dispatchEvent).action = action;
+				if(action.inMenu)
+					new ActionButton(this, action.title, this.dispatchEvent).action = action;
 			}
 		}
 

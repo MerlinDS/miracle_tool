@@ -13,9 +13,11 @@ package com.merlinds.miracle_tool.views.components.containers {
 	import com.bit101.components.Text;
 	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
+	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
 
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 
 	public class DialogWindow extends Window {
@@ -34,6 +36,7 @@ package com.merlinds.miracle_tool.views.components.containers {
 
 		public function DialogWindow(parent:DisplayObjectContainer = null,
 		                             data:Object = null, title:String = "Window") {
+			this.addEventListener(Event.ADDED_TO_STAGE, this.addedToStageHandler);
 			super(parent, 0, 0, title);
 			_controls = {};
 			_body = new VBox(this);
@@ -66,6 +69,9 @@ package com.merlinds.miracle_tool.views.components.containers {
 			new Label(field, 0, 0, label);
 			_body.addChild(field);
 			_controls[name] = input;
+			if(_data != null && _data.hasOwnProperty(name)){
+				input.text = _data[name];
+			}
 		}
 
 		protected final function addText(text:String = ""):void{
@@ -105,6 +111,7 @@ package com.merlinds.miracle_tool.views.components.containers {
 				}
 			}
 			_data = data;
+			this.stage.removeEventListener(KeyboardEvent.KEY_UP, this.keyBoardHandler);
 			this.onClose(new MouseEvent(MouseEvent.CLICK));
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
@@ -117,6 +124,18 @@ package com.merlinds.miracle_tool.views.components.containers {
 				_closeCallback.apply(this, [_closeReason, _data]);
 			}
 			super.onClose(event);
+		}
+
+		private function keyBoardHandler(event:KeyboardEvent):void {
+			if(event.keyCode == 13)//Enter
+			{
+				this.close(DialogWindow.ACCEPT);
+			}
+		}
+
+		private function addedToStageHandler(event:Event):void {
+			this.removeEventListener(event.type, this.addedToStageHandler);
+			this.stage.addEventListener(KeyboardEvent.KEY_UP, this.keyBoardHandler);
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 

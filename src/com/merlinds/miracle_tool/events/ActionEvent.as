@@ -25,6 +25,8 @@ package com.merlinds.miracle_tool.events {
 
 		public static const ANIMATION_ATTACH:String = "ActionEvent::ANIMATION_ATTACH";
 
+		public static const PUBLISHING:String = "ActionEvent::PUBLISHING";
+
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ActionEvent(type:String, body:* = null) {
