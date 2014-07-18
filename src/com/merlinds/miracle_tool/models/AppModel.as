@@ -4,17 +4,20 @@
  * Time: 22:21
  */
 package com.merlinds.miracle_tool.models {
-	import com.merlinds.miracle_tool.models.vo.ActionVO;
+	import com.merlinds.miracle_tool.models.vo.ConfigVO;
 	import com.merlinds.miracle_tool.models.vo.DialogVO;
 	import com.merlinds.unitls.structures.SearchUtils;
 
 	import flash.filesystem.File;
-
 	import flash.net.SharedObject;
 
 	import org.robotlegs.mvcs.Actor;
 
 	public class AppModel extends Actor {
+
+		[Embed(source="../../../../../assets/app.cgf", mimeType="application/octet-stream")]
+		private static var Config:Class;
+		private var _config:ConfigVO;
 
 		private var _so:SharedObject;
 		private var _lastFileDirection:File;
@@ -24,11 +27,12 @@ package com.merlinds.miracle_tool.models {
 
 		public function AppModel() {
 			_dialogs = new <DialogVO>[];
-			_so = SharedObject.getLocal("settings");
+			_config = new ConfigVO(new Config());
+			_so = SharedObject.getLocal(_config.settingsFile);
 			if(_so.size == 0){
 				this.lastFileDirection = File.documentsDirectory;
 			}else{
-				this.lastFileDirection = new File(_so.data.lastFileDirection);
+				this.lastFileDirection = new File(_so.data[_config.lastFileDirection]);
 			}
 			super();
 		}
@@ -70,7 +74,7 @@ package com.merlinds.miracle_tool.models {
 
 		public function set lastFileDirection(value:File):void {
 			_lastFileDirection = value;
-			_so.data.lastFileDirection = _lastFileDirection.nativePath;
+			_so.data[_config.lastFileDirection] = _lastFileDirection.nativePath;
 			_so.flush();
 		}
 
