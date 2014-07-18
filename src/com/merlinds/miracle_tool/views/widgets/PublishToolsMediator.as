@@ -6,7 +6,6 @@
 package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
-	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.services.ActionService;
 
@@ -51,11 +50,7 @@ package com.merlinds.miracle_tool.views.widgets {
 		private function selectHandler(event:Event):void {
 			log(this, "selectHandler", this.viewComponent.data);
 			if(this.viewComponent.data == 0){
-				var data:Object = {
-					projectName:this.projectModel.name
-				};
-				this.actionService.addAcceptActions(new <String>[ActionEvent.PUBLISHING]);
-				this.dispatch(new DialogEvent(DialogEvent.PUBLISH_SETTINGS, data));
+				this.dispatch( new ActionEvent(ActionEvent.PUBLISHING ));
 			}else{
 				//Open preview window
 			}

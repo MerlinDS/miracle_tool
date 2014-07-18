@@ -15,7 +15,11 @@
           <sdk name="AIR 4.0" />
         </dependencies>
         <compiler-options />
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/com/merlinds/miracle_tool/Main-app.xml" package-file-name="miracle_tool" />
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/com/merlinds/miracle_tool/Main-app.xml" package-file-name="miracle_tool">
+          <files-to-package>
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/assets/png2atf.exe" path-in-package="png2atf.exe" />
+          </files-to-package>
+        </packaging-air-desktop>
         <packaging-android />
         <packaging-ios />
       </configuration>

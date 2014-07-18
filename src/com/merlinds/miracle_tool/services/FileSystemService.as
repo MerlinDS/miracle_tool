@@ -16,12 +16,14 @@ package com.merlinds.miracle_tool.services {
 	import flash.filesystem.FileStream;
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
+	import flash.utils.ByteArray;
 
 	import org.robotlegs.mvcs.Actor;
 
 	public class FileSystemService extends Actor {
 
 		public static const PROJECT_EXTENSION:String = ".mtp"; /** Miracle tools project **/
+		public static const TEXTURE_EXTENSION:String = ".mtf"; /** Miracle texture format **/
 		[Inject]
 		public var appModel:AppModel;
 		[Inject]
@@ -30,11 +32,13 @@ package com.merlinds.miracle_tool.services {
 		private var _target:File;
 		private var _output:ByteArray;
 		private var _sourceQueue:QueueFIFO;
+		private var _publishBuilder:PublishBuilder;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function FileSystemService() {
 			super();
 			_sourceQueue = new QueueFIFO();
+			_publishBuilder = new PublishBuilder();
 		}
 
 		public function readSource():void{
@@ -79,7 +83,6 @@ package com.merlinds.miracle_tool.services {
 			_output = new ByteArray();
 			//add signature
 			_output.position = 0;
-			trace(PROJECT_EXTENSION.substr(1).toUpperCase());
 			_output.writeUTFBytes(PROJECT_EXTENSION.substr(1).toUpperCase());
 			_output.position = 4;
 			_output.writeObject(data);
@@ -91,8 +94,23 @@ package com.merlinds.miracle_tool.services {
 
 		}
 
-		public function writeTexture():void{
-			log(this, "writeTexture");
+		public function writeTexture(name:String, png:ByteArray, mesh:ByteArray):void{
+			log(this, "writeTexture", name);
+			name = name + TEXTURE_EXTENSION;
+			//create file
+			_output = new ByteArray();
+			//add signature
+			_output.position = 0;
+			_output.writeUTFBytes(TEXTURE_EXTENSION.substr(1).toUpperCase());
+			_output.position = 4;
+			var meshHeaderBlocks:int = Math.ceil( mesh.length / 512 );
+			_output.writeUnsignedInt( meshHeaderBlocks );
+			_output.position = 8;
+			_output.writeBytes(mesh);
+			_output.position = meshHeaderBlocks * 512;
+			//save file
+			_target = this.appModel.lastFileDirection.resolvePath(name);
+			_publishBuilder.createATFFile(png, 0, this.publishBuilderATFHandler);
 		}
 
 		public function writeTimeline():void{
@@ -163,6 +181,12 @@ package com.merlinds.miracle_tool.services {
 			_output = null;
 			log(this, "selectProjectForSaveHandler", "Project Saved");
 			this.actionService.done();
+		}
+
+		private function publishBuilderATFHandler():void {
+			_output.writeBytes(_publishBuilder.output);
+			_target.addEventListener(Event.SELECT, this.selectProjectForSaveHandler);
+			_target.browseForSave("Publish texture");
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
