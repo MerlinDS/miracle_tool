@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.viewer {
 	import com.merlinds.miracle.Miracle;
+	import com.merlinds.miracle.display.MiracleImage;
 	import com.merlinds.miracle.utils.Asset;
 	import com.merlinds.miracle_tool.models.AppModel;
 
@@ -66,10 +67,17 @@ package com.merlinds.miracle_tool.viewer {
 			var asset:Asset = new Asset(_model.viewerInput.name, byteArray);
 			var name:String = asset.name;
 			Miracle.createScene(new <Asset>[asset], 1);
-			for(var i:int = 0; i < 100; i++){
-				Miracle.currentScene.createImage(name).moveTO(50 * i, 400);
-			}
+			Miracle.currentScene.createImage(name)
+					.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
 			Miracle.resume();
+		}
+
+		private function imageAddedToStage(event:Event):void {
+			var target:MiracleImage = event.target as MiracleImage;
+			target.moveTO(
+					this.stage.stageWidth - target.width >> 1,
+					this.stage.stageHeight - target.height >> 1
+			);
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
