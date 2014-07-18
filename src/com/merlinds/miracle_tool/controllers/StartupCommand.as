@@ -78,6 +78,7 @@ package com.merlinds.miracle_tool.controllers {
 			this.commandMap.mapEvent(EditorEvent.FILE_READ, FileDecodeCommand, EditorEvent);
 			this.commandMap.mapEvent(EditorEvent.SOURCE_ATTACHED, SWFSeparatorCommand, EditorEvent);
 			this.commandMap.mapEvent(EditorEvent.PLACE_ITEMS, PlacerCommand, EditorEvent);
+			this.commandMap.mapEvent(EditorEvent.PREVIEW, PreviewCommand, EditorEvent);
 		}
 
 		private function viewsMapping():void {

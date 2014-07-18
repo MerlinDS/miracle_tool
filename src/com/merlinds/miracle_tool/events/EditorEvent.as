@@ -20,6 +20,8 @@ package com.merlinds.miracle_tool.events {
 		//Tools
 		public static const PLACE_ITEMS:String = "EditorEvent::PLACE_ITEMS";
 		public static const SELECT_ITEM:String = "EditorEvent::SELECT_ITEM";
+		//
+		public static const PREVIEW:String = "EditorEvent::PREVIEW";
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function EditorEvent(type:String, body:* = null) {

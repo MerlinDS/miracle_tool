@@ -53,6 +53,7 @@ package com.merlinds.miracle_tool.views.widgets {
 				this.dispatch( new ActionEvent(ActionEvent.PUBLISHING ));
 			}else{
 				//Open preview window
+				this.dispatch( new EditorEvent(EditorEvent.PREVIEW))
 			}
 		}
 		//} endregion EVENTS HANDLERS ==================================================
