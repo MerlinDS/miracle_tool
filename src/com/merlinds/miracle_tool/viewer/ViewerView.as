@@ -64,8 +64,9 @@ package com.merlinds.miracle_tool.viewer {
 			stream.close();
 			//parse
 			var asset:Asset = new Asset(_model.viewerInput.name, byteArray);
+			var name:String = asset.name;
 			Miracle.createScene(new <Asset>[asset], 1);
-			Miracle.currentScene.createImage(asset.name);
+			Miracle.currentScene.createImage(name).moveTO(200, 200);
 			Miracle.resume();
 		}
 		//} endregion EVENTS HANDLERS ==================================================
