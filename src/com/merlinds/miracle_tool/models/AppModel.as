@@ -25,6 +25,8 @@ package com.merlinds.miracle_tool.models {
 		private var _dialogs:Vector.<DialogVO>;
 		private var _activeTool:String;
 
+		private var _viewerInput:File;
+
 		public function AppModel() {
 			_dialogs = new <DialogVO>[];
 			_config = new ConfigVO(new Config());
@@ -76,6 +78,14 @@ package com.merlinds.miracle_tool.models {
 			_lastFileDirection = value;
 			_so.data[_config.lastFileDirection] = _lastFileDirection.nativePath;
 			_so.flush();
+		}
+
+		public function get viewerInput():File {
+			return _viewerInput;
+		}
+
+		public function set viewerInput(value:File):void {
+			_viewerInput = value;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

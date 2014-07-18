@@ -4,35 +4,29 @@
  * Time: 17:42
  */
 package com.merlinds.miracle_tool.viewer {
-	import com.merlinds.miracle_tool.models.vo.ConfigVO;
+	import com.merlinds.miracle.Miracle;
+	import com.merlinds.miracle.utils.Asset;
+	import com.merlinds.miracle_tool.models.AppModel;
 
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
-	import flash.net.SharedObject;
 	import flash.utils.ByteArray;
 
 	[SWF(backgroundColor="0x333333", frameRate=60)]
 	public class ViewerView extends Sprite {
 
-		[Embed(source="../../../../../assets/app.cgf", mimeType="application/octet-stream")]
-		private static var Config:Class;
-		private var _config:ConfigVO;
+		private var _model:AppModel;
 
-		private var _input:File;
-		private var _mtf:ByteArray;
-
-		public function ViewerView(input:File = null, config:ConfigVO = null) {
+		public function ViewerView(model:AppModel = null) {
 			super();
-			_input = input;
-			if(config == null){
-				config = new ConfigVO(new Config());
+			_model = model;
+			if(_model == null){
+				_model = new AppModel();
 			}
-			_config = config;
 
 			this.addEventListener(Event.ADDED_TO_STAGE, this.initialize);
 		}
@@ -46,32 +40,33 @@ package com.merlinds.miracle_tool.viewer {
 			this.removeEventListener(event.type, this.initialize);
 			this.stage.scaleMode = StageScaleMode.NO_SCALE;
 			this.stage.align = StageAlign.TOP_LEFT;
-
-			//TODO: Initialize Miracle
-
-			if(_input == null){
-				var so:SharedObject = SharedObject.getLocal(_config.settingsFile);
-				if(so.size > 0){
-					_input = new File(so.data[_config.lastFileDirection]);
-				}else{
-					_input = File.documentsDirectory;
-				}
-				_input.addEventListener(Event.SELECT, this.selectFileHandler)
-				_input.browseForOpen("Open file that you want to view");
-			}
+			Miracle.start(this.stage, this.createHandler, true);
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		private function createHandler():void {
+			if(_model.viewerInput == null){
+				_model.viewerInput = _model.lastFileDirection;
+				_model.viewerInput.addEventListener(Event.SELECT, this.selectFileHandler)
+				_model.viewerInput.browseForOpen("Open file that you want to view");
+			}
+		}
+
 		private function selectFileHandler(event:Event):void {
-			_input.removeEventListener(event.type, this.selectFileHandler);
-			_mtf = new ByteArray();
+			_model.viewerInput.removeEventListener(event.type, this.selectFileHandler);
+			_model.lastFileDirection = _model.viewerInput.parent;
+			var byteArray:ByteArray = new ByteArray();
 			var stream:FileStream = new FileStream();
-			stream.open(_input, FileMode.READ);
-			stream.readBytes(_mtf);
+			stream.open(_model.viewerInput, FileMode.READ);
+			stream.readBytes(byteArray);
 			stream.close();
 			//parse
+			var asset:Asset = new Asset(_model.viewerInput.name, byteArray);
+			Miracle.createScene(new <Asset>[asset], 1);
+			Miracle.currentScene.createImage(asset.name);
+			Miracle.resume();
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 

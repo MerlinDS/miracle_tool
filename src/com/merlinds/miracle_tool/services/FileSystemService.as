@@ -107,7 +107,7 @@ package com.merlinds.miracle_tool.services {
 			_output.writeUnsignedInt( meshHeaderBlocks );
 			_output.position = 8;
 			_output.writeBytes(mesh);
-			_output.position = meshHeaderBlocks * 512;
+			_output.position = 8 + meshHeaderBlocks * 512;
 			//save file
 			_target = this.appModel.lastFileDirection.resolvePath(name);
 			_publishBuilder.createATFFile(png, 0, this.publishBuilderATFHandler);
