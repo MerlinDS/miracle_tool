@@ -90,11 +90,12 @@ package com.merlinds.miracle_tool.controllers {
 				}
 			}
 			//end
+			trace(_animation.timelines);
 		}
 
 		[Inline]
 		private function parseFrames(frames:XMLList):void {
-			log(this, "parseFrames");
+//			log(this, "parseFrames");
 			default xml namespace =  _namespace;
 			var n:int = frames.length();
 			for(var i:int = 0; i < n; i++) {
@@ -103,7 +104,6 @@ package com.merlinds.miracle_tool.controllers {
 				_currentFrame.type = frame.@tweenType;
 				this.parseElements(frame.elements.DOMSymbolInstance);
 				_currentTimeline.frames.push(_currentFrame);
-				trace(_currentFrame.toString());
 			}
 		}
 
