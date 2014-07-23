@@ -10,6 +10,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.models.vo.AnimSourcesVO;
 	import com.merlinds.miracle_tool.models.vo.AnimationVO;
+	import com.merlinds.miracle_tool.models.vo.FrameVO;
 	import com.merlinds.miracle_tool.models.vo.TimelineVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.XMLConverters;
@@ -21,16 +22,6 @@ package com.merlinds.miracle_tool.controllers {
 
 	public class AnimationConverterCommand extends Command {
 
-		private static const BLANK_TYPE:String = "blank";
-		private static const TWEEN_TYPE:String = "tween";
-		private static const MATRIX_TYPE:String = "matrix";
-		private static const MOTION_TYPE:String = "motion";
-
-		private static const TWEEN_ALL_FLAG:String = "all";
-		private static const TWEEN_POSITION_FLAG:String = "position";
-		private static const TWEEN_SCALE_FLAG:String = "scale";
-		private static const TWEEN_ROTATION_FLAG:String = "rotation";
-
 		[Inject]
 		public var projectModel:ProjectModel;
 		[Inject]
@@ -39,7 +30,10 @@ package com.merlinds.miracle_tool.controllers {
 		public var event:ActionEvent;
 
 		private var _animation:AnimationVO;
-		private var _timeline:TimelineVO;
+
+		private var _currentFrame:FrameVO;
+		private var _currentTimeline:TimelineVO;
+
 		private var _namespace:Namespace;
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -76,7 +70,7 @@ package com.merlinds.miracle_tool.controllers {
 		//{region						PRIVATE\PROTECTED METHODS
 		private function convertXML(xml:XML, name:String):void{
 			log(this, "convertXML", name);
-			_timeline = new TimelineVO(name);
+			_animation.name = name;
 			//add namespace
 			_namespace = new Namespace(xml.inScopeNamespaces()[0],
 					xml.inScopeNamespaces()[1]);
@@ -90,28 +84,26 @@ package com.merlinds.miracle_tool.controllers {
 				var child:XML = layersList[i];
 				if(child.@layerType != "folder"){//exclude Folders from parsing
 					//parse frames on layer
+					_currentTimeline = new TimelineVO();
 					this.parseFrames( child.frames.DOMFrame );
+					_animation.timelines.push(_currentTimeline);
 				}
 			}
 			//end
-			_animation.timelines.push(_timeline);
 		}
 
 		[Inline]
 		private function parseFrames(frames:XMLList):void {
 			log(this, "parseFrames");
 			default xml namespace =  _namespace;
-
 			var n:int = frames.length();
 			for(var i:int = 0; i < n; i++) {
 				var frame:XML = frames[i];
-				var duration:int = frame.@duration;
-				var index:int = frame.@index;
-				trace("Frame duration =", duration, "; index =", index);
-				if(frame.@tweenType == MOTION_TYPE){
-					trace("Has classic motion");
-				}
+				_currentFrame = new FrameVO(frame.@index, frame.@duration);
+				_currentFrame.type = frame.@tweenType;
 				this.parseElements(frame.elements.DOMSymbolInstance);
+				_currentTimeline.frames.push(_currentFrame);
+				trace(_currentFrame.toString());
 			}
 		}
 
@@ -122,14 +114,13 @@ package com.merlinds.miracle_tool.controllers {
 			var n:int = elements.length();
 			for(var i:int = 0; i < n; i++) {
 				var element:XML = elements[i];
-				var elementName:String = element.@libraryItemName;
+				_currentFrame.name = element.@libraryItemName;
 				//get element matrix
-				var matrix:Matrix = XMLConverters.convertToObject(element.matrix.Matrix, Matrix);
-				var transformationPoint:Point = XMLConverters.convertToObject(
+				_currentFrame.matrix = XMLConverters.convertToObject(element.matrix.Matrix, Matrix);
+				_currentFrame.transformationPoint = XMLConverters.convertToObject(
 						element.transformationPoint.Point, Point);
 
-				//TODO add colors multipliers
-				trace(elementName, matrix, transformationPoint);
+				//TODO add colors multipliers, create vo for colors
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================

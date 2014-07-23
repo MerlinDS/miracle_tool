@@ -9,6 +9,7 @@ package com.merlinds.miracle_tool.models.vo {
 	public class AnimationVO {
 
 		private var _file:File;
+		private var _name:String;
 		private var _timelines:Vector.<TimelineVO>;
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -35,6 +36,14 @@ package com.merlinds.miracle_tool.models.vo {
 
 		public function get timelines():Vector.<TimelineVO> {
 			return _timelines;
+		}
+
+		public function get name():String {
+			return _name;
+		}
+
+		public function set name(value:String):void {
+			_name = value;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================
