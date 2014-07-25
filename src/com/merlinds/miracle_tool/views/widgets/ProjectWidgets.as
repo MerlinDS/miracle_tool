@@ -26,7 +26,7 @@ package com.merlinds.miracle_tool.views.widgets {
 			new ProjectInfoView(this).draggable = false;
 			new ItemInfoView(this).draggable = false;
 			new SheetToolsView(this).draggable = false;
-			new PublishToolsView(this).draggable = false;
+			new AnimationToolsView(this).draggable = false;
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 

@@ -22,6 +22,7 @@ package com.merlinds.miracle_tool.events {
 		public static const SELECT_ITEM:String = "EditorEvent::SELECT_ITEM";
 		//
 		public static const PREVIEW:String = "EditorEvent::PREVIEW";
+		public static const SELECT_SHEETS:String = "EditorEvent::SELECT_SHEETS";
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function EditorEvent(type:String, body:* = null) {

@@ -91,6 +91,7 @@ package com.merlinds.miracle_tool.views.widgets {
 				source.selected = source.name == this.viewComponent.data;
 			}
 			this.dispatch(new EditorEvent(EditorEvent.SELECT_ITEM));
+			this.dispatch(new EditorEvent(EditorEvent.SELECT_SHEETS, this.viewComponent.data));
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
