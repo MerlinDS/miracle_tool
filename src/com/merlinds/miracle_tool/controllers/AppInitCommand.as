@@ -47,8 +47,8 @@ package com.merlinds.miracle_tool.controllers {
 			this.mapAction(SaveProjectCommand, ActionEvent, ActionEvent.SAVE_PROJECT, "Save As...");
 			this.mapAction(OpenSettingCommand, ActionEvent, ActionEvent.OPEN_SETTINGS, "Settings...");
 			this.mapAction(OpenHelpCommand, ActionEvent, ActionEvent.OPEN_HELP, "Help...");
+			this.mapAction(PublishCommand, ActionEvent, ActionEvent.PUBLISHING, "Publish", true, true);
 			this.mapAction(AnimationConverterCommand, ActionEvent, ActionEvent.ANIMATION_ATTACH, null, false);
-			this.mapAction(PublishCommand, ActionEvent, ActionEvent.PUBLISHING, null, false);
 		}
 
 		private function initializeDialogs():void {
@@ -59,9 +59,9 @@ package com.merlinds.miracle_tool.controllers {
 		}
 		//utilities
 		[Inline]
-		private function mapAction(command:Class, event:Class, type:String, title:String, inMenu:Boolean = true):void {
+		private function mapAction(command:Class, event:Class, type:String, title:String, inMenu:Boolean = true, onProject:Boolean = false):void {
 			this.commandMap.mapEvent(type, command, event);
-			this.actionService.actions.push(new ActionVO(title, event, type, inMenu));
+			this.actionService.actions.push(new ActionVO(title, event, type, inMenu, onProject));
 		}
 
 		[Inline]

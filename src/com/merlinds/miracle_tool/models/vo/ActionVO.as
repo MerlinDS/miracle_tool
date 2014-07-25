@@ -10,14 +10,17 @@ package com.merlinds.miracle_tool.models.vo {
 		private var _event:Class;
 		private var _type:String;
 		private var _inMenu:Boolean;
+
+		private var _onProject:Boolean;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 
-		public function ActionVO(title:String, event:Class, type:String, inMenu:Boolean = false) {
+		public function ActionVO(title:String, event:Class, type:String, inMenu:Boolean = false, onProject:Boolean = false) {
 			_title = title;
 			_event = event;
 			_type = type;
 			_inMenu = inMenu;
+			_onProject = onProject;
 		}
 
 		public function toString():String {
@@ -50,6 +53,14 @@ package com.merlinds.miracle_tool.models.vo {
 
 		public function get inMenu():Boolean {
 			return _inMenu;
+		}
+
+		public function get onProject():Boolean {
+			return _onProject;
+		}
+
+		public function set onProject(value:Boolean):void {
+			_onProject = value;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================
