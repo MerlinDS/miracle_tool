@@ -43,19 +43,22 @@ package com.merlinds.miracle_tool.models {
 			super();
 		}
 
-		public function addSource(file:File):void {
+		public function addSource(file:File):SourceVO {
+			var source:SourceVO;
 			var n:int = _sources.length;
 			for(var i:int = 0; i < n; i++){
-				var source:SourceVO = _sources[i];
+				 source = _sources[i];
 				if(source.file.nativePath == file.nativePath)break;
 			}
 			if(i >= n){
-				_sources.push(new SourceVO(file));
+				source = new SourceVO(file);
+				_sources.push(source);
 			}else
 			{
 				//TODO update exist source
 			}
 			_inProgress = i;
+			return source;
 		}
 
 		public function addAnimation(file:File):void {
