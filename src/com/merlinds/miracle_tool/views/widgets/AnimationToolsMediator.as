@@ -7,6 +7,7 @@ package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.models.vo.AnimationVO;
+	import com.merlinds.miracle_tool.models.vo.SourceVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 
@@ -44,12 +45,20 @@ package com.merlinds.miracle_tool.views.widgets {
 		//{region						PRIVATE\PROTECTED METHODS
 		private function editorHandler(event:EditorEvent):void {
 			var name:String = event.body;
-			if(event.type == EditorEvent.SELECT_SHEETS){
-				this.viewComponent.enabled = name != null;
-			}else if(event.type == EditorEvent.ANIMATION_ATTACHED){
+			if(event.type == EditorEvent.SELECT_SHEETS || event.type == EditorEvent.ANIMATION_ATTACHED){
 				this.viewComponent.enabled = true;
-				var animationVO:AnimationVO = this.projectModel.animationInProgress;
-				this.viewComponent.data = animationVO.name;
+				var animations:Array = [];
+				var n:int = this.projectModel.sources.length;
+				for(var i:int = 0; i < n; i++){
+					var sourceVO:SourceVO = this.projectModel.sources[i];
+					if(sourceVO.name == event.body){
+						var m:int = sourceVO.animations.length;
+						for(var j:int = 0; j < m; j++){
+							animations.push(sourceVO.animations[j].name);
+						}
+					}
+				}
+				this.viewComponent.data = animations;
 			}else{
 				this.viewComponent.enabled = false;
 			}

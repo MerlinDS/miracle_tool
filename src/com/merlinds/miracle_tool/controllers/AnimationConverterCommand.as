@@ -62,7 +62,7 @@ package com.merlinds.miracle_tool.controllers {
 					}
 					this.convertXML(data[name] as XML, name);
 				}
-				this.dispatch(new EditorEvent(EditorEvent.ANIMATION_ATTACHED));
+				this.dispatch(new EditorEvent(EditorEvent.ANIMATION_ATTACHED, this.projectModel.animationInProgress.name));
 			}
 		}
 

@@ -56,7 +56,10 @@ package com.merlinds.miracle_tool.views.widgets {
 			super.data = value;
 			if(value != null){
 				_removeButton.enabled = true;
-				_list.addItem(value);
+				_list.removeAll();
+				while(value.length){
+					_list.addItem(value.shift());
+				}
 			}
 		}
 
