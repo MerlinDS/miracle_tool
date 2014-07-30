@@ -44,7 +44,6 @@ package com.merlinds.miracle_tool.views.widgets {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		private function editorHandler(event:EditorEvent):void {
-			var name:String = event.body;
 			if(event.type == EditorEvent.SELECT_SHEETS || event.type == EditorEvent.ANIMATION_ATTACHED){
 				this.viewComponent.enabled = true;
 				var animations:Array = [];

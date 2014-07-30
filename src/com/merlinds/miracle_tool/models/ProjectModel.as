@@ -63,12 +63,12 @@ package com.merlinds.miracle_tool.models {
 
 		public function addAnimation(file:File):void {
 			var source:SourceVO = this.selected;
-			var n:int = source.animations.length;
+			/*var n:int = source.animations.length;
 			for(var i:int = 0; i < n; i++){
 				var animation:AnimationVO = source.animations[i];
 				if(animation.file.nativePath == file.nativePath)break;
-			}
-			_animationInProgress = source.animations[i] =new AnimationVO(file);
+			}*/
+			_animationInProgress = source.animations[source.animations.length] =new AnimationVO(file);
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -127,6 +127,10 @@ package com.merlinds.miracle_tool.models {
 
 		public function get animationInProgress():AnimationVO {
 			return _animationInProgress;
+		}
+
+		public function set animationInProgress(value:AnimationVO):void {
+			_animationInProgress = value;
 		}
 
 		public function get boundsOffset():int {

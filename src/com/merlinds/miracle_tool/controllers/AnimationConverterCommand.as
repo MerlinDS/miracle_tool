@@ -53,6 +53,7 @@ package com.merlinds.miracle_tool.controllers {
 				this.projectModel.tempData = null;
 				data.chosen.push(this.event.body["list"]);
 				_animation = this.projectModel.animationInProgress;
+				this.projectModel.animationInProgress = null;
 				var name:String;
 				while(data.chosen.length > 0){
 					name = data.chosen.pop();
@@ -62,7 +63,8 @@ package com.merlinds.miracle_tool.controllers {
 					}
 					this.convertXML(data[name] as XML, name);
 				}
-				this.dispatch(new EditorEvent(EditorEvent.ANIMATION_ATTACHED, this.projectModel.animationInProgress.name));
+				this.dispatch(new EditorEvent(EditorEvent.ANIMATION_ATTACHED, this.projectModel.selected.name));
+
 			}
 		}
 
