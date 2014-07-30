@@ -7,6 +7,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
+	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.models.vo.AnimSourcesVO;
 	import com.merlinds.miracle_tool.models.vo.AnimationVO;
@@ -61,6 +62,7 @@ package com.merlinds.miracle_tool.controllers {
 					}
 					this.convertXML(data[name] as XML, name);
 				}
+				this.dispatch(new EditorEvent(EditorEvent.ANIMATION_ATTACHED));
 			}
 		}
 

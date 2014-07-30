@@ -20,7 +20,7 @@ package com.merlinds.miracle_tool.views.widgets {
 		private var _size:Label;
 		private var _numElements:Label;
 		private var _sourceAttach:PushButton;
-		private var _animationAttach:PushButton;
+		//private var _animationAttach:PushButton;
 		private var _data:Object;
 
 		private var _vo:SheetToolsVO;
@@ -31,7 +31,7 @@ package com.merlinds.miracle_tool.views.widgets {
 		}
 
 		public function cancel():void {
-			_animationAttach.enabled = false;
+			//_animationAttach.enabled = false;
 		}
 		//} endregion PUBLIC METHODS ===================================================
 
@@ -41,14 +41,14 @@ package com.merlinds.miracle_tool.views.widgets {
 			_sources = new List(this, 0, 0);
 			_sources.addEventListener(Event.SELECT, this.selectHandler);
 			_sourceAttach = new PushButton(this, 0, 0, "Attach new texture", this.buttonHandler);
-			_animationAttach = new PushButton(this, 0, 0, "Attach new animation", this.buttonHandler);
+//			_animationAttach = new PushButton(this, 0, 0, "Attach new animation", this.buttonHandler);
 			var line:HBox = new HBox(this);
 			new Label(line, 0, 0, "Sheet size =");
 			_size = new Label(line, 0, 0, "2048x2048");
 			line = new HBox(this);
 			new Label(line, 0, 0, "Elements =");
 			_numElements = new Label(line);
-			this.height += 130;
+			this.height += 100;
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
@@ -63,7 +63,7 @@ package com.merlinds.miracle_tool.views.widgets {
 			var numElements:int = _vo.numElements[ _sources.selectedIndex ];
 			_numElements.text = numElements.toString();
 			_data = _sources.selectedItem;
-			_animationAttach.enabled = true;
+//			_animationAttach.enabled = true;
 			this.dispatchEvent(new Event(Event.SELECT_ALL));
 		}
 		//} endregion EVENTS HANDLERS ==================================================
@@ -82,7 +82,7 @@ package com.merlinds.miracle_tool.views.widgets {
 				}
 				if(_sources.items.length == 0){
 					_sources.enabled = false;
-					_animationAttach.enabled = false;
+//					_animationAttach.enabled = false;
 				}else{
 					_sources.enabled = true;
 				}
