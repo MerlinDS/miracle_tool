@@ -4,6 +4,10 @@
  * Time: 17:42
  */
 package com.merlinds.miracle_tool.viewer {
+	import com.bit101.components.List;
+	import com.bit101.components.List;
+	import com.bit101.components.Window;
+	import com.merlinds.debug.log;
 	import com.merlinds.miracle.Miracle;
 	import com.merlinds.miracle.display.MiracleImage;
 	import com.merlinds.miracle.utils.Asset;
@@ -21,6 +25,8 @@ package com.merlinds.miracle_tool.viewer {
 	public class ViewerView extends Sprite {
 
 		private var _model:AppModel;
+		private var _assets:Vector.<Asset>;
+		private var _window:Window;
 
 		public function ViewerView(model:AppModel = null) {
 			super();
@@ -43,15 +49,44 @@ package com.merlinds.miracle_tool.viewer {
 			this.stage.align = StageAlign.TOP_LEFT;
 			Miracle.start(this.stage, this.createHandler, true);
 		}
+
+		private function choseAnimation():void {
+			//find animation asset and add all of animations to chose list
+			var n:int = _assets.length;
+			for(var i:int = 0; i < n; i++){
+				var asset:Asset = _assets[i];
+				if(asset.type == Asset.TEXTURE_TYPE){
+					//parse output
+					_window = new Window(this, 0, 0, "Chose mesh");
+					var list:List = new List(_window, 0, 0, this.getTexture(asset.output));
+					_window.x = this.stage.stageWidth - _window.width >> 1;
+					_window.y = this.stage.stageHeight - _window.height >> 1;
+					list.addEventListener(Event.SELECT, this.selectAnimationHandler);
+				}
+			}
+
+		}
+
+		private function getTexture(bytes:ByteArray):Array {
+			var result:Array = [1, 2, 3];
+			return result;
+		}
+
+		private function getAnimations(bytes:ByteArray):Array {
+			var result:Array = [1, 2, 3];
+			return result;
+		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
-		private function createHandler():void {
-			if(_model.viewerInput == null){
+		private function createHandler(animation:Boolean = false):void {
+			//TODO: Show view if it exit
+			if(animation || _model.viewerInput == null){
 				_model.viewerInput = _model.lastFileDirection;
-				_model.viewerInput.addEventListener(Event.SELECT, this.selectFileHandler)
-				_model.viewerInput.browseForOpen("Open file that you want to view");
+				_model.viewerInput.addEventListener(Event.SELECT, this.selectFileHandler);
+				_model.viewerInput.browseForOpen("Open " + animation ? "Animation" : "Sprite"
+						+ "file that you want to view");
 			}
 		}
 
@@ -64,12 +99,28 @@ package com.merlinds.miracle_tool.viewer {
 			stream.readBytes(byteArray);
 			stream.close();
 			//parse
-			var asset:Asset = new Asset(_model.viewerInput.name, byteArray);
-			var name:String = asset.name;
-			Miracle.createScene(new <Asset>[asset], 1);
+			if(_assets == null)_assets = new <Asset>[];
+			_assets.push(new Asset(_model.viewerInput.name, byteArray));
+//			var name:String = asset.name;
+			if(_assets.length > 1){
+				this.choseAnimation();
+				Miracle.createScene(_assets, 1);
+				Miracle.resume();
+			}else{
+				this.createHandler(true);
+			}
+		}
+
+		private function selectAnimationHandler(event:Event):void {
+			var list:List = event.target as List;
+			list.removeEventListener(event.type, this.selectAnimationHandler);
+			log(this, "selectAnimationHandler", list.selectedItem);
+			this.removeChild(_window);
+			_window = null;
+			//add animation to miracle
+			var name:String = list.selectedItem.toString();
 			Miracle.currentScene.createImage(name)
-					.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
-			Miracle.resume();
+			 .addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
 		}
 
 		private function imageAddedToStage(event:Event):void {
