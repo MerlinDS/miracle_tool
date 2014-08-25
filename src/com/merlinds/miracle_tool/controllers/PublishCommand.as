@@ -106,21 +106,25 @@ package com.merlinds.miracle_tool.controllers {
 
 		private function createAnimationOutput(animationVO:AnimationVO):Object {
 			var data:Object = { name:animationVO.name.substr(0, -4), // name of the mesh
-				frames:[]};//list of matrixes
+				timeline:[]};//list of matrixes
 			var n:int = animationVO.timelines.length;
 			//find matrixes sequence for current animation
 			for(var i:int = 0; i < n; i++){
 				var timelineVO:TimelineVO = animationVO.timelines[i];
 				var m:int = timelineVO.frames.length;
+				var polygon:Object = {name:"", frames:[]};
+
 				for(var j:int = 0; j < m; j++){
 					var frameVO:FrameVO = timelineVO.frames[j];
 					var animationMatrix:AnimationMatrix = new AnimationMatrix()
 					animationMatrix.t = 1 / frameVO.duration;
 					animationMatrix.tx = frameVO.matrix.tx;
 					animationMatrix.ty = frameVO.matrix.ty;
-					animationMatrix.mesh = frameVO.name;
-					data.frames.push(animationMatrix);
+					//TODO: change timeline if polygon name changes
+					polygon.name = frameVO.name;
+					polygon.frames.push(animationMatrix);
 				}
+				data.timeline.push(polygon);
 			}
 			return data;
 
@@ -140,6 +144,5 @@ class AnimationMatrix{
 	public var t:Number;//time multiplier, for formula (1 - t) * P0 + P1 * t
 	public var tx:Number;
 	public var ty:Number;
-	public var mesh:String;
 	//TODO add else parameters
 }
