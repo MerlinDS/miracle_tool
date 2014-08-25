@@ -52,7 +52,7 @@ package com.merlinds.miracle_tool.models.vo {
 		}
 
 		public function get duration():int {
-			return _duration;
+			return _duration == 0 ? 1 : _duration;
 		}
 
 		public function get type():String {

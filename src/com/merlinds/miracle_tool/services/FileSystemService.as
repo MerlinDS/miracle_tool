@@ -24,6 +24,7 @@ package com.merlinds.miracle_tool.services {
 
 		public static const PROJECT_EXTENSION:String = ".mtp"; /** Miracle tools project **/
 		public static const TEXTURE_EXTENSION:String = ".mtf"; /** Miracle texture format **/
+		public static const ANIMATION_EXTENSION:String = ".maf"; /** Miracle animation format **/
 		[Inject]
 		public var appModel:AppModel;
 		[Inject]
@@ -33,10 +34,12 @@ package com.merlinds.miracle_tool.services {
 		private var _output:ByteArray;
 		private var _sourceQueue:QueueFIFO;
 		private var _publishBuilder:PublishBuilder;
+		private var _queue:QueueFIFO;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function FileSystemService() {
 			super();
+			_queue = new QueueFIFO();
 			_sourceQueue = new QueueFIFO();
 			_publishBuilder = new PublishBuilder();
 		}
@@ -113,8 +116,14 @@ package com.merlinds.miracle_tool.services {
 			_publishBuilder.createATFFile(png, 0, this.publishBuilderATFHandler);
 		}
 
-		public function writeTimeline():void{
-			log(this, "writeTimeline");
+		public function writeAnimation(animation:ByteArray):void{
+			var output:ByteArray = new ByteArray();
+			//add signature
+			output.position = 0;
+			output.writeUTFBytes(ANIMATION_EXTENSION.substr(1).toUpperCase());
+			output.position = 4;
+			output.writeBytes(animation);
+			_queue.push(output);
 		}
 
 		public function clear():void {
@@ -179,6 +188,13 @@ package com.merlinds.miracle_tool.services {
 			fileStream.close();
 			_output.clear();
 			_output = null;
+			if(!_queue.empty){
+				_output = _queue.pop();
+				var name:String = _target.name.replace(TEXTURE_EXTENSION, ANIMATION_EXTENSION);
+				_target = this.appModel.lastFileDirection.resolvePath(name);
+				_target.addEventListener(Event.SELECT, this.selectProjectForSaveHandler);
+				_target.browseForSave("Publish animation");
+			}
 			log(this, "selectProjectForSaveHandler", "Project Saved");
 			this.actionService.done();
 		}

@@ -8,8 +8,11 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
+	import com.merlinds.miracle_tool.models.vo.AnimationVO;
 	import com.merlinds.miracle_tool.models.vo.ElementVO;
+	import com.merlinds.miracle_tool.models.vo.FrameVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
+	import com.merlinds.miracle_tool.models.vo.TimelineVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.utils.MeshUtils;
@@ -38,6 +41,7 @@ package com.merlinds.miracle_tool.controllers {
 
 		private var _mesh:ByteArray;
 		private var _png:ByteArray;
+		private var _animations:ByteArray;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function PublishCommand() {
@@ -56,7 +60,7 @@ package com.merlinds.miracle_tool.controllers {
 				var  projectName:String = event.body.projectName;
 				this.createOutput();
 				this.fileSystemService.writeTexture(projectName, _png, _mesh);
-//				this.fileSystemService.writeTimeline();
+				this.fileSystemService.writeAnimation(_animations);
 			}
 		}
 
@@ -85,12 +89,42 @@ package com.merlinds.miracle_tool.controllers {
 						indexes:element.indexes
 					});
 				}
+				//get animation
+				m = source.animations.length;
+				var animations:Array = [];
+				for(j = 0; j < m; j++){
+					var animation:Object = this.createAnimationOutput(source.animations[j]);
+					animations.push(animation);
+				}
 			}
 			_mesh = new ByteArray();
 			_mesh.writeObject(mesh);
 			_png = PNGEncoder.encode(buffer);
+			_animations = new ByteArray();
+			_animations.writeObject(animations);
 		}
 
+		private function createAnimationOutput(animationVO:AnimationVO):Object {
+			var data:Object = { name:animationVO.name.substr(0, -4), // name of the mesh
+				frames:[]};//list of matrixes
+			var n:int = animationVO.timelines.length;
+			//find matrixes sequence for current animation
+			for(var i:int = 0; i < n; i++){
+				var timelineVO:TimelineVO = animationVO.timelines[i];
+				var m:int = timelineVO.frames.length;
+				for(var j:int = 0; j < m; j++){
+					var frameVO:FrameVO = timelineVO.frames[j];
+					var animationMatrix:AnimationMatrix = new AnimationMatrix()
+					animationMatrix.t = 1 / frameVO.duration;
+					animationMatrix.tx = frameVO.matrix.tx;
+					animationMatrix.ty = frameVO.matrix.ty;
+					animationMatrix.mesh = frameVO.name;
+					data.frames.push(animationMatrix);
+				}
+			}
+			return data;
+
+		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
@@ -101,4 +135,11 @@ package com.merlinds.miracle_tool.controllers {
 		//{region							GETTERS/SETTERS
 		//} endregion GETTERS/SETTERS ==================================================
 	}
+}
+class AnimationMatrix{
+	public var t:Number;//time multiplier, for formula (1 - t) * P0 + P1 * t
+	public var tx:Number;
+	public var ty:Number;
+	public var mesh:String;
+	//TODO add else parameters
 }
