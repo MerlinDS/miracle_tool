@@ -11,6 +11,7 @@ package com.merlinds.miracle_tool.viewer {
 	import com.merlinds.miracle.Miracle;
 	import com.merlinds.miracle.display.MiracleImage;
 	import com.merlinds.miracle.utils.Asset;
+	import com.merlinds.miracle.utils.MafReader;
 	import com.merlinds.miracle.utils.MtfReader;
 	import com.merlinds.miracle_tool.models.AppModel;
 
@@ -69,7 +70,12 @@ package com.merlinds.miracle_tool.viewer {
 
 		private function getAnimations(bytes:ByteArray):Array {
 			var result:Array = [];
-
+			var reader:MafReader = new MafReader();
+			reader.execute(bytes);
+			var animations:Vector.<Object> = reader.animations;
+			for each(var animation:Object in animations){
+				result.push(animation.name);
+			}
 			return result;
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
