@@ -5,14 +5,11 @@
  */
 package com.merlinds.miracle_tool.viewer {
 	import com.bit101.components.List;
-	import com.bit101.components.List;
 	import com.bit101.components.Window;
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle.Miracle;
 	import com.merlinds.miracle.display.MiracleImage;
 	import com.merlinds.miracle.utils.Asset;
-	import com.merlinds.miracle.utils.MafReader;
-	import com.merlinds.miracle.utils.MtfReader;
 	import com.merlinds.miracle_tool.models.AppModel;
 
 	import flash.display.Sprite;
@@ -70,12 +67,12 @@ package com.merlinds.miracle_tool.viewer {
 
 		private function getAnimations(bytes:ByteArray):Array {
 			var result:Array = [];
-			var reader:MafReader = new MafReader();
+			/*var reader:MafReader = new MafReader();
 			reader.execute(bytes);
 			var animations:Vector.<Object> = reader.animations;
 			for each(var animation:Object in animations){
 				result.push(animation.name);
-			}
+			}*/
 			return result;
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
@@ -121,10 +118,9 @@ package com.merlinds.miracle_tool.viewer {
 
 		private function selectAnimationHandler(event:Event):void {
 			var list:List = event.target as List;
-			log(this, "selectAnimationHandler", list.selectedItem);
 			//add animation to miracle
 			var name:String = list.selectedItem.toString();
-
+			log(this, "selectAnimationHandler", name);
 		}
 
 		private function imageAddedToStage(event:Event):void {

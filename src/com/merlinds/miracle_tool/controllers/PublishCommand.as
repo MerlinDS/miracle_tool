@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
+	import com.merlinds.miracle.meshes.MeshMatrix;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
@@ -16,10 +17,6 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.utils.MeshUtils;
-
-	import flash.debugger.enterDebugger;
-
-	import flash.display.Bitmap;
 
 	import flash.display.BitmapData;
 	import flash.geom.Point;
@@ -106,28 +103,42 @@ package com.merlinds.miracle_tool.controllers {
 
 		private function createAnimationOutput(animationVO:AnimationVO):Object {
 			var data:Object = { name:animationVO.name.substr(0, -4), // name of the mesh
-				timeline:[]};//list of matrixes
+				layers:[]};
 			var n:int = animationVO.timelines.length;
-			//find matrixes sequence for current animation
+			//find matrix sequence for current animation
 			for(var i:int = 0; i < n; i++){
 				var timelineVO:TimelineVO = animationVO.timelines[i];
 				var m:int = timelineVO.frames.length;
-				var polygon:Object = {name:"", frames:[]};
-
+				var layer:Layer = new Layer();
 				for(var j:int = 0; j < m; j++){
 					var frameVO:FrameVO = timelineVO.frames[j];
-					var animationMatrix:AnimationMatrix = new AnimationMatrix()
-					animationMatrix.t = 1 / frameVO.duration;
-					animationMatrix.tx = frameVO.matrix.tx;
-					animationMatrix.ty = frameVO.matrix.ty;
-					//TODO: change timeline if polygon name changes
-					polygon.name = frameVO.name;
-					polygon.frames.push(animationMatrix);
+					//create mesh
+					var mesh:MeshMatrix = frameVO.matrix != null ? new MeshMatrix( 0, 0,
+							frameVO.matrix.tx,
+							frameVO.matrix.ty
+							//TODO calculate scale and skew
+						) : null;
+					var index:int = mesh == null ? -1 : layer.meshes.push(mesh);
+					var framesArray:Array = this.createFramesInfo(index, frameVO.name, frameVO.duration);
+					layer.frames = layer.frames.concat(framesArray);
 				}
-				data.timeline.push(polygon);
+				data.layers.push(layer);
 			}
 			return data;
+		}
 
+		[Inline]
+		private function createFramesInfo(meshIndex:int, polygonName:String, duration:int):Array {
+			var result:Array = new Array(duration);
+			var t:Number = 1 / (duration - 1);
+			for(var i:int = 0; i < duration; i++){
+				var frameInfoData:FrameInfoData = new FrameInfoData();
+				frameInfoData.meshIndex = meshIndex;
+				frameInfoData.polygonName = polygonName;
+				frameInfoData.t = t * i;
+				result[i] = frameInfoData;
+			}
+			return result;
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
@@ -140,9 +151,18 @@ package com.merlinds.miracle_tool.controllers {
 		//} endregion GETTERS/SETTERS ==================================================
 	}
 }
-class AnimationMatrix{
-	public var t:Number;//time multiplier, for formula (1 - t) * P0 + P1 * t
-	public var tx:Number;
-	public var ty:Number;
-	//TODO add else parameters
+class Layer{
+	public var meshes:Array;
+	public var frames:Array;
+
+	public function Layer() {
+		this.frames = [];
+		this.meshes = [];
+	}
+}
+
+class FrameInfoData{
+	public var polygonName:String;
+	public var meshIndex:int;
+	public var t:Number;
 }
