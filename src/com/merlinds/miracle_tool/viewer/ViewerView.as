@@ -8,7 +8,7 @@ package com.merlinds.miracle_tool.viewer {
 	import com.bit101.components.Window;
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle.Miracle;
-	import com.merlinds.miracle.animations.Animation;
+	import com.merlinds.miracle.animations.AnimationHelper;
 	import com.merlinds.miracle.display.MiracleDisplayObject;
 	import com.merlinds.miracle.display.MiracleImage;
 	import com.merlinds.miracle.utils.Asset;
@@ -73,8 +73,8 @@ package com.merlinds.miracle_tool.viewer {
 			var result:Array = [];
 			var reader:MafReader = new MafReader();
 			reader.execute(bytes);
-			var animations:Vector.<Animation> = reader.animations;
-			for each(var animation:Animation in animations){
+			var animations:Vector.<AnimationHelper> = reader.animations;
+			for each(var animation:AnimationHelper in animations){
 				result.push(animation.name);
 			}
 			return result;
