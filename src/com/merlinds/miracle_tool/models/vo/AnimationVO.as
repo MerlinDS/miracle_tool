@@ -10,6 +10,7 @@ package com.merlinds.miracle_tool.models.vo {
 
 		private var _file:File;
 		private var _name:String;
+		private var _totalFrames:int;
 		private var _timelines:Vector.<TimelineVO>;
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -44,6 +45,15 @@ package com.merlinds.miracle_tool.models.vo {
 
 		public function set name(value:String):void {
 			_name = value;
+		}
+
+
+		public function get totalFrames():int {
+			return _totalFrames;
+		}
+
+		public function set totalFrames(value:int):void {
+			_totalFrames = value;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================
