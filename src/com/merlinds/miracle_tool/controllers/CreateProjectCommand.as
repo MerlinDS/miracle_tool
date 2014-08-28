@@ -113,13 +113,13 @@ package com.merlinds.miracle_tool.controllers {
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 		private function object2Matrix(data:Object):Matrix{
-			return new Matrix(
+			return data == null ? null : new Matrix(
 					data.a, data.b, data.c, data.d, data.tx, data.ty
 			);
 		}
 
 		private function object2Point(data:Object):Point{
-			return new Point(data.x, data.y);
+			return data == null ? null : new Point(data.x, data.y);
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 

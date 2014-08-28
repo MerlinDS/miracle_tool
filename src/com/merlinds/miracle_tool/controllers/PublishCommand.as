@@ -119,24 +119,33 @@ package com.merlinds.miracle_tool.controllers {
 							//TODO calculate scale and skew
 						) : null;
 					var index:int = mesh == null ? -1 : layer.meshes.push(mesh);
-					var framesArray:Array = this.createFramesInfo(index, frameVO.name, frameVO.duration);
+					var framesArray:Array = this.createFramesInfo(index, frameVO.name,
+							frameVO.duration, frameVO.type == "motion");
 					layer.frames = layer.frames.concat(framesArray);
 				}
 				data.layers.push(layer);
 			}
+			trace(JSON.stringify(data));
 			return data;
 		}
 
 		[Inline]
-		private function createFramesInfo(meshIndex:int, polygonName:String, duration:int):Array {
+		private function createFramesInfo(meshIndex:int, polygonName:String,
+		                                  duration:int, motion:Boolean):Array {
 			var result:Array = new Array(duration);
-			var t:Number = 1 / (duration - 1);
-			for(var i:int = 0; i < duration; i++){
-				var frameInfoData:FrameInfoData = new FrameInfoData();
-				frameInfoData.meshIndex = meshIndex;
-				frameInfoData.polygonName = polygonName;
-				frameInfoData.t = t * i;
-				result[i] = frameInfoData;
+			if(duration < 2){
+				motion = false;
+			}
+			if(meshIndex > -1){
+				var t:Number = 1 / (duration - 1);
+				for(var i:int = 0; i < duration; i++){
+					var frameInfoData:FrameInfoData = new FrameInfoData();
+					frameInfoData.meshIndex = meshIndex;
+					frameInfoData.polygonName = polygonName;
+					frameInfoData.motion = motion;
+					frameInfoData.t = motion ? t * i : 0;
+					result[i] = frameInfoData;
+				}
 			}
 			return result;
 		}
@@ -163,6 +172,7 @@ class Layer{
 
 class FrameInfoData{
 	public var polygonName:String;
+	public var motion:Boolean;
 	public var meshIndex:int;
 	public var t:Number;
 }
