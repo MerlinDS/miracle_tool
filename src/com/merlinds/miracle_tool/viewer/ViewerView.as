@@ -9,6 +9,7 @@ package com.merlinds.miracle_tool.viewer {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle.Miracle;
 	import com.merlinds.miracle.animations.Animation;
+	import com.merlinds.miracle.display.MiracleDisplayObject;
 	import com.merlinds.miracle.display.MiracleImage;
 	import com.merlinds.miracle.utils.Asset;
 	import com.merlinds.miracle.utils.MafReader;
@@ -111,8 +112,6 @@ package com.merlinds.miracle_tool.viewer {
 			if(_assets.length > 1){
 				this.choseAnimation();
 				Miracle.createScene(_assets, 1);
-				Miracle.currentScene.createImage(_name)
-						.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
 				Miracle.resume();
 			}else{
 				this.createHandler(true);
@@ -122,12 +121,14 @@ package com.merlinds.miracle_tool.viewer {
 		private function selectAnimationHandler(event:Event):void {
 			var list:List = event.target as List;
 			//add animation to miracle
-			var name:String = list.selectedItem.toString();
-			log(this, "selectAnimationHandler", name);
+			var animation:String = list.selectedItem.toString();
+			log(this, "selectAnimationHandler", animation);
+			Miracle.currentScene.createAnimation(_name, animation)
+					.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
 		}
 
 		private function imageAddedToStage(event:Event):void {
-			var target:MiracleImage = event.target as MiracleImage;
+			var target:MiracleDisplayObject = event.target as MiracleDisplayObject;
 			target.moveTO(
 					this.stage.stageWidth - target.width >> 1,
 					this.stage.stageHeight - target.height >> 1
