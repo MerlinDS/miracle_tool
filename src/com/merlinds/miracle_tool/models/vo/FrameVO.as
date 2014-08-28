@@ -71,6 +71,10 @@ package com.merlinds.miracle_tool.models.vo {
 		}
 
 		public function set name(value:String):void {
+			var delim:int = value.lastIndexOf("/");
+			if(delim > -1){
+				value = value.substr(delim + 1);
+			}
 			_name = value;
 		}
 

@@ -53,8 +53,10 @@ package com.merlinds.miracle_tool.services {
 				for(var i:int = 0; i < n; i++){
 					var entry:ZipEntry = zip.entries[i];
 					if(!entry.isDirectory() && entry.name.search(LIBRARY) > -1){
-						result [ entry.name.substr(LIBRARY.length) ] =
-						this.decodeAnimation(zip.getInput(entry), true);
+						if(entry.name.search(".xml") > -1){
+							result [ entry.name.substr(LIBRARY.length) ] =
+								this.decodeAnimation(zip.getInput(entry), true);
+						}
 					}
 				}
 			}
