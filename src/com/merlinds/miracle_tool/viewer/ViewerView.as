@@ -10,7 +10,6 @@ package com.merlinds.miracle_tool.viewer {
 	import com.merlinds.miracle.Miracle;
 	import com.merlinds.miracle.animations.AnimationHelper;
 	import com.merlinds.miracle.display.MiracleDisplayObject;
-	import com.merlinds.miracle.display.MiracleImage;
 	import com.merlinds.miracle.utils.Asset;
 	import com.merlinds.miracle.utils.MafReader;
 	import com.merlinds.miracle_tool.models.AppModel;
@@ -108,7 +107,6 @@ package com.merlinds.miracle_tool.viewer {
 				_name = asset.name;
 			}
 			_assets.push(asset);
-//			var name:String = asset.name;
 			if(_assets.length > 1){
 				this.choseAnimation();
 				Miracle.createScene(_assets, 1);
@@ -123,7 +121,7 @@ package com.merlinds.miracle_tool.viewer {
 			//add animation to miracle
 			var animation:String = list.selectedItem.toString();
 			log(this, "selectAnimationHandler", animation);
-			Miracle.currentScene.createAnimation(_name, animation)
+			Miracle.currentScene.createAnimation(_name, _name + "." +animation)
 					.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
 		}
 

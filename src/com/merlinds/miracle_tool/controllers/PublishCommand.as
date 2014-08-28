@@ -124,7 +124,7 @@ package com.merlinds.miracle_tool.controllers {
 							frameVO.duration, frameVO.type == "motion");
 					layer.framesList = layer.framesList.concat(framesArray);
 				}
-				data.layers.push(layer);
+				data.layers.unshift(layer);
 			}
 			trace(JSON.stringify(data));
 			return data;
