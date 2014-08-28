@@ -102,7 +102,7 @@ package com.merlinds.miracle_tool.controllers {
 		}
 
 		private function createAnimationOutput(animationVO:AnimationVO):Object {
-			var data:Object = { name:animationVO.name.substr(0, -4),// name of the mesh
+			var data:Object = { name:animationVO.name.substr(0, -4),// name of the matrix
 				totalFrames:animationVO.totalFrames,// Total animation frames
 				layers:[]};
 			var n:int = animationVO.timelines.length;
@@ -113,16 +113,16 @@ package com.merlinds.miracle_tool.controllers {
 				var layer:Layer = new Layer();
 				for(var j:int = 0; j < m; j++){
 					var frameVO:FrameVO = timelineVO.frames[j];
-					//create mesh
-					var mesh:MeshMatrix = frameVO.matrix != null ? new MeshMatrix( 0, 0,
+					//create matrix
+					var matrix:MeshMatrix = frameVO.matrix != null ? new MeshMatrix( 0, 0,
 							frameVO.matrix.tx,
 							frameVO.matrix.ty
 							//TODO calculate scale and skew
 						) : null;
-					var index:int = mesh == null ? -1 : layer.meshes.push(mesh);
+					var index:int = matrix == null ? -1 : layer.matrixList.push(matrix) - 1;
 					var framesArray:Array = this.createFramesInfo(index, frameVO.name,
 							frameVO.duration, frameVO.type == "motion");
-					layer.frames = layer.frames.concat(framesArray);
+					layer.framesList = layer.framesList.concat(framesArray);
 				}
 				data.layers.push(layer);
 			}
@@ -131,17 +131,17 @@ package com.merlinds.miracle_tool.controllers {
 		}
 
 		[Inline]
-		private function createFramesInfo(meshIndex:int, polygonName:String,
+		private function createFramesInfo(index:int, polygonName:String,
 		                                  duration:int, motion:Boolean):Array {
 			var result:Array = new Array(duration);
 			if(duration < 2){
 				motion = false;
 			}
-			if(meshIndex > -1){
+			if(index > -1){
 				var t:Number = 1 / (duration - 1);
 				for(var i:int = 0; i < duration; i++){
 					var frameInfoData:FrameInfoData = new FrameInfoData();
-					frameInfoData.meshIndex = meshIndex;
+					frameInfoData.index = index;
 					frameInfoData.polygonName = polygonName;
 					frameInfoData.motion = motion;
 					frameInfoData.t = motion ? t * i : 0;
@@ -162,18 +162,18 @@ package com.merlinds.miracle_tool.controllers {
 	}
 }
 class Layer{
-	public var meshes:Array;
-	public var frames:Array;
+	public var matrixList:Array;
+	public var framesList:Array;
 
 	public function Layer() {
-		this.frames = [];
-		this.meshes = [];
+		this.framesList = [];
+		this.matrixList = [];
 	}
 }
 
 class FrameInfoData{
 	public var polygonName:String;
 	public var motion:Boolean;
-	public var meshIndex:int;
+	public var index:int;
 	public var t:Number;
 }
