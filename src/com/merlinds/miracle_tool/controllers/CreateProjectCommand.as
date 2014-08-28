@@ -87,6 +87,7 @@ package com.merlinds.miracle_tool.controllers {
 			var animationVO:AnimationVO;
 			animationVO = new AnimationVO(new File(data.file));
 			animationVO.name = data.name;
+			animationVO.totalFrames = data.totalFrames;
 			var n:int = data.timelites.length;
 			for(var i:int = 0; i < n; i++){
 				var timelineVO:TimelineVO = new TimelineVO();
