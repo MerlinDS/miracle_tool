@@ -114,11 +114,7 @@ package com.merlinds.miracle_tool.controllers {
 				for(var j:int = 0; j < m; j++){
 					var frameVO:FrameVO = timelineVO.frames[j];
 					//create matrix
-					var matrix:MeshMatrix = frameVO.matrix != null ? new MeshMatrix( 0, 0,
-							frameVO.matrix.tx,
-							frameVO.matrix.ty
-							//TODO calculate scale and skew
-						) : null;
+					var matrix:MeshMatrix = MeshMatrix.fromMatrix(frameVO.matrix, 0, 0);
 					var index:int = matrix == null ? -1 : layer.matrixList.push(matrix) - 1;
 					var framesArray:Array = this.createFramesInfo(index, frameVO.name,
 							frameVO.duration, frameVO.type == "motion");
