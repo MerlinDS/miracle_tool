@@ -20,6 +20,7 @@ package com.merlinds.miracle_tool.viewer {
 	import flash.events.Event;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import flash.html.script.Package;
 	import flash.utils.ByteArray;
 
 	[SWF(backgroundColor="0x333333", frameRate=60)]
@@ -29,6 +30,7 @@ package com.merlinds.miracle_tool.viewer {
 		private var _assets:Vector.<Asset>;
 		private var _window:Window;
 		private var _name:String;
+		private var _current:MiracleDisplayObject;
 
 		public function ViewerView(model:AppModel = null) {
 			super();
@@ -59,12 +61,16 @@ package com.merlinds.miracle_tool.viewer {
 				var asset:Asset = _assets[i];
 				if(asset.type == Asset.TIMELINE_TYPE){
 					//parse output
-					_window = new Window(this, 0, 0, "Chose mesh");
+					_window = new Window(this, 0, 0, "Chose animation");
 					var list:List = new List(_window, 0, 0, this.getAnimations(asset.output));
 					_window.x = this.stage.stageWidth - _window.width;
 					list.addEventListener(Event.SELECT, this.selectAnimationHandler);
 				}
 			}
+			var w2:Window = new Window(this, _window.x, _window.y + _window.height + 10, "FPS");
+			list = new List(w2, 0, 0, [1, 5, 16, 24, 30, 35, 40, 60]);
+			w2.height = 120;
+			list.addEventListener(Event.SELECT, this.selectFpsHandler);
 		}
 
 		[Inline]
@@ -121,16 +127,25 @@ package com.merlinds.miracle_tool.viewer {
 			//add animation to miracle
 			var animation:String = list.selectedItem.toString();
 			log(this, "selectAnimationHandler", animation);
-			Miracle.currentScene.createAnimation(_name, _name + "." +animation)
+			Miracle.currentScene.createAnimation(_name, _name + "." + animation, 60)
 					.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
 		}
 
 		private function imageAddedToStage(event:Event):void {
 			var target:MiracleDisplayObject = event.target as MiracleDisplayObject;
 			target.moveTO(
-					this.stage.stageWidth - target.width >> 1,
-					this.stage.stageHeight - target.height >> 1
+					300,300 /*this.stage.stageWidth - target.width >> 1,
+					this.stage.stageHeight - target.height >> 1*/
 			);
+			_current = target;
+		}
+
+		private function selectFpsHandler(event:Event):void {
+			var list:List = event.target as List;
+			//add animation to miracle
+			if(_current != null){
+				_current.fps = int(list.selectedItem);
+			}
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
