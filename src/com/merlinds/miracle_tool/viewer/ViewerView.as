@@ -134,7 +134,7 @@ package com.merlinds.miracle_tool.viewer {
 		private function imageAddedToStage(event:Event):void {
 			var target:MiracleDisplayObject = event.target as MiracleDisplayObject;
 			target.moveTO(
-					300,300 /*this.stage.stageWidth - target.width >> 1,
+					500,300 /*this.stage.stageWidth - target.width >> 1,
 					this.stage.stageHeight - target.height >> 1*/
 			);
 			_current = target;

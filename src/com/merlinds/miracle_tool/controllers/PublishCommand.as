@@ -6,6 +6,7 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle.meshes.MeshMatrix;
+	import com.merlinds.miracle.utils.UMath;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
@@ -114,11 +115,20 @@ package com.merlinds.miracle_tool.controllers {
 				for(var j:int = 0; j < m; j++){
 					var frameVO:FrameVO = timelineVO.frames[j];
 					//create matrix
+					var prevMatrix:MeshMatrix = layer.matrixList.length > 0
+							? layer.matrixList[ layer.matrixList.length - 1] : null;
 					var matrix:MeshMatrix = MeshMatrix.fromMatrix(frameVO.matrix, 0, 0);
+					if(prevMatrix != null && matrix != null){
+						//calculate shortest angle between previous matrix skew and current matrix skew
+						matrix.skewX = this.getShortest(matrix.skewX, prevMatrix.skewX);
+						matrix.skewY = this.getShortest(matrix.skewY, prevMatrix.skewY);
+						//
+					}
 					var index:int = matrix == null ? -1 : layer.matrixList.push(matrix) - 1;
 					var framesArray:Array = this.createFramesInfo(index, frameVO.name,
 							frameVO.duration, frameVO.type == "motion");
 					layer.framesList = layer.framesList.concat(framesArray);
+					prevMatrix = matrix;
 				}
 				data.layers.unshift(layer);
 			}
@@ -134,7 +144,7 @@ package com.merlinds.miracle_tool.controllers {
 				motion = false;
 			}
 			if(index > -1){
-				var t:Number = 1 / (duration - 1);
+				var t:Number = 1 / duration;
 				for(var i:int = 0; i < duration; i++){
 					var frameInfoData:FrameInfoData = new FrameInfoData();
 					frameInfoData.index = index;
@@ -145,6 +155,17 @@ package com.merlinds.miracle_tool.controllers {
 				}
 			}
 			return result;
+		}
+
+		private function getShortest(a:Number, b:Number):Number {
+			if(Math.abs(a - b) > Math.PI){
+				if(a > 0){
+					return a - Math.PI * 2;
+				}else if(a < 0){
+					return Math.PI * 2 + a;
+				}
+			}
+			return a;
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 

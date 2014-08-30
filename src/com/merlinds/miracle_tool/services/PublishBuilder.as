@@ -107,6 +107,7 @@ package com.merlinds.miracle_tool.services {
 				stream.open(_atf, FileMode.READ);
 				stream.readBytes(_output);
 				stream.close();
+				trace(_atf.nativePath);
 				_atf.deleteFile();
 				_file.deleteFile();
 				_workDir.deleteDirectory(true);
