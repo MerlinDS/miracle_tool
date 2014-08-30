@@ -6,7 +6,6 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle.meshes.MeshMatrix;
-	import com.merlinds.miracle.utils.UMath;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
@@ -117,7 +116,7 @@ package com.merlinds.miracle_tool.controllers {
 					//create matrix
 					var prevMatrix:MeshMatrix = layer.matrixList.length > 0
 							? layer.matrixList[ layer.matrixList.length - 1] : null;
-					var matrix:MeshMatrix = MeshMatrix.fromMatrix(frameVO.matrix, 0, 0);
+					var matrix:MeshMatrix = MeshMatrix.fromMatrix(frameVO.matrix, frameVO.transformationPoint.x, frameVO.transformationPoint.y);
 					if(prevMatrix != null && matrix != null){
 						//calculate shortest angle between previous matrix skew and current matrix skew
 						matrix.skewX = this.getShortest(matrix.skewX, prevMatrix.skewX);
