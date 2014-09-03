@@ -138,6 +138,8 @@ package com.merlinds.miracle_tool.viewer {
 					this.stage.stageHeight - target.height >> 1*/
 			);
 			_current = target;
+			_current.currentFrame = 0;
+//			_current.stop();
 		}
 
 		private function selectFpsHandler(event:Event):void {
