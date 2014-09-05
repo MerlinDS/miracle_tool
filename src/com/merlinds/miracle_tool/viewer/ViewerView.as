@@ -20,7 +20,6 @@ package com.merlinds.miracle_tool.viewer {
 	import flash.events.Event;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
-	import flash.html.script.Package;
 	import flash.utils.ByteArray;
 
 	[SWF(backgroundColor="0x333333", frameRate=60)]
@@ -127,19 +126,19 @@ package com.merlinds.miracle_tool.viewer {
 			//add animation to miracle
 			var animation:String = list.selectedItem.toString();
 			log(this, "selectAnimationHandler", animation);
-			Miracle.currentScene.createAnimation(_name, _name + "." + animation, 60)
-					.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
+			if(_current == null){
+				_current = Miracle.currentScene.createAnimation(_name, _name + "." + animation, 60);
+				_current.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
+			}else{
+				_current.animation = _name + "." + animation;
+			}
 		}
 
 		private function imageAddedToStage(event:Event):void {
-			var target:MiracleDisplayObject = event.target as MiracleDisplayObject;
-			target.moveTO(
-					500,300 /*this.stage.stageWidth - target.width >> 1,
-					this.stage.stageHeight - target.height >> 1*/
+			_current.moveTO(
+					this.stage.stageWidth - _current.width >> 1,
+					this.stage.stageHeight - _current.height >> 1
 			);
-			_current = target;
-			_current.currentFrame = 0;
-//			_current.stop();
 		}
 
 		private function selectFpsHandler(event:Event):void {
