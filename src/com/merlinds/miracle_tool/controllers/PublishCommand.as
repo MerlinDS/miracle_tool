@@ -104,6 +104,8 @@ package com.merlinds.miracle_tool.controllers {
 		private function createAnimationOutput(animationVO:AnimationVO):Object {
 			var data:Object = { name:animationVO.name,// name of the matrix
 				totalFrames:animationVO.totalFrames,// Total animation frames
+				width:animationVO.width,
+				height:animationVO.height,
 				layers:[]};
 			var n:int = animationVO.timelines.length;
 			//find matrix sequence for current animation

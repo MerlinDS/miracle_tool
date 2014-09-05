@@ -46,6 +46,7 @@ package com.merlinds.miracle_tool.controllers {
 
 		override public function execute():void {
 			log(this, "execute");
+			//TODO update exist animation
 			//search for animation in file
 			var data:AnimSourcesVO = this.event.body as AnimSourcesVO;
 			var source:SourceVO = this.projectModel.selected;

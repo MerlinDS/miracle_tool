@@ -128,6 +128,7 @@ package com.merlinds.miracle_tool.viewer {
 			log(this, "selectAnimationHandler", animation);
 			if(_current == null){
 				_current = Miracle.currentScene.createAnimation(_name, _name + "." + animation, 60);
+				_current.moveTO(this.stage.stageWidth >> 1, this.stage.stageHeight >> 1);
 				_current.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
 			}else{
 				_current.animation = _name + "." + animation;
@@ -135,10 +136,7 @@ package com.merlinds.miracle_tool.viewer {
 		}
 
 		private function imageAddedToStage(event:Event):void {
-			_current.moveTO(
-					this.stage.stageWidth - _current.width >> 1,
-					this.stage.stageHeight - _current.height >> 1
-			);
+			trace("Added to stage");
 		}
 
 		private function selectFpsHandler(event:Event):void {
