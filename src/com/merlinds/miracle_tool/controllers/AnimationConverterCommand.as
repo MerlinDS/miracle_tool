@@ -128,7 +128,6 @@ package com.merlinds.miracle_tool.controllers {
 				_currentFrame.matrix = XMLConverters.convertToObject(element.matrix.Matrix, Matrix);
 				_currentFrame.transformationPoint = XMLConverters.convertToObject(
 						element.transformationPoint.Point, Point);
-
 				//TODO add colors multipliers, create vo for colors
 			}
 		}

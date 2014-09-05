@@ -87,11 +87,13 @@ package com.merlinds.miracle_tool.models.vo {
 		}
 
 		public function get transformationPoint():Point {
+			if(_transformationPoint == null)
+				this.transformationPoint = null;
 			return _transformationPoint;
 		}
 
 		public function set transformationPoint(value:Point):void {
-			_transformationPoint = value;
+			_transformationPoint = value == null ? new Point() : value;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================
