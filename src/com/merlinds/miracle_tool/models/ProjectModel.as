@@ -30,8 +30,6 @@ package com.merlinds.miracle_tool.models {
 		private var _saved:Boolean;
 
 		private var _animationInProgress:AnimationVO;
-
-		public var tempData:*;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectModel(name:String, sceneSize:Point) {
@@ -61,15 +59,6 @@ package com.merlinds.miracle_tool.models {
 			return source;
 		}
 
-		public function addAnimation(file:File):void {
-			var source:SourceVO = this.selected;
-			/*var n:int = source.animations.length;
-			for(var i:int = 0; i < n; i++){
-				var animation:AnimationVO = source.animations[i];
-				if(animation.file.nativePath == file.nativePath)break;
-			}*/
-			_animationInProgress = source.animations[source.animations.length] =new AnimationVO(file);
-		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================

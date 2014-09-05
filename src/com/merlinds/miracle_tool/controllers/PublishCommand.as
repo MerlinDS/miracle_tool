@@ -102,7 +102,7 @@ package com.merlinds.miracle_tool.controllers {
 		}
 
 		private function createAnimationOutput(animationVO:AnimationVO):Object {
-			var data:Object = { name:animationVO.name.substr(0, -4),// name of the matrix
+			var data:Object = { name:animationVO.name,// name of the matrix
 				totalFrames:animationVO.totalFrames,// Total animation frames
 				layers:[]};
 			var n:int = animationVO.timelines.length;

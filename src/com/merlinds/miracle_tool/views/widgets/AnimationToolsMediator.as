@@ -53,7 +53,9 @@ package com.merlinds.miracle_tool.views.widgets {
 					if(sourceVO.name == event.body){
 						var m:int = sourceVO.animations.length;
 						for(var j:int = 0; j < m; j++){
-							animations.push(sourceVO.animations[j].name);
+							if(sourceVO.animations[j].added){
+								animations.push(sourceVO.animations[j].name);
+							}
 						}
 					}
 				}

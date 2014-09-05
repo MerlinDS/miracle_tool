@@ -54,7 +54,6 @@ package com.merlinds.miracle_tool.controllers {
 					method = this.decodeService.decodeSource;
 					break;
 				case 'fla': case 'xml':
-					projectModel.addAnimation(_target);
 					method = this.decodeService.decodeAnimation;
 					break;
 				case FileSystemService.PROJECT_EXTENSION.substr(1):

@@ -12,6 +12,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.vo.AnimSourcesVO;
 	import com.merlinds.miracle_tool.models.vo.AnimationVO;
 	import com.merlinds.miracle_tool.models.vo.FrameVO;
+	import com.merlinds.miracle_tool.models.vo.SourceVO;
 	import com.merlinds.miracle_tool.models.vo.TimelineVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.XMLConverters;
@@ -45,28 +46,21 @@ package com.merlinds.miracle_tool.controllers {
 
 		override public function execute():void {
 			log(this, "execute");
-			var data:AnimSourcesVO = this.projectModel.tempData;
-			if(data == null){
-				this.projectModel.tempData = this.event.body;
-				this.actionService.addAcceptActions(new <String>[this.event.type]);
-				this.dispatch(new DialogEvent(DialogEvent.CHOOSE_ANIMATION, this.event.body.names));
-			}else{
-				this.projectModel.tempData = null;
-				data.chosen.push(this.event.body["list"]);
-				_animation = this.projectModel.animationInProgress;
-				this.projectModel.animationInProgress = null;
-				var name:String;
-				while(data.chosen.length > 0){
-					name = data.chosen.pop();
-					if(name == AnimSourcesVO.DEFAULT_NAME){
-						name = _animation.file.name;
-						name = name.substr(_animation.file.extension.length);
+			//search for animation in file
+			var data:AnimSourcesVO = this.event.body as AnimSourcesVO;
+			var source:SourceVO = this.projectModel.selected;
+			var n:int = source.animations.length;
+			for(var i:int = 0; i < n; i++){
+				var animation:AnimationVO = source.animations[i];
+				for(var sourceName:String in data){
+					if(animation.name + '.xml' == sourceName){
+						_animation = animation;
+						this.convertXML( data[sourceName] as XML, animation.name );
+						_animation.added = true;
 					}
-					this.convertXML(data[name] as XML, name);
 				}
-				this.dispatch(new EditorEvent(EditorEvent.ANIMATION_ATTACHED, this.projectModel.selected.name));
-
 			}
+			this.dispatch(new EditorEvent(EditorEvent.ANIMATION_ATTACHED, source.name));
 		}
 
 		//} endregion PUBLIC METHODS ===================================================

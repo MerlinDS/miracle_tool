@@ -9,6 +9,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
+	import com.merlinds.miracle_tool.models.vo.AnimationVO;
 	import com.merlinds.miracle_tool.models.vo.ElementVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
 
@@ -45,6 +46,11 @@ package com.merlinds.miracle_tool.controllers {
 				var n:int = container.numChildren;
 				for(var i:int = 0; i < n; i++){
 					_target = container.getChildAt(i) as MovieClip;
+					trace(getQualifiedClassName(_target));
+					//create animations value object
+					var animation:AnimationVO = new AnimationVO(null, _target.width, _target.height);
+					animation.name = getQualifiedClassName(_target);
+					source.animations.push(animation);
 					this.getElements();
 				}
 				this.projectModel.outputSize = _outputSize;
