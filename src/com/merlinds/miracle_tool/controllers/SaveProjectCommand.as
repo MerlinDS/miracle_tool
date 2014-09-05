@@ -65,7 +65,6 @@ package com.merlinds.miracle_tool.controllers {
 		[Inline]
 		private function parseAnimations(animationVO:AnimationVO):Object {
 			var data:Object = {
-				file:animationVO.file.nativePath,
 				name:animationVO.name,
 				totalFrames:animationVO.totalFrames,
 				timelites:[]

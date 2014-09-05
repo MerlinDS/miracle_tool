@@ -30,7 +30,7 @@ package com.merlinds.miracle_tool.controllers {
 
 		private var _target:MovieClip;
 		private var _elements:Vector.<ElementVO>;
-		private var _totalElements:Vector.<ElementVO>;
+		private var _totalElements:Vector.<String>;
 		private var _outputSize:int;
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -43,7 +43,7 @@ package com.merlinds.miracle_tool.controllers {
 			var source:SourceVO = this.projectModel.inProgress;
 			var container:DisplayObjectContainer = this.event.body;
 			if(container != null){
-				_totalElements = new <ElementVO>[];
+				_totalElements = new <String>[];
 				var n:int = container.numChildren;
 				for(var i:int = 0; i < n; i++){
 					_target = container.getChildAt(i) as MovieClip;
@@ -52,9 +52,8 @@ package com.merlinds.miracle_tool.controllers {
 					animation.name = getQualifiedClassName(_target);
 					source.animations.push(animation);
 					this.getElements();
-					_totalElements = _totalElements.concat(_elements);
+					source.elements = source.elements.concat(_elements);
 				}
-				source.elements = _totalElements;
 				this.projectModel.outputSize = _outputSize;
 				log(this, "execute", "End separation");
 			}
@@ -80,6 +79,7 @@ package com.merlinds.miracle_tool.controllers {
 					if(!this.hasElement(elementName)){
 						element = new ElementVO(elementName, elementView);
 						_elements.push(element);
+						_totalElements.push(elementName);//for searching
 					}
 				}
 			}
@@ -126,7 +126,7 @@ package com.merlinds.miracle_tool.controllers {
 			var result:Boolean;
 			var i:int, n:int = _totalElements.length;
 			for(i = 0; i < n; i++){
-				result = _totalElements[i].name == name;
+				result = _totalElements[i] == name;
 				if(result)break;
 			}
 			return result;
