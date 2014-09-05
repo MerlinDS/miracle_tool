@@ -157,6 +157,7 @@ package com.merlinds.miracle_tool.controllers {
 			return result;
 		}
 
+		[Inline]
 		private function getShortest(a:Number, b:Number):Number {
 			if(Math.abs(a - b) > Math.PI){
 				if(a > 0){

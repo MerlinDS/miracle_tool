@@ -40,7 +40,9 @@ package com.merlinds.miracle_tool.models.vo {
 		public function set vertexes(value:Vector.<Number>):void {
 			_vertexes = value;
 			if(value != null){
-				var matrix:Matrix = new Matrix(1, 0, 0, 1, -vertexes[0], -vertexes[1]);
+				this.width = Math.ceil(this.width);
+				this.height = Math.ceil(this.height);
+				var matrix:Matrix = new Matrix(1, 0, 0, 1, -Math.floor(vertexes[0]), -Math.floor(vertexes[1]));
 				this.bitmapData = new BitmapData(this.width, this.height, true, 0x0);
 				bitmapData.draw(this.view, matrix);
 				var selector:Bitmap = new Bitmap(new BitmapData(this.width, this.height, true, 0x3300FF00));

@@ -42,6 +42,7 @@ package com.merlinds.miracle_tool.controllers.placers {
 		//{region						PRIVATE\PROTECTED METHODS
 		[Inline]
 		private function placeElement(element:ElementVO):Boolean{
+			trace(element);
 			var rect:Rectangle = _packer.quickInsert(element.width, element.height);
 
 			if(rect != null){
