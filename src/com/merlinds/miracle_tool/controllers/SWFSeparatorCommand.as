@@ -30,6 +30,7 @@ package com.merlinds.miracle_tool.controllers {
 
 		private var _target:MovieClip;
 		private var _elements:Vector.<ElementVO>;
+		private var _totalElements:Vector.<ElementVO>;
 		private var _outputSize:int;
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -42,17 +43,18 @@ package com.merlinds.miracle_tool.controllers {
 			var source:SourceVO = this.projectModel.inProgress;
 			var container:DisplayObjectContainer = this.event.body;
 			if(container != null){
-				_elements = source.elements;
+				_totalElements = new <ElementVO>[];
 				var n:int = container.numChildren;
 				for(var i:int = 0; i < n; i++){
 					_target = container.getChildAt(i) as MovieClip;
-					trace(getQualifiedClassName(_target));
 					//create animations value object
 					var animation:AnimationVO = new AnimationVO(null, _target.width, _target.height);
 					animation.name = getQualifiedClassName(_target);
 					source.animations.push(animation);
 					this.getElements();
+					_totalElements = _totalElements.concat(_elements);
 				}
+				source.elements = _totalElements;
 				this.projectModel.outputSize = _outputSize;
 				log(this, "execute", "End separation");
 			}
@@ -67,6 +69,7 @@ package com.merlinds.miracle_tool.controllers {
 			var elementName:String;
 			var elementView:DisplayObject;
 			var i:int, j:int, n:int, m:int;
+			_elements = new <ElementVO>[];
 			n = _target.totalFrames + 1;
 			for(i = 1; i < n; i++){
 				_target.gotoAndStop(i);
@@ -121,9 +124,9 @@ package com.merlinds.miracle_tool.controllers {
 		[Inline]
 		private function hasElement(name:String):Boolean {
 			var result:Boolean;
-			var i:int, n:int = _elements.length;
+			var i:int, n:int = _totalElements.length;
 			for(i = 0; i < n; i++){
-				result = _elements[i].name == name;
+				result = _totalElements[i].name == name;
 				if(result)break;
 			}
 			return result;

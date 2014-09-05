@@ -45,6 +45,10 @@ package com.merlinds.miracle_tool.models.vo {
 			return _elements;
 		}
 
+		public function set elements(value:Vector.<ElementVO>):void {
+			_elements = value;
+		}
+
 		public function get animations():Vector.<AnimationVO> {
 			return _animations;
 		}
