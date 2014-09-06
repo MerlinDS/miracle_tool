@@ -38,7 +38,9 @@ package com.merlinds.miracle_tool.views.widgets {
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 		private function buttonHandler(event:MouseEvent):void {
-			if(event.target == _addButton){
+			if(event.target == _removeButton){
+				_data = _list.selectedItem;
+			}else{
 				_data = null;
 			}
 			this.dispatchEvent(new Event(Event.SELECT));
@@ -59,6 +61,9 @@ package com.merlinds.miracle_tool.views.widgets {
 				_list.removeAll();
 				while(value.length){
 					_list.addItem(value.shift());
+				}
+				if(value.length == 0){
+					_list.addItem(null);
 				}
 			}
 		}

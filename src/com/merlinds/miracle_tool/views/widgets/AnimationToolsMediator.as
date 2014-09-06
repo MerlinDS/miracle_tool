@@ -5,8 +5,6 @@
  */
 package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.miracle_tool.events.EditorEvent;
-	import com.merlinds.miracle_tool.models.ProjectModel;
-	import com.merlinds.miracle_tool.models.vo.AnimationVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.services.FileSystemService;
@@ -66,8 +64,13 @@ package com.merlinds.miracle_tool.views.widgets {
 		}
 
 		private function selectHandler(event:Event):void {
-			if(this.viewComponent.data == null){
+			var animationName:String = this.viewComponent.data;
+			if(animationName == null){
 				this.fileSystemService.readAnimation();
+			}else{
+				this.projectModel.deleteAnimation(animationName);
+				this.editorHandler(new EditorEvent(EditorEvent.ANIMATION_ATTACHED,
+						this.projectModel.selected.name));
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================

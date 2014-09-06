@@ -59,6 +59,26 @@ package com.merlinds.miracle_tool.models {
 			return source;
 		}
 
+		public function deleteAnimation(name:String):void {
+			var source:SourceVO = this.selected;
+			var animation:AnimationVO;
+			var n:int = source.animations.length;
+			for(var i:int = 0; i < n; i++){
+				animation = source.animations[i];
+				if(animation.name == name){
+					//delete founded animation
+					source.animations.splice(i, 1);
+					break;
+				}
+				animation = null;
+			}
+			//nulled object and add it back for future
+			if(animation != null){
+				animation.added = false;
+				source.animations.push(animation);
+			}
+		}
+
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
