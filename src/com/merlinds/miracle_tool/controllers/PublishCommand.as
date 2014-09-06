@@ -68,6 +68,7 @@ package com.merlinds.miracle_tool.controllers {
 		private function createOutput():void{
 			var buffer:BitmapData = new BitmapData(this.projectModel.outputSize, this.projectModel.outputSize, true, 0x0);
 			var mesh:Array = [];
+			var animations:Array = [];
 			var n:int = this.projectModel.sources.length;
 			for(var i:int = 0; i < n; i++){
 				var source:SourceVO = this.projectModel.sources[i];
@@ -88,7 +89,6 @@ package com.merlinds.miracle_tool.controllers {
 				}
 				//get animation
 				m = source.animations.length;
-				var animations:Array = [];
 				for(j = 0; j < m; j++){
 					var animation:Object = this.createAnimationOutput(source.animations[j]);
 					animations.push(animation);

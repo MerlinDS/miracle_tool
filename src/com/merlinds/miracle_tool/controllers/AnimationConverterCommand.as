@@ -16,6 +16,8 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.XMLConverters;
 
+	import flash.debugger.enterDebugger;
+
 	import flash.filesystem.File;
 
 	import flash.geom.Matrix;
@@ -33,7 +35,6 @@ package com.merlinds.miracle_tool.controllers {
 		public var event:ActionEvent;
 
 		private var _animation:AnimationVO;
-		private var _totalFrames:int;
 
 		private var _currentFrame:FrameVO;
 		private var _currentTimeline:TimelineVO;
@@ -94,8 +95,7 @@ package com.merlinds.miracle_tool.controllers {
 				}
 			}
 			//end
-			_animation.totalFrames = _totalFrames;
-			trace(_totalFrames, _animation.timelines);
+//			trace(_animation.timelines);
 		}
 
 		[Inline]
@@ -109,9 +109,6 @@ package com.merlinds.miracle_tool.controllers {
 				_currentFrame.type = frame.@tweenType;
 				this.parseElements(frame.elements.DOMSymbolInstance);
 				_currentTimeline.frames.push(_currentFrame);
-				//calculate total frames count
-				var totalFrame:int = _currentFrame.index + _currentFrame.duration;
-				if(_totalFrames < totalFrame)_totalFrames = totalFrame;
 			}
 		}
 

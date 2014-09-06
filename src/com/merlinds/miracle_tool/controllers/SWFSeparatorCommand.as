@@ -50,6 +50,7 @@ package com.merlinds.miracle_tool.controllers {
 					//create animations value object
 					var animation:AnimationVO = new AnimationVO(null, _target.width, _target.height);
 					animation.name = getQualifiedClassName(_target);
+					animation.totalFrames = _target.totalFrames;
 					source.animations.push(animation);
 					this.getElements();
 					source.elements = source.elements.concat(_elements);
