@@ -54,6 +54,7 @@ package com.merlinds.miracle_tool.controllers {
 					method = this.decodeService.decodeSource;
 					break;
 				case 'fla': case 'xml':
+					projectModel.tempFile = _target.clone();
 					method = this.decodeService.decodeAnimation;
 					break;
 				case FileSystemService.PROJECT_EXTENSION.substr(1):

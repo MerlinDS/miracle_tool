@@ -30,6 +30,9 @@ package com.merlinds.miracle_tool.models {
 		private var _saved:Boolean;
 
 		private var _animationInProgress:AnimationVO;
+
+		//quick hack for animation saving
+		public var tempFile:File;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectModel(name:String, sceneSize:Point) {

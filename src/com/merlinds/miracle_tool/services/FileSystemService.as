@@ -10,12 +10,10 @@ package com.merlinds.miracle_tool.services {
 	import com.merlinds.unitls.structures.QueueFIFO;
 
 	import flash.events.Event;
-
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.net.FileFilter;
-	import flash.utils.ByteArray;
 	import flash.utils.ByteArray;
 
 	import org.robotlegs.mvcs.Actor;
@@ -32,15 +30,14 @@ package com.merlinds.miracle_tool.services {
 
 		private var _target:File;
 		private var _output:ByteArray;
-		private var _sourceQueue:QueueFIFO;
 		private var _publishBuilder:PublishBuilder;
 		private var _queue:QueueFIFO;
+		private var _projectLoader:ProjectLoader;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function FileSystemService() {
 			super();
 			_queue = new QueueFIFO();
-			_sourceQueue = new QueueFIFO();
 			_publishBuilder = new PublishBuilder();
 		}
 
@@ -72,12 +69,11 @@ package com.merlinds.miracle_tool.services {
 		}
 
 		public function readProjectSources(sources:Array):void{
+			if(_projectLoader == null){
+				_projectLoader = new ProjectLoader(this.projectLoadedCallback);
+			}
 			if(sources != null){
-				log(this, "readProjectSources");
-				while(sources.length > 0){
-					_sourceQueue.push(sources.shift());
-				}
-				this.readProjectSource();
+				_projectLoader.read(sources);
 			}
 		}
 
@@ -140,23 +136,24 @@ package com.merlinds.miracle_tool.services {
 			_target.addEventListener(Event.SELECT, this.selectSourceHandler);
 			_target.browseForOpen(title, filters);
 		}
-
-		private function readProjectSource():void {
-			if(!_sourceQueue.empty)
-			{
-				var source:Object = _sourceQueue.pop();
-				_target = new File(source.file);
-				log(this, "readProjectSource", _target.name);
-				//start to download
-				var fileStream:FileStream = new FileStream();
-				fileStream.addEventListener(Event.COMPLETE, this.completeReadHandler);
-				fileStream.openAsync(_target, FileMode.READ);
-			}
-		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		private function projectLoadedCallback(event:EditorEvent = null):void {
+			this.eventDispatcher.removeEventListener(EditorEvent.SOURCE_ATTACHED, this.projectLoadedCallback);
+			this.eventDispatcher.removeEventListener(EditorEvent.ANIMATION_ATTACHED, this.projectLoadedCallback);
+			if(_projectLoader.fileHelpers.length > 0){
+				log(this, "projectLoadedCallback");
+				var fileHelper:Object = _projectLoader.fileHelpers.shift();
+				_target = fileHelper.file;
+				_output = fileHelper.bytes;
+				this.eventDispatcher.addEventListener(EditorEvent.SOURCE_ATTACHED, this.projectLoadedCallback);
+				this.eventDispatcher.addEventListener(EditorEvent.ANIMATION_ATTACHED, this.projectLoadedCallback);
+				this.dispatch(new EditorEvent(EditorEvent.FILE_READ));
+			}
+		}
+
 		private function selectSourceHandler(event:Event):void {
 			_target.removeEventListener(event.type, this.selectSourceHandler);
 			this.appModel.lastFileDirection = _target.parent;
@@ -175,7 +172,6 @@ package com.merlinds.miracle_tool.services {
 			fileStream.readBytes(_output);
 			fileStream.close();
 			this.dispatch(new EditorEvent(EditorEvent.FILE_READ));
-			this.readProjectSource();
 		}
 
 		private function selectProjectForSaveHandler(event:Event):void {

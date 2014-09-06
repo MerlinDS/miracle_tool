@@ -38,7 +38,11 @@ package com.merlinds.miracle_tool.models.vo {
 		//{region							GETTERS/SETTERS
 
 		public function get file():File {
-			return _file.clone();
+			return _file != null ? _file.clone() : null;
+		}
+
+		public function set file(file:File):void {
+			_file = file;
 		}
 
 		public function get timelines():Vector.<TimelineVO> {

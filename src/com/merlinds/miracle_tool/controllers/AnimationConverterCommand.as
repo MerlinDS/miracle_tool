@@ -6,7 +6,6 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
-	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.models.vo.AnimSourcesVO;
@@ -16,6 +15,8 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.vo.TimelineVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.XMLConverters;
+
+	import flash.filesystem.File;
 
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -38,6 +39,7 @@ package com.merlinds.miracle_tool.controllers {
 		private var _currentTimeline:TimelineVO;
 
 		private var _namespace:Namespace;
+
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function AnimationConverterCommand() {
@@ -50,6 +52,7 @@ package com.merlinds.miracle_tool.controllers {
 			//search for animation in file
 			var data:AnimSourcesVO = this.event.body as AnimSourcesVO;
 			var source:SourceVO = this.projectModel.selected;
+			if(source == null)source = this.projectModel.inProgress;
 			var n:int = source.animations.length;
 			for(var i:int = 0; i < n; i++){
 				var animation:AnimationVO = source.animations[i];
@@ -57,6 +60,7 @@ package com.merlinds.miracle_tool.controllers {
 					if(animation.name + '.xml' == sourceName){
 						_animation = animation;
 						this.convertXML( data[sourceName] as XML, animation.name );
+						_animation.file = this.projectModel.tempFile;
 						_animation.added = true;
 					}
 				}
