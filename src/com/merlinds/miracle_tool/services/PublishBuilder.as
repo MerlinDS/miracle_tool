@@ -45,7 +45,7 @@ package com.merlinds.miracle_tool.services {
 			_file = _workDir.resolvePath("png4atf.png");
 			_atf = _workDir.resolvePath("output.atf");
 			var stream:FileStream = new FileStream();
-			stream.openAsync(_file, FileMode.WRITE);
+			stream.open(_file, FileMode.WRITE);
 			stream.writeBytes(png);
 			stream.close();
 			//execute atf packer
