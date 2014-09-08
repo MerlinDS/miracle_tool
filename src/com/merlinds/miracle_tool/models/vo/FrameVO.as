@@ -34,6 +34,15 @@ package com.merlinds.miracle_tool.models.vo {
 					", type = " + _type + ", transformationPoint = " + _transformationPoint
 					+ ", matrix = " + _matrix + ")]";
 		}
+
+		public function clone():FrameVO{
+			var clone:FrameVO = new FrameVO(_index, _duration);
+			clone._name = _name;
+			clone._type = _type;
+			clone._matrix = _matrix.clone();
+			clone._transformationPoint = _transformationPoint.clone();
+			return clone;
+		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
@@ -96,6 +105,16 @@ package com.merlinds.miracle_tool.models.vo {
 			_transformationPoint = value == null ? new Point() : value;
 		}
 
+		public function set scale(value:Number):void{
+			if(_matrix != null){
+				_matrix.tx = _matrix.tx * value;
+				_matrix.ty = _matrix.ty * value;
+			}
+			if(_transformationPoint != null){
+				_transformationPoint.x = _transformationPoint.x * value;
+				_transformationPoint.y = _transformationPoint.y * value;
+			}
+		}
 //} endregion GETTERS/SETTERS ==================================================
 	}
 }

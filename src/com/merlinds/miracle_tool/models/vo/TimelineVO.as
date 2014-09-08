@@ -21,6 +21,17 @@ package com.merlinds.miracle_tool.models.vo {
 			string += ")]\n";
 			return string;
 		}
+
+		public function clone():TimelineVO {
+			var clone:TimelineVO = new TimelineVO();
+			var n:int = clone._frames.length = _frames.length;
+			clone._frames.fixed = true;
+			for(var i:int = 0; i < n; i++){
+				clone._frames[i] = _frames[i].clone();
+			}
+			clone._frames.fixed = false;
+			return clone;
+		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
@@ -38,6 +49,12 @@ package com.merlinds.miracle_tool.models.vo {
 			return _frames;
 		}
 
+		public function set scale(value:Number):void{
+			var n:int = _frames.length;
+			for(var i:int = 0; i < n; i++){
+				_frames[i].scale = value;
+			}
+		}
 //} endregion GETTERS/SETTERS ==================================================
 	}
 }

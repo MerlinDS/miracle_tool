@@ -24,6 +24,20 @@ package com.merlinds.miracle_tool.models.vo {
 			_width = width;
 			_height = height;
 		}
+
+		public function clone():AnimationVO{
+			var clone:AnimationVO = new AnimationVO(_file, _width, _height);
+			clone._name = _name;
+			clone._added = _added;
+			clone._totalFrames = _totalFrames;
+			var n:int = clone._timelines.length = _timelines.length;
+			clone._timelines.fixed = true;
+			for(var i:int = 0; i < n; i++){
+				clone._timelines[i] = _timelines[i].clone();
+			}
+			clone._timelines.fixed = false;
+			return clone;
+		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
@@ -82,6 +96,13 @@ package com.merlinds.miracle_tool.models.vo {
 			_added = value;
 		}
 
+
+		public function set scale(value:Number):void{
+			var n:int = _timelines.length;
+			for(var i:int = 0; i < n; i++){
+				_timelines[i].scale = value;
+			}
+		}
 //} endregion GETTERS/SETTERS ==================================================
 	}
 }

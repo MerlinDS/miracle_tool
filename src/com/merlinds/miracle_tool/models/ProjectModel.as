@@ -140,14 +140,7 @@ package com.merlinds.miracle_tool.models {
 			sources.fixed = true;
 			for(var i:int = 0; i < n; i++){
 				//cloning
-				sources[i] = defaultSources[i].clone();
-				//scaling
-				var elements:Vector.<ElementVO> = sources[i].elements;
-				var m:int = elements.length;
-				for(var j:int = 0; j < m; j++){
-					var element:ElementVO = elements[j];
-					element.scale = scale;
-				}
+				sources[i] = defaultSources[i].clone(scale);
 			}
 			//end
 			sources.fixed = false;
