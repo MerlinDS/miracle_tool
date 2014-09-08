@@ -4,8 +4,11 @@
  * Time: 1:51
  */
 package com.merlinds.miracle_tool.models {
+	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.vo.AnimationVO;
+	import com.merlinds.miracle_tool.models.vo.ElementVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
+	import com.merlinds.unitls.Resolutions;
 
 	import flash.filesystem.File;
 	import flash.geom.Point;
@@ -41,10 +44,13 @@ package com.merlinds.miracle_tool.models {
 
 		//quick hack for animation saving
 		public var tempFile:File;
+		//storage for handling previous resolution sources
+		private var _memorize:Object;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectModel(name:String, referenceResolution:int) {
 			_name = name;
+			_memorize = {};
 			_referenceResolution = referenceResolution;
 			_targetResolution = referenceResolution;
 			_sources = new <SourceVO>[];
@@ -54,6 +60,10 @@ package com.merlinds.miracle_tool.models {
 		}
 
 		public function addSource(file:File):SourceVO {
+			//revert to default sources and delete old backups
+			this.revertBackupTo(_referenceResolution);
+			_memorize = {};
+			//add new source
 			var source:SourceVO;
 			var n:int = _sources.length;
 			for(var i:int = 0; i < n; i++){
@@ -65,7 +75,7 @@ package com.merlinds.miracle_tool.models {
 				_sources.push(source);
 			}else
 			{
-				//TODO update exist source
+				//TODO MF-30 Update swf source if it already added
 			}
 			_inProgress = i;
 			return source;
@@ -95,6 +105,54 @@ package com.merlinds.miracle_tool.models {
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
+		/**
+		 * Backup sources for current resolution
+		 */
+		private function prepareBackup():void {
+			if(!_memorize.hasOwnProperty(_targetResolution.toString())){
+				_memorize[_targetResolution] = _sources.concat();
+			}
+		}
+
+		/**
+		 * get sources for resolution
+		 * @param resolution
+		 * @return True if backup was reverted. In other case returns false
+		 */
+		private function revertBackupTo(resolution:int):Boolean {
+			var result:Boolean = _memorize.hasOwnProperty(resolution.toString());
+			if(result){
+				_sources = _memorize[resolution];
+			}
+			return result;
+		}
+
+		/**
+		 * Scale sources for resolution
+		 */
+		private function scaleSources():void {
+			//calculate scale
+			var scale:Number = Resolutions.width(_targetResolution) / Resolutions.width(_referenceResolution);
+			//clone default sources, that was first for the project and scale elements in it
+			var defaultSources:Vector.<SourceVO> = _memorize[_referenceResolution.toString()];
+			var sources:Vector.<SourceVO> = new <SourceVO>[];
+			var n:int = sources.length = defaultSources.length;
+			sources.fixed = true;
+			for(var i:int = 0; i < n; i++){
+				//cloning
+				sources[i] = defaultSources[i].clone();
+				//scaling
+				var elements:Vector.<ElementVO> = sources[i].elements;
+				var m:int = elements.length;
+				for(var j:int = 0; j < m; j++){
+					var element:ElementVO = elements[j];
+					element.scale = scale;
+				}
+			}
+			//end
+			sources.fixed = false;
+			_sources = sources;
+		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
@@ -145,7 +203,9 @@ package com.merlinds.miracle_tool.models {
 		public function set boundsOffset(value:int):void {
 			if(value != _boundsOffset){
 				_boundsOffset = value;
-				//TODO MF-20 recalculate output
+				if(_sources.length > 0){
+					this.dispatch(new EditorEvent(EditorEvent.UPDATE_PROJECT));
+				}
 			}
 		}
 
@@ -176,9 +236,17 @@ package com.merlinds.miracle_tool.models {
 		}
 
 		public function set targetResolution(value:int):void {
+			//TODO: MF-31 Disable resizing in a big way
 			if(value != _targetResolution){
+				this.prepareBackup();
 				_targetResolution = value;
-				//TODO MF-20 recalculate output
+				if(_sources.length > 0){
+					var reverted:Boolean = this.revertBackupTo(_targetResolution);
+					if( !reverted ){
+						this.scaleSources();
+					}
+					this.dispatch(new EditorEvent(EditorEvent.UPDATE_PROJECT));
+				}
 			}
 		}
 

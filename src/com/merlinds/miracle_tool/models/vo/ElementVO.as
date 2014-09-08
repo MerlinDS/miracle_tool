@@ -8,19 +8,24 @@ package com.merlinds.miracle_tool.models.vo {
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.display.IBitmapDrawable;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 
 	public class ElementVO {
 
 		private static const CLEAR_MATRIX:Matrix = new Matrix();
 		public var name:String;
 		public var view:DisplayObject;
-		public var bitmapData:BitmapData;
+
 		public var x:Number;
 		public var y:Number;
 		public var width:Number;
 		public var height:Number;
+
+		//this will be published
+		public var bitmapData:BitmapData;
 		public var uv:Vector.<Number>;
 		public var indexes:Vector.<int>;
 
@@ -33,6 +38,42 @@ package com.merlinds.miracle_tool.models.vo {
 			this.view.transform.matrix = CLEAR_MATRIX;
 		}
 
+		public function clone():ElementVO {
+			var clone:ElementVO = new ElementVO(name, this.view);
+			clone.x = this.x;
+			clone.y = this.y;
+			clone.width = this.width;
+			clone.height = this.height;
+			clone.bitmapData = this.bitmapData;
+			clone.uv = this.uv;
+			clone.indexes = indexes;
+			clone._vertexes = _vertexes;
+			clone.selected = this.selected;
+			return clone;
+		}
+
+		private function updateView(fromBitmap:Boolean, scale:Number = 1):void {
+			var matrix:Matrix;
+			var source:IBitmapDrawable;
+			if(!fromBitmap){
+				matrix = new Matrix(1, 0, 0, 1, -Math.floor(_vertexes[0]), -Math.floor(_vertexes[1]));
+				source = this.view;
+			}else{
+				matrix = new Matrix(1, 0, 0, 1, 0, 0);
+				source = this.bitmapData.clone();
+			}
+			matrix.scale(scale, scale);
+			this.bitmapData = new BitmapData(this.width, this.height, true, 0x0);
+			bitmapData.draw(source, matrix);
+			var selector:Bitmap = new Bitmap(new BitmapData(this.width, this.height, true, 0x3300FF00));
+			selector.visible = false;
+			var view:Sprite = new Sprite();
+			view.addChild(selector);
+			view.addChild(new Bitmap(bitmapData));
+			view.name = "element";
+			this.view = view;
+		}
+
 		public function get vertexes():Vector.<Number> {
 			return _vertexes;
 		}
@@ -40,18 +81,7 @@ package com.merlinds.miracle_tool.models.vo {
 		public function set vertexes(value:Vector.<Number>):void {
 			_vertexes = value;
 			if(value != null){
-				this.width = Math.ceil(this.width);
-				this.height = Math.ceil(this.height);
-				var matrix:Matrix = new Matrix(1, 0, 0, 1, -Math.floor(vertexes[0]), -Math.floor(vertexes[1]));
-				this.bitmapData = new BitmapData(this.width, this.height, true, 0x0);
-				bitmapData.draw(this.view, matrix);
-				var selector:Bitmap = new Bitmap(new BitmapData(this.width, this.height, true, 0x3300FF00));
-				selector.visible = false;
-				var view:Sprite = new Sprite();
-				view.addChild(selector);
-				view.addChild(new Bitmap(bitmapData));
-				view.name = "element";
-				this.view = view;
+				this.updateView(false);
 			}
 		}
 
@@ -72,6 +102,21 @@ package com.merlinds.miracle_tool.models.vo {
 				return selector.visible;
 			}
 			return false;
+		}
+
+		public function set scale(value:Number):void {
+			this.width = this.width * value;
+			this.height = this.height * value;
+			//calculate new vertexes
+			//topRightPoint
+			_vertexes[2] = _vertexes[2] * value;//x
+			//bottomRightPoint
+			_vertexes[4] = _vertexes[4] * value;//x
+			_vertexes[5] = _vertexes[5] * value;//y
+			//bottomLeftPoint
+			_vertexes[7] = _vertexes[7] * value;//y
+			this.view = new Bitmap(bitmapData);
+			this.updateView(true, value);
 		}
 	}
 }

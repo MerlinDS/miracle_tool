@@ -52,6 +52,7 @@ package com.merlinds.miracle_tool.views.project {
 			this.addViewListener(MouseEvent.MOUSE_DOWN, this.mouseHandler);
 			this.addViewListener(MouseEvent.MOUSE_UP, this.mouseHandler);
 			this.addContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
+			this.addContextListener(EditorEvent.UPDATE_PROJECT, this.editorHandler);
 			this.addContextListener(EditorEvent.PLACE_ITEMS, this.editorHandler);
 			this.dispatch(new EditorEvent(EditorEvent.PROJECT_OPEN));
 		}
@@ -62,6 +63,7 @@ package com.merlinds.miracle_tool.views.project {
 			this.removeViewListener(MouseEvent.MOUSE_DOWN, this.mouseHandler);
 			this.removeViewListener(MouseEvent.MOUSE_UP, this.mouseHandler);
 			this.removeContextListener(EditorEvent.SOURCE_ATTACHED, this.editorHandler);
+			this.removeContextListener(EditorEvent.UPDATE_PROJECT, this.editorHandler);
 			this.removeContextListener(EditorEvent.PLACE_ITEMS, this.editorHandler);
 			StatusBar.log("Project", projectModel.name, "was closed");
 			this.dispatch(new EditorEvent(EditorEvent.PROJECT_CLOSED));
@@ -117,9 +119,10 @@ package com.merlinds.miracle_tool.views.project {
 		private function editorHandler(event:EditorEvent):void {
 			log(this, "editorHandler");
 			switch (event.type){
-				case EditorEvent.SOURCE_ATTACHED:
+				case EditorEvent.SOURCE_ATTACHED: case EditorEvent.UPDATE_PROJECT:
 						this.updateWorkplace();
 						this.dispatch(new EditorEvent(EditorEvent.PLACE_ITEMS, PlacerAlgorithmList.MAX_RECT));
+						this.resizeWorkplace(true);
 						break;
 				case EditorEvent.PLACE_ITEMS:
 					this.resizeWorkplace();

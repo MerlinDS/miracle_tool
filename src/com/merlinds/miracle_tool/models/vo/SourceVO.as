@@ -4,7 +4,6 @@
  * Time: 19:11
  */
 package com.merlinds.miracle_tool.models.vo {
-	import flash.display.DisplayObject;
 	import flash.filesystem.File;
 
 	public class SourceVO {
@@ -19,6 +18,21 @@ package com.merlinds.miracle_tool.models.vo {
 			_file = file;
 			_elements = new <ElementVO>[];
 			_animations = new <AnimationVO>[];
+		}
+
+		public function clone():SourceVO {
+			var clone:SourceVO = new SourceVO(this.file);
+			clone._animations = _animations.concat();
+			//clone elements
+			clone._elements.length = _elements.length;
+			clone._elements.fixed = true;
+			var n:int = _elements.length;
+			for(var i:int = 0; i < n; i++){
+				clone._elements[i] = _elements[i].clone();
+			}
+			clone._elements.fixed = true;
+			clone.selected = selected;
+			return clone;
 		}
 		//} endregion PUBLIC METHODS ===================================================
 

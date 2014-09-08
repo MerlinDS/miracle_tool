@@ -41,6 +41,7 @@ package com.merlinds.miracle_tool.controllers {
 			projectModel.boundsOffset = this.event.body.boundsOffset;
 			//
 			this.injector.mapValue(ProjectModel, projectModel);
+			projectModel.eventDispatcher = this.eventDispatcher;
 			this.resizeController.addInstance(new ProjectWidgets(this.contextView));
 			//create view for project
 			var view:ProjectView = new ProjectView(projectModel.name, this.appView);
