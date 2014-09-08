@@ -48,12 +48,14 @@ package com.merlinds.miracle_tool.controllers {
 					if(projectName == null || projectName.length == 0){
 						projectName = "Miracle project_" + new Date().time;//create unique name for project
 					}
+					var boundsOffset:int = int(this.event.body.boundsOffset);
 					var resolution:int = Resolutions.fromString(this.event.body.choice);
 					log(this, "execute", "Create project:", projectName,
-							", Resolution = ", Resolutions.toString(resolution));
+							", Resolution = ", Resolutions.toString(resolution), "Bounds offset = ", boundsOffset);
 					//see ProjectModel referenceSize
 					this.dispatch(new EditorEvent(EditorEvent.CREATE_PROJECT,
-							{projectName:projectName, referenceSize:resolution}));
+							{projectName:projectName, referenceSize:resolution,
+								boundsOffset:boundsOffset}));
 				}
 			}
 		}
