@@ -32,8 +32,6 @@ package com.merlinds.miracle_tool.controllers {
 		public var fileSystemService:FileSystemService;
 		[Inject]
 		public var event:EditorEvent;
-
-		private var _projectModel:ProjectModel;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function CreateProjectCommand() {
@@ -45,15 +43,15 @@ package com.merlinds.miracle_tool.controllers {
 			var projectName:String = this.event.body.projectName;
 			var sceneSize:Point = this.event.body.sceneSize;
 
-			_projectModel = new ProjectModel(projectName, sceneSize);
-			_projectModel.boundsOffset = this.event.body.boundsOffset;
-			if(this.event.body.hasOwnProperty("sheetSize")){
-				_projectModel.outputSize = this.event.body.sheetSize.x;
+			var projectModel:ProjectModel = new ProjectModel(projectName, sceneSize);
+			projectModel.boundsOffset = this.event.body.boundsOffset;
+			if (this.event.body.hasOwnProperty("sheetSize")) {
+				projectModel.outputSize = this.event.body.sheetSize.x;
 			}
-			this.injector.mapValue(ProjectModel, _projectModel);
-			this.resizeController.addInstance( new ProjectWidgets( this.contextView ));
+			this.injector.mapValue(ProjectModel, projectModel);
+			this.resizeController.addInstance(new ProjectWidgets(this.contextView));
 			//create view for project
-			var view:ProjectView = new ProjectView(_projectModel.name, this.appView);
+			var view:ProjectView = new ProjectView(projectModel.name, this.appView);
 			this.resizeController.addInstance(view);
 			this.actionService.done();
 			this.fileSystemService.readProjectSources(this.event.body.sources);
