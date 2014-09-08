@@ -6,20 +6,16 @@
 package com.merlinds.miracle_tool.views.components.containers {
 	import com.bit101.components.ComboBox;
 	import com.bit101.components.Component;
-	import com.bit101.components.Component;
 	import com.bit101.components.HBox;
 	import com.bit101.components.InputText;
 	import com.bit101.components.Label;
 	import com.bit101.components.List;
 	import com.bit101.components.PushButton;
 	import com.bit101.components.Text;
-	import com.bit101.components.Text;
 	import com.bit101.components.VBox;
 	import com.bit101.components.Window;
-	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
 
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -102,8 +98,10 @@ package com.merlinds.miracle_tool.views.components.containers {
 				value = _data;
 			}
 			var field:HBox = new HBox(_body);
-			_controls["comboBox"] = new ComboBox(field, 0, 0, value[0], value);
+			var comboBox:ComboBox = new ComboBox(field, 0, 0, value[0], value);
+			comboBox.selectedIndex = 0;
 			new Label(field, 0, 0, label);
+			_controls["choice"] = comboBox;
 		}
 
 		protected final function addButton(label:String, closeReason:String = ACCEPT):void{
@@ -124,7 +122,7 @@ package com.merlinds.miracle_tool.views.components.containers {
 					var control:Object = _controls[name];
 					if(control is InputText){
 						data[name] = control.text;
-					}else if(control is List){
+					}else if(control is List || control is ComboBox){
 						data[name] = control.selectedItem;
 					}
 					//TODO add else controls that will be created automatically

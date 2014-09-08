@@ -22,7 +22,7 @@ package com.merlinds.miracle_tool.views.widgets {
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 		override protected function editorHandler(event:EditorEvent):void {
-			this.data = this.projectModel.infoVO;
+			this.data = this.projectModel;
 			super.editorHandler(event);
 		}
 		//} endregion EVENTS HANDLERS ==================================================

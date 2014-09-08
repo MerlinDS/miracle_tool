@@ -5,11 +5,9 @@
  */
 package com.merlinds.miracle_tool.models {
 	import com.merlinds.miracle_tool.models.vo.AnimationVO;
-	import com.merlinds.miracle_tool.models.vo.ProjectInfoVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
 
 	import flash.filesystem.File;
-
 	import flash.geom.Point;
 
 	import org.robotlegs.mvcs.Actor;
@@ -17,27 +15,37 @@ package com.merlinds.miracle_tool.models {
 	public class ProjectModel extends Actor {
 
 		private var _name:String;
-		private var _sceneSize:Point;
+		/**
+		 * TODO: MF-29 Make normal comment for referenceSize
+		 * This size will be used for scaling of output texture.
+		 * It based of target screen resolution and resource screen resolution.
+		 * For example: IF reference size (width of screen of the fla. resource ) equals 2048
+		 * and will be needed to publish project for 1024 screen width, than scale will be 0.5;
+		 **/
+		private var _referenceResolution:int;
+		/**
+		 * Width of the target screen resolution
+		 */
+		private var _targetResolution:int;
+		//TODO MF-28 Bound calculation for every polygon in texture
+		private var _boundsOffset:int;
 
 		private var _sources:Vector.<SourceVO>;
 		private var _inProgress:int;
 
-		private var _boundsOffset:int;
 		private var _outputSize:int;
 		private var _zoom:Number = 1;
 		private var _sheetSize:Point;
 
 		private var _saved:Boolean;
 
-		private var _animationInProgress:AnimationVO;
-
 		//quick hack for animation saving
 		public var tempFile:File;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function ProjectModel(name:String, sceneSize:Point) {
+		public function ProjectModel(name:String, referenceResolution:int) {
 			_name = name;
-			_sceneSize = sceneSize;
+			_referenceResolution = referenceResolution;
 			_sources = new <SourceVO>[];
 			_boundsOffset = 0;
 			_sheetSize = new Point();
@@ -98,14 +106,6 @@ package com.merlinds.miracle_tool.models {
 			return _name;
 		}
 
-		public function get sceneSize():Point {
-			return _sceneSize;
-		}
-
-		public function get infoVO():ProjectInfoVO {
-			return new ProjectInfoVO(_name, _sceneSize.toString());
-		}
-
 		public function get sources():Vector.<SourceVO> {
 			return _sources;
 		}
@@ -137,14 +137,6 @@ package com.merlinds.miracle_tool.models {
 			return _inProgress < 0 ? null : _sources[ _inProgress ];
 		}
 
-		public function get animationInProgress():AnimationVO {
-			return _animationInProgress;
-		}
-
-		public function set animationInProgress(value:AnimationVO):void {
-			_animationInProgress = value;
-		}
-
 		public function get boundsOffset():int {
 			return _boundsOffset;
 		}
@@ -169,6 +161,22 @@ package com.merlinds.miracle_tool.models {
 
 		public function set zoom(value:Number):void {
 			_zoom = value;
+		}
+		//TODO MF-29 Make normal comment for referenceSize
+		public function get referenceResolution():int {
+			return _referenceResolution;
+		}
+
+		public function set referenceResolution(value:int):void {
+			_referenceResolution = value;
+		}
+
+		public function get targetResolution():int {
+			return _targetResolution;
+		}
+
+		public function set targetResolution(value:int):void {
+			_targetResolution = value;
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

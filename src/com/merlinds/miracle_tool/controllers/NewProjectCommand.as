@@ -11,8 +11,8 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.ProjectModel;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
-
-	import flash.geom.Point;
+	import com.merlinds.unitls.Resolutions;
+	import com.merlinds.unitls.Resolutions;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -48,13 +48,12 @@ package com.merlinds.miracle_tool.controllers {
 					if(projectName == null || projectName.length == 0){
 						projectName = "Miracle project_" + new Date().time;//create unique name for project
 					}
-					var sceneSize:Point = new Point(this.event.body.sceneWidth, this.event.body.sceneHeight);
-					//quote size to normal
-					sceneSize.x = sceneSize.x <= 0 ? 1024 : sceneSize.x;
-					sceneSize.y = sceneSize.y <= 0 ? 768 : sceneSize.y;
-					log(this, "execute", "Create project:", projectName, ", Scene size = ", sceneSize);
+					var resolution:int = Resolutions.fromString(this.event.body.choice);
+					log(this, "execute", "Create project:", projectName,
+							", Resolution = ", Resolutions.toString(resolution));
+					//see ProjectModel referenceSize
 					this.dispatch(new EditorEvent(EditorEvent.CREATE_PROJECT,
-							{projectName:projectName, sceneSize:sceneSize}));
+							{projectName:projectName, referenceSize:resolution}));
 				}
 			}
 		}

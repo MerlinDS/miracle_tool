@@ -12,8 +12,6 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.views.project.ProjectView;
 	import com.merlinds.miracle_tool.views.widgets.ProjectWidgets;
 
-	import flash.geom.Point;
-
 	import org.robotlegs.mvcs.Command;
 
 	public class CreateProjectCommand extends Command {
@@ -37,13 +35,11 @@ package com.merlinds.miracle_tool.controllers {
 		override public function execute():void {
 			//create model for project
 			var projectName:String = this.event.body.projectName;
-			var sceneSize:Point = this.event.body.sceneSize;
+			var referenceSize:int = this.event.body.referenceSize;
 
-			var projectModel:ProjectModel = new ProjectModel(projectName, sceneSize);
+			var projectModel:ProjectModel = new ProjectModel(projectName, referenceSize);
 			projectModel.boundsOffset = this.event.body.boundsOffset;
-			if (this.event.body.hasOwnProperty("sheetSize")) {
-				projectModel.outputSize = this.event.body.sheetSize.x;
-			}
+			//
 			this.injector.mapValue(ProjectModel, projectModel);
 			this.resizeController.addInstance(new ProjectWidgets(this.contextView));
 			//create view for project

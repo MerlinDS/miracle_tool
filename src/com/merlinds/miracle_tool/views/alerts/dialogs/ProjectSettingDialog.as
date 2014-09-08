@@ -6,6 +6,7 @@
 package com.merlinds.miracle_tool.views.alerts.dialogs {
 
 	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
+	import com.merlinds.unitls.Resolutions;
 
 	import flash.display.DisplayObjectContainer;
 
@@ -21,9 +22,17 @@ package com.merlinds.miracle_tool.views.alerts.dialogs {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		override protected function initialize():void {
+			var resolutions:Array = [
+				Resolutions.toString(Resolutions.RETINA),
+				Resolutions.toString(Resolutions.FULL_HD),
+				Resolutions.toString(Resolutions.XGA),
+				Resolutions.toString(Resolutions.VGA),
+				Resolutions.toString(Resolutions.QVGA)
+			];
 			this.addBr();
 			this.addInput("projectName", "Project Name");
-			this.addComboBox("Chose resolution", ["Retina", "Full HD", "XGA", "VGA"]);
+			this.addComboBox("Chose resolution", resolutions);
+			//TODO MF-28 Add bound offset to project setting dialog
 			this.addButton("Create", DialogWindow.ACCEPT);
 		}
 

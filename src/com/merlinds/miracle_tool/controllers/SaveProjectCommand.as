@@ -29,7 +29,11 @@ package com.merlinds.miracle_tool.controllers {
 			if(this.injector.hasMapping(ProjectModel)){
 				var model:ProjectModel = this.injector.getInstance(ProjectModel);
 				//forming save data
-				var data:Object = { projectName:model.name, sceneSize:model.sceneSize };
+				var data:Object = { projectName:model.name,
+					referenceSize:model.referenceResolution,
+					targetSize:model.targetResolution,
+					boundsOffset:model.boundsOffset
+				};
 				data.sources = [];
 				var n:int = model.sources.length;
 				for(var i:int = 0; i < n; i++){

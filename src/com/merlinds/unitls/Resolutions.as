@@ -17,7 +17,8 @@ package com.merlinds.unitls {
 		public static const XGA:int = 4;
 		/** Full HD - 1920×1080 / 16:9 / 2,07 mpix**/
 		public static const FULL_HD:int = 6;
-		//TODO: Add retina display
+		/** Retina - 2048×1536 / 4:3 / **/
+		public static const RETINA:int = 7;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		/**
@@ -48,7 +49,21 @@ package com.merlinds.unitls {
 				case 0: case QVGA: return "QVGA";
 				case VGA: return "VGA";
 				case XGA: return "XGA";
-				default : return "Full_HD";
+				default :return value > FULL_HD ? "Retina" : "Full HD";
+			}
+		}
+
+		/**
+		 * Return resolution value by it's name
+		 * @param value Resolution name
+		 * **/
+		public static function fromString(value:String):int{
+			switch (value){
+				case "VGA": return VGA;
+				case "XGA": return XGA;
+				case "Full HD": return FULL_HD;
+				case "Retina": return RETINA;
+				default: return QVGA;
 			}
 		}
 
@@ -57,6 +72,7 @@ package com.merlinds.unitls {
 				case 0: case QVGA: return 320;
 				case VGA: return 640;
 				case XGA: return 1024;
+				case RETINA: return 2048;
 				default : return 1920;
 			}
 		}
@@ -66,6 +82,7 @@ package com.merlinds.unitls {
 				case 0: case QVGA: return 240;
 				case VGA: return 480;
 				case XGA: return 768;
+				case RETINA: return 1536;
 				default : return 1080;
 			}
 		}
