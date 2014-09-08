@@ -6,17 +6,13 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
-	import com.merlinds.miracle_tool.models.vo.AnimationVO;
-	import com.merlinds.miracle_tool.models.vo.SourceVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.views.AppView;
 	import com.merlinds.miracle_tool.views.project.ProjectView;
 	import com.merlinds.miracle_tool.views.widgets.ProjectWidgets;
 
-	import flash.filesystem.File;
 	import flash.geom.Point;
-	import flash.utils.setTimeout;
 
 	import org.robotlegs.mvcs.Command;
 
