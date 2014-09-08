@@ -21,9 +21,9 @@ package com.merlinds.miracle_tool.views.alerts.dialogs {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		override protected function initialize():void {
+			this.addBr();
 			this.addInput("projectName", "Project Name");
-			this.addInput("sceneWidth", "Screen width", "1024");
-			this.addInput("sceneHeight", "Screen height", "768");
+			this.addComboBox("Chose resolution", ["Retina", "Full HD", "XGA", "VGA"]);
 			this.addButton("Create", DialogWindow.ACCEPT);
 		}
 

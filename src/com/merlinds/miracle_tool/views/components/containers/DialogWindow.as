@@ -4,6 +4,9 @@
  * Time: 23:19
  */
 package com.merlinds.miracle_tool.views.components.containers {
+	import com.bit101.components.ComboBox;
+	import com.bit101.components.Component;
+	import com.bit101.components.Component;
 	import com.bit101.components.HBox;
 	import com.bit101.components.InputText;
 	import com.bit101.components.Label;
@@ -16,6 +19,7 @@ package com.merlinds.miracle_tool.views.components.containers {
 	import com.merlinds.miracle_tool.views.components.containers.DialogWindow;
 
 	import flash.display.DisplayObjectContainer;
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
@@ -62,6 +66,13 @@ package com.merlinds.miracle_tool.views.components.containers {
 			this.hasCloseButton = true;
 		}
 
+		protected final function addBr():void{
+			var br:Component = new Component();
+			br.width = 1;
+			br.height = 20;
+			_body.addChild(br);
+		}
+
 		protected final function addInput(name:String, label:String, text:String = ""):void{
 			var field:HBox = new HBox();
 			var input:InputText = new InputText(field, 0, 0, text);
@@ -84,6 +95,15 @@ package com.merlinds.miracle_tool.views.components.containers {
 				value = _data;
 			}
 			_controls["list"] = new List(_body, 0, 0, value);
+		}
+
+		protected final function addComboBox(label:String, value:Array = null):void{
+			if(value == null){
+				value = _data;
+			}
+			var field:HBox = new HBox(_body);
+			_controls["comboBox"] = new ComboBox(field, 0, 0, value[0], value);
+			new Label(field, 0, 0, label);
 		}
 
 		protected final function addButton(label:String, closeReason:String = ACCEPT):void{
