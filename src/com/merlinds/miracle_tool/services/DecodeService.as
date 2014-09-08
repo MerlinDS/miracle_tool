@@ -77,13 +77,11 @@ package com.merlinds.miracle_tool.services {
 			}else{
 				bytes.position = 4;
 				var data:Object = bytes.readObject();
-				var sceneSize:Point = new Point(data.sceneSize.x, data.sceneSize.y);
+				var referenceSize:int = data.referenceSize;
 				var boundsOffset:Number = data.boundsOffset;
-				var sheetSize:Point = new Point(data.sheetSize.x, data.sheetSize.y);
 				this.dispatch(new EditorEvent(EditorEvent.CREATE_PROJECT,
-						{projectName:data.projectName, sceneSize:sceneSize,
-							boundsOffset:boundsOffset, sheetSize:sheetSize,
-							sources:data.sources
+						{projectName:data.projectName, referenceSize:referenceSize,
+							boundsOffset:boundsOffset, sources:data.sources
 						}));
 			}
 		}

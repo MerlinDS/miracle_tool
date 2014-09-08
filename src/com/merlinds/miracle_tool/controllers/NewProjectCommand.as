@@ -12,7 +12,6 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.views.logger.StatusBar;
 	import com.merlinds.unitls.Resolutions;
-	import com.merlinds.unitls.Resolutions;
 
 	import org.robotlegs.mvcs.Command;
 

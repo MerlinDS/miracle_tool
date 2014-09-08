@@ -31,7 +31,6 @@ package com.merlinds.miracle_tool.controllers {
 				//forming save data
 				var data:Object = { projectName:model.name,
 					referenceSize:model.referenceResolution,
-					targetSize:model.targetResolution,
 					boundsOffset:model.boundsOffset
 				};
 				data.sources = [];
