@@ -143,7 +143,10 @@ package com.merlinds.miracle_tool.models {
 		}
 
 		public function set boundsOffset(value:int):void {
-			_boundsOffset = value;
+			if(value != _boundsOffset){
+				_boundsOffset = value;
+				//TODO MF-20 recalculate output
+			}
 		}
 
 		public function get outputSize():int {
@@ -168,16 +171,15 @@ package com.merlinds.miracle_tool.models {
 			return _referenceResolution;
 		}
 
-		public function set referenceResolution(value:int):void {
-			_referenceResolution = value;
-		}
-
 		public function get targetResolution():int {
 			return _targetResolution;
 		}
 
 		public function set targetResolution(value:int):void {
-			_targetResolution = value;
+			if(value != _targetResolution){
+				_targetResolution = value;
+				//TODO MF-20 recalculate output
+			}
 		}
 
 //} endregion GETTERS/SETTERS ==================================================

@@ -33,7 +33,6 @@ package com.merlinds.miracle_tool.views.alerts.dialogs {
 			this.addInput("projectName", "Project Name");
 			this.addComboBox("Chose resolution", resolutions);
 			this.addInput("boundsOffset", "Bounds offset", "0");
-			//TODO MF-28 Add bound offset to project setting dialog
 			this.addButton("Create", DialogWindow.ACCEPT);
 		}
 

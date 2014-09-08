@@ -14,14 +14,18 @@ package com.merlinds.miracle_tool.views.widgets {
 	import com.merlinds.unitls.Resolutions;
 
 	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
 
 	public class ProjectInfoView extends WidgetWindow {
+
+		private var _projectModel:ProjectModel;
 
 		private var _saveIndicator:IndicatorLight;
 		private var _projectResolution:Label;
 		private var _targetResoultion:ComboBox;
 		private var _boundOffset:InputText;
 		private var _name:Label;
+
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function ProjectInfoView(parent:DisplayObjectContainer = null) {
@@ -62,6 +66,15 @@ package com.merlinds.miracle_tool.views.widgets {
 
 		//==============================================================================
 		//{region							EVENTS HANDLERS
+		private function comboBoxHandler(event:Event):void {
+			_projectModel.targetResolution = Resolutions.fromString(_targetResoultion.selectedItem.toString());
+		}
+
+		private function inputHandler(event:Event):void {
+			if(_boundOffset.text.length > 0){
+				_projectModel.boundsOffset = int(_boundOffset.text);
+			}
+		}
 		//} endregion EVENTS HANDLERS ==================================================
 
 		//==============================================================================
@@ -69,14 +82,14 @@ package com.merlinds.miracle_tool.views.widgets {
 		override public function set data(value:Object):void {
 			this.enabled = value != null;
 			if(this.enabled){
-				var projectModel:ProjectModel = value as ProjectModel;
-				_name.text = projectModel.name;
-				_projectResolution.text = Resolutions.toString(projectModel.referenceResolution);
-				_boundOffset.text = projectModel.boundsOffset.toString();
-				_saveIndicator.color = projectModel.saved ? 0xFF00FF00 : 0xFFFF0000;
-				_saveIndicator.label = projectModel.saved ? "Saved" : "Not saved";
+				_projectModel = value as ProjectModel;
+				_name.text = _projectModel.name;
+				_projectResolution.text = Resolutions.toString(_projectModel.referenceResolution);
+				_boundOffset.text = _projectModel.boundsOffset.toString();
+				_saveIndicator.color = _projectModel.saved ? 0xFF00FF00 : 0xFFFF0000;
+				_saveIndicator.label = _projectModel.saved ? "Saved" : "Not saved";
 				//choose target resolution
-				var targetString:String = Resolutions.toString(projectModel.targetResolution);
+				var targetString:String = Resolutions.toString(_projectModel.targetResolution);
 				var list:Array = _targetResoultion.items;
 				for(var i:int = 0; i < list.length; i++){
 					if(list[i] == targetString){
@@ -84,6 +97,9 @@ package com.merlinds.miracle_tool.views.widgets {
 						break;
 					}
 				}
+				//add listeners
+				_targetResoultion.addEventListener(Event.SELECT, this.comboBoxHandler);
+				_boundOffset.addEventListener(Event.CHANGE, this.inputHandler);
 			}
 		}
 
