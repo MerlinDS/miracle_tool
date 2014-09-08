@@ -75,6 +75,15 @@ package com.merlinds.miracle_tool.views.widgets {
 				_boundOffset.text = projectModel.boundsOffset.toString();
 				_saveIndicator.color = projectModel.saved ? 0xFF00FF00 : 0xFFFF0000;
 				_saveIndicator.label = projectModel.saved ? "Saved" : "Not saved";
+				//choose target resolution
+				var targetString:String = Resolutions.toString(projectModel.targetResolution);
+				var list:Array = _targetResoultion.items;
+				for(var i:int = 0; i < list.length; i++){
+					if(list[i] == targetString){
+						_targetResoultion.selectedIndex = i;
+						break;
+					}
+				}
 			}
 		}
 

@@ -46,6 +46,7 @@ package com.merlinds.miracle_tool.models {
 		public function ProjectModel(name:String, referenceResolution:int) {
 			_name = name;
 			_referenceResolution = referenceResolution;
+			_targetResolution = referenceResolution;
 			_sources = new <SourceVO>[];
 			_boundsOffset = 0;
 			_sheetSize = new Point();
