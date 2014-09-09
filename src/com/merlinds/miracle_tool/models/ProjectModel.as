@@ -237,6 +237,7 @@ package com.merlinds.miracle_tool.models {
 				if(_sources.length > 0){
 					var reverted:Boolean = this.revertBackupTo(_targetResolution);
 					if( !reverted ){
+						_outputSize = 1;
 						this.scaleSources();
 					}
 					this.dispatch(new EditorEvent(EditorEvent.UPDATE_PROJECT));
