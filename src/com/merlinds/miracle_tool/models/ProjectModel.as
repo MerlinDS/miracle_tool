@@ -140,6 +140,7 @@ package com.merlinds.miracle_tool.models {
 			sources.fixed = true;
 			for(var i:int = 0; i < n; i++){
 				//cloning
+				//TODO do cloning of animation to publish command
 				sources[i] = defaultSources[i].clone(scale);
 			}
 			//end

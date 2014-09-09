@@ -39,8 +39,8 @@ package com.merlinds.miracle_tool.models.vo {
 			var clone:FrameVO = new FrameVO(_index, _duration);
 			clone._name = _name;
 			clone._type = _type;
-			clone._matrix = _matrix.clone();
-			clone._transformationPoint = _transformationPoint.clone();
+			clone._matrix = _matrix != null ? _matrix.clone() : null;
+			clone._transformationPoint = _transformationPoint != null ? _transformationPoint.clone() : null;
 			return clone;
 		}
 		//} endregion PUBLIC METHODS ===================================================

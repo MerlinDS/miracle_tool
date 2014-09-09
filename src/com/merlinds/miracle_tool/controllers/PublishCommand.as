@@ -17,6 +17,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.utils.MeshUtils;
+	import com.merlinds.unitls.Resolutions;
 
 	import flash.display.BitmapData;
 	import flash.geom.Point;
@@ -108,6 +109,8 @@ package com.merlinds.miracle_tool.controllers {
 				height:animationVO.height,
 				layers:[]};
 			var n:int = animationVO.timelines.length;
+			var scale:Number = Resolutions.width(this.projectModel.targetResolution) /
+					Resolutions.width(this.projectModel.referenceResolution);
 			//find matrix sequence for current animation
 			for(var i:int = 0; i < n; i++){
 				var timelineVO:TimelineVO = animationVO.timelines[i];
@@ -120,8 +123,15 @@ package com.merlinds.miracle_tool.controllers {
 							? layer.matrixList[ layer.matrixList.length - 1] : null;
 					var matrix:MeshMatrix = MeshMatrix.fromMatrix(frameVO.matrix,
 							frameVO.transformationPoint.x, frameVO.transformationPoint.y);
+					//multiply scale to matrix
+					if(matrix != null){
+						matrix.tx = matrix.tx * scale;
+						matrix.ty = matrix.ty * scale;
+						matrix.offsetX = matrix.offsetX * scale;
+						matrix.offsetY = matrix.offsetY * scale;
+					}
+					//calculate shortest angle between previous matrix skew and current matrix skew
 					if(prevMatrix != null && matrix != null){
-						//calculate shortest angle between previous matrix skew and current matrix skew
 						matrix.skewX = this.getShortest(matrix.skewX, prevMatrix.skewX);
 						matrix.skewY = this.getShortest(matrix.skewY, prevMatrix.skewY);
 						//

@@ -23,15 +23,7 @@ package com.merlinds.miracle_tool.models.vo {
 		public function clone(scale:Number = 1):SourceVO {
 			var i:int, n:int;
 			var clone:SourceVO = new SourceVO(this.file);
-			clone._animations = _animations.concat();
-			//clone animation
-			clone._animations.length = _animations.length;
-			clone._animations.fixed = true;
-			n = _animations.length;
-			for(i = 0; i < n; i++){
-				clone._animations[i] = _animations[i].clone();
-				if(scale != 1)clone._animations[i].scale = scale;
-			}
+			clone._animations = _animations;
 			//clone elements
 			clone._elements.length = _elements.length;
 			clone._elements.fixed = true;
@@ -42,7 +34,6 @@ package com.merlinds.miracle_tool.models.vo {
 			}
 			clone.selected = selected;
 			clone._elements.fixed = false;
-			clone._animations.fixed = false;
 			return clone;
 		}
 		//} endregion PUBLIC METHODS ===================================================
