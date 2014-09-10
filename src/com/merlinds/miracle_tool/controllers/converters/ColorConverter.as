@@ -27,7 +27,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 		}
 
 		public function convertToArray(xml:XMLList):Array {
-			_color = [0, 0, 0, 0];
+			_color = [0, 0, 0, 1];
 			/* get attributes from Color node
 			 * Node example:
 			 * Additional =
