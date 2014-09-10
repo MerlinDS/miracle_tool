@@ -49,6 +49,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 				var method:Function = _methods[_colorEffect.type];
 				method.apply(this);
 			}
+			trace(_color);
 			return _color;
 		}
 		//} endregion PUBLIC METHODS ===================================================
@@ -57,7 +58,9 @@ package com.merlinds.miracle_tool.controllers.converters {
 		//{region						PRIVATE\PROTECTED METHODS
 		private function alpha():void {
 			log(this, "alpha");
-			_color[A] = _colorEffect.alphaMultiplier;
+			if(!isNaN(_colorEffect.alphaMultiplier)){
+				_color[A] = _colorEffect.alphaMultiplier;
+			}
 		}
 
 		private function brightness():void {
