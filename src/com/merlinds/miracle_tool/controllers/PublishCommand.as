@@ -129,6 +129,7 @@ package com.merlinds.miracle_tool.controllers {
 						matrix.ty = matrix.ty * scale;
 						matrix.offsetX = matrix.offsetX * scale;
 						matrix.offsetY = matrix.offsetY * scale;
+						matrix.color = frameVO.color.concat();
 					}
 					//calculate shortest angle between previous matrix skew and current matrix skew
 					if(prevMatrix != null && matrix != null){
