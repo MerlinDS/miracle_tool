@@ -3,7 +3,7 @@
  * Date: 16.07.2014
  * Time: 22:22
  */
-package com.merlinds.miracle_tool.controllers {
+package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
@@ -15,10 +15,6 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.vo.TimelineVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.XMLConverters;
-
-	import flash.debugger.enterDebugger;
-
-	import flash.filesystem.File;
 
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -41,6 +37,8 @@ package com.merlinds.miracle_tool.controllers {
 
 		private var _namespace:Namespace;
 
+		private var _colorConverter:ColorConverter;
+
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function AnimationConverterCommand() {
@@ -49,6 +47,7 @@ package com.merlinds.miracle_tool.controllers {
 
 		override public function execute():void {
 			log(this, "execute");
+			_colorConverter = new ColorConverter();
 			//search for animation in file
 			var data:AnimSourcesVO = this.event.body as AnimSourcesVO;
 			var source:SourceVO = this.projectModel.selected;
@@ -123,7 +122,7 @@ package com.merlinds.miracle_tool.controllers {
 				_currentFrame.matrix = XMLConverters.convertToObject(element.matrix.Matrix, Matrix);
 				_currentFrame.transformationPoint = XMLConverters.convertToObject(
 						element.transformationPoint.Point, Point);
-				//TODO add colors multipliers, create vo for colors
+				_currentFrame.color = _colorConverter.convertToArray(element.color.Color);
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================

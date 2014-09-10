@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
+	import com.merlinds.miracle_tool.controllers.converters.AnimationConverterCommand;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.AppModel;

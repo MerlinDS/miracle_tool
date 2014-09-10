@@ -20,6 +20,8 @@ package com.merlinds.miracle_tool.models.vo {
 
 		private var _matrix:Matrix;
 		private var _transformationPoint:Point;
+
+		private var _color:Array;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 
@@ -115,6 +117,15 @@ package com.merlinds.miracle_tool.models.vo {
 				_transformationPoint.y = _transformationPoint.y * value;
 			}
 		}
+
+		public function get color():Array {
+			return _color;
+		}
+
+		public function set color(value:Array):void {
+			_color = value;
+		}
+
 //} endregion GETTERS/SETTERS ==================================================
 	}
 }
