@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.debug.log;
+	import com.merlinds.miracle_tool.controllers.converters.XMLColorConverter;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
@@ -15,6 +16,8 @@ package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.miracle_tool.models.vo.TimelineVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.XMLConverters;
+
+	import flash.debugger.enterDebugger;
 
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -37,8 +40,6 @@ package com.merlinds.miracle_tool.controllers.converters {
 
 		private var _namespace:Namespace;
 
-		private var _colorConverter:ColorConverter;
-
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function AnimationConverterCommand() {
@@ -47,7 +48,6 @@ package com.merlinds.miracle_tool.controllers.converters {
 
 		override public function execute():void {
 			log(this, "execute");
-			_colorConverter = new ColorConverter();
 			//search for animation in file
 			var data:AnimSourcesVO = this.event.body as AnimSourcesVO;
 			var source:SourceVO = this.projectModel.selected;
@@ -122,7 +122,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 				_currentFrame.matrix = XMLConverters.convertToObject(element.matrix.Matrix, Matrix);
 				_currentFrame.transformationPoint = XMLConverters.convertToObject(
 						element.transformationPoint.Point, Point);
-				_currentFrame.color = _colorConverter.convertToArray(element.color.Color);
+				_currentFrame.color = new XMLColorConverter(element.color.Color);
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================

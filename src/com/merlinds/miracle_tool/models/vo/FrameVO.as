@@ -4,6 +4,8 @@
  * Time: 22:45
  */
 package com.merlinds.miracle_tool.models.vo {
+	import com.merlinds.miracle.meshes.Color;
+
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 
@@ -21,7 +23,7 @@ package com.merlinds.miracle_tool.models.vo {
 		private var _matrix:Matrix;
 		private var _transformationPoint:Point;
 
-		private var _color:Array;
+		private var _color:Color;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 
@@ -118,11 +120,11 @@ package com.merlinds.miracle_tool.models.vo {
 			}
 		}
 
-		public function get color():Array {
+		public function get color():Color {
 			return _color;
 		}
 
-		public function set color(value:Array):void {
+		public function set color(value:Color):void {
 			_color = value;
 		}
 

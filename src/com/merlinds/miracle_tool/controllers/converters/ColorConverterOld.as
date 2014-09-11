@@ -9,7 +9,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 	import flash.debugger.enterDebugger;
 	import flash.geom.ColorTransform;
 
-	public class ColorConverter {
+	public class ColorConverterOld {
 
 		/** Index of red color **/
 		private static const R:int = 0;
@@ -30,7 +30,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 		private var _methods:Vector.<Function>;
 		//==============================================================================
 		//{region							PUBLIC METHODS
-		public function ColorConverter() {
+		public function ColorConverterOld() {
 			_methods = new <Function>[this.brightness, this.alpha, this.tint, this.additional];
 		}
 
