@@ -6,6 +6,9 @@
 package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.miracle.meshes.Color;
 	import com.merlinds.unitls.ColorUtils;
+
+	import flash.debugger.enterDebugger;
+
 	/**
 	 * The XMLColorConverter class present color transformations from the XML to Miracle format.
 	 * In miracle engine this object will be downloaded as Color object and gives to shader color transformations data.
@@ -14,7 +17,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 	 **/
 	public class XMLColorConverter extends Color{
 		//constants Color node attributes that need convert to Color parameters
-		private static const BRIGHTNESS:String = "brightness";
+		private static const BRIGHTNESS_TAG:String = "brightness";
 		private static const TINT_MULTIPLIER:String = "tintMultiplier";
 		private static const TINT_COLOR:String = "tintColor";
 		//auxiliary constants
@@ -79,7 +82,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 					}else if(name == TINT_MULTIPLIER){
 						//tint multiplier spreads for all channels except alpha chanel
 						this.redMultiplier = this.greenMultiplier = this.blueMultiplier = attribute;
-					}else if(name == BRIGHTNESS){
+					}else if(name == BRIGHTNESS_TAG){
 						//brightness multiplier spreads for all channels except alpha chanel
 						this.redMultiplier = this.greenMultiplier = this.blueMultiplier = attribute;
 						//all channels offset equals 255 channels except alpha chanel
@@ -89,11 +92,18 @@ package com.merlinds.miracle_tool.controllers.converters {
 			}
 			//define color transformation type
 			this.type = TINT;//by default set TINT as type.
-			if(this.redMultiplier == 0 && this.greenMultiplier == 0 && this.blueMultiplier == 0){
-				if(this.alphaMultiplier != 0 || this.alphaOffset != 0){
+			if(this.alphaMultiplier + this.alphaOffset == 0){
+				if(this.redMultiplier + this.greenMultiplier + this.blueMultiplier == this.redMultiplier * 3 &&
+						this.redOffset + this.greenOffset + this.blueOffset == this.redOffset * 3){
+					this.type = BRIGHTNESS;
+				}
+			}else{
+				if(this.redMultiplier + this.greenMultiplier + this.blueMultiplier +
+					this.redOffset + this.greenOffset + this.blueOffset == 0){
 					this.type = ALPHA;
 				}
 			}
+			//in other case Color type is tint
 		}
 
 		private function covertTintColor(hex:String):void{
