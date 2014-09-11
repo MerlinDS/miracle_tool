@@ -7,8 +7,6 @@ package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.miracle.meshes.Color;
 	import com.merlinds.unitls.ColorUtils;
 
-	import flash.debugger.enterDebugger;
-
 	/**
 	 * The XMLColorConverter class present color transformations from the XML to Miracle format.
 	 * In miracle engine this object will be downloaded as Color object and gives to shader color transformations data.
@@ -91,19 +89,14 @@ package com.merlinds.miracle_tool.controllers.converters {
 				}
 			}
 			//define color transformation type
-			this.type = TINT;//by default set TINT as type.
-			if(this.alphaMultiplier + this.alphaOffset == 0){
-				if(this.redMultiplier + this.greenMultiplier + this.blueMultiplier == this.redMultiplier * 3 &&
-						this.redOffset + this.greenOffset + this.blueOffset == this.redOffset * 3){
-					this.type = BRIGHTNESS;
-				}
-			}else{
-				if(this.redMultiplier + this.greenMultiplier + this.blueMultiplier +
-					this.redOffset + this.greenOffset + this.blueOffset == 0){
-					this.type = ALPHA;
-				}
+			if(this.alphaMultiplier + this.alphaOffset > 0){
+				this.type += ALPHA;
 			}
-			//in other case Color type is tint
+			if(this.redMultiplier + this.greenMultiplier + this.blueMultiplier +
+					this.redOffset + this.greenOffset + this.blueOffset > 0){
+				this.type += COLOR;
+			}
+			//in other case Color type is none
 		}
 
 		private function covertTintColor(hex:String):void{
