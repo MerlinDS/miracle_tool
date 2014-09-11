@@ -6,9 +6,6 @@
 package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.miracle.meshes.Color;
 	import com.merlinds.unitls.ColorUtils;
-
-	import flash.debugger.enterDebugger;
-
 	/**
 	 * The XMLColorConverter class present color transformations from the XML to Miracle format.
 	 * In miracle engine this object will be downloaded as Color object and gives to shader color transformations data.
@@ -21,6 +18,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 		private static const TINT_MULTIPLIER:String = "tintMultiplier";
 		private static const TINT_COLOR:String = "tintColor";
 		//auxiliary constants
+		private static const ALPHA_PREFIX:String = "alpha";
 		private static const MULTIPLIER_POSTFIX:String = "Multiplier";
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -67,6 +65,11 @@ package com.merlinds.miracle_tool.controllers.converters {
 						 * Need to covert it to (-1, 1) form
 						 */
 						attribute = attribute / 255;
+					}else{
+						if(name.lastIndexOf(ALPHA_PREFIX) > -1){
+							//Need to revert alpha
+							attribute = 1 - attribute;
+						}
 					}
 					this[name] = attribute;
 				}else{
