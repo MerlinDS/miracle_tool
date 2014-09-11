@@ -76,9 +76,14 @@ package com.merlinds.miracle_tool.controllers.converters {
 					/* Color node has unique attributes that need to be converted to Color parameters */
 					if(name == TINT_COLOR){
 						this.covertTintColor(attribute);
-					}else if(name == TINT_MULTIPLIER || name == BRIGHTNESS){
-						//tint multiplier and brightness multiplier spreads for all channels except alpha chanel
+					}else if(name == TINT_MULTIPLIER){
+						//tint multiplier spreads for all channels except alpha chanel
 						this.redMultiplier = this.greenMultiplier = this.blueMultiplier = attribute;
+					}else if(name == BRIGHTNESS){
+						//brightness multiplier spreads for all channels except alpha chanel
+						this.redMultiplier = this.greenMultiplier = this.blueMultiplier = attribute;
+						//all channels offset equals 255 channels except alpha chanel
+						this.redOffset = this.greenOffset = this.blueOffset = 1;
 					}
 				}
 			}
