@@ -6,6 +6,9 @@
 package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.debug.log;
 
+	import flash.debugger.enterDebugger;
+	import flash.geom.ColorTransform;
+
 	public class ColorConverter {
 
 		/** Index of red color **/
@@ -16,6 +19,11 @@ package com.merlinds.miracle_tool.controllers.converters {
 		private static const B:int = 2;
 		/** Index of alpha chanel **/
 		private static const A:int = 3;
+		//
+		private static const MR:int = 4;
+		private static const MG:int = 5;
+		private static const MB:int = 6;
+		private static const MA:int = 7;
 
 		private var _color:Array;//RGBA
 		private var _colorEffect:ColorEffect;
@@ -27,7 +35,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 		}
 
 		public function convertToArray(xml:XMLList):Array {
-			_color = [0, 0, 0, 1];
+			_color = [0, 0, 0, 0, 0, 0, 0, 0];
 			/* get attributes from Color node
 			 * Node example:
 			 * Additional =
@@ -49,7 +57,6 @@ package com.merlinds.miracle_tool.controllers.converters {
 				var method:Function = _methods[_colorEffect.type];
 				method.apply(this);
 			}
-			trace(_color);
 			return _color;
 		}
 		//} endregion PUBLIC METHODS ===================================================
@@ -70,12 +77,24 @@ package com.merlinds.miracle_tool.controllers.converters {
 
 		private function tint():void {
 			log(this, "tint");
+			var colorTransform:ColorTransform = new ColorTransform(_colorEffect.tintMultiplier,
+					_colorEffect.tintMultiplier, _colorEffect.tintMultiplier, 1);
+			colorTransform.color = _colorEffect.tintColor;
+			_color[R] = colorTransform.redOffset / 255;
+			_color[G] = colorTransform.greenOffset / 255;
+			_color[B] = colorTransform.blueOffset / 255;
+			_color[A] = 1;//colorTransform.alphaOffset / 255;
+			_color[MR] = _colorEffect.tintMultiplier;
+			_color[MG] = _colorEffect.tintMultiplier;
+			_color[MB] = _colorEffect.tintMultiplier;
+			_color[MA] = 1;//colorTransform.alphaMultiplier;
 		}
 
 		private function additional():void {
 			log(this, "additional");
 			this.alpha();//In colorEffect can be alpha multiplier
 		}
+
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
@@ -112,7 +131,13 @@ class ColorEffect{
 		for(var i:int = 0; i < data.length(); i++){
 			var name:String = data[i].name();
 			if(this.hasOwnProperty(name)){
-				this[name] = data[i];
+				if(name == "tintColor"){
+					var hex:String = data[i];
+					hex = hex.replace("#", "0x");
+					this[name] = hex;
+				}else{
+					this[name] = data[i];
+				}
 			}
 		}
 		//define type of the color effect
