@@ -36,7 +36,6 @@ package com.merlinds.miracle_tool.views.widgets {
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
 		override protected function initialize():void{
-			//TODO: MF-31 Disable resizing in a big way
 			var resolutions:Array = [
 				Resolutions.toString(Resolutions.RETINA),
 				Resolutions.toString(Resolutions.FULL_HD),

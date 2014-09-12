@@ -62,8 +62,7 @@ package com.merlinds.miracle_tool.models.vo {
 		 */
 		public function generateTransform(scale:Number, previousTransform:Transformation):Transformation {
 			if(this.matrix != null){
-				var matrix:TransformMatrix = TransformMatrix.fromMatrix(this.matrix,
-						this.transformationPoint.x, this.transformationPoint.y);
+				var matrix:TransformMatrix = this.getMatrix();
 				//multiply scale to matrix
 				matrix.tx = matrix.tx * scale;
 				matrix.ty = matrix.ty * scale;
@@ -88,6 +87,24 @@ package com.merlinds.miracle_tool.models.vo {
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
+		[Inline]
+		private function getMatrix():TransformMatrix{
+			var transformMatrix:TransformMatrix;
+			if(this.matrix != null){
+				var position:Point = this.matrix.transformPoint(this.transformationPoint);
+				transformMatrix = new TransformMatrix(
+						this.transformationPoint.x * -1,
+						this.transformationPoint.y,
+						position.x, position.y,
+						Math.sqrt(matrix.a * matrix.a + matrix.b * matrix.b),
+						Math.sqrt(matrix.c * matrix.c + matrix.d * matrix.d),
+						Math.atan2(-matrix.c, matrix.d),
+						Math.atan2(matrix.b, matrix.a)
+				)
+			}
+			return transformMatrix;
+		}
+
 		[Inline]
 		private function getShortest(a:Number, b:Number):Number {
 			if(Math.abs(a - b) > Math.PI){

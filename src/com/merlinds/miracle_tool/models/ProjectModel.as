@@ -230,7 +230,6 @@ package com.merlinds.miracle_tool.models {
 		}
 
 		public function set targetResolution(value:int):void {
-			//TODO: MF-31 Disable resizing in a big way
 			if(value != _targetResolution){
 				this.prepareBackup();
 				_targetResolution = value;
