@@ -5,9 +5,12 @@
  */
 package com.merlinds.miracle_tool.models.vo {
 	import com.merlinds.miracle.meshes.Color;
+	import com.merlinds.miracle.meshes.TransformMatrix;
+	import com.merlinds.miracle.meshes.Transformation;
 
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 	public class FrameVO {
 
@@ -47,10 +50,55 @@ package com.merlinds.miracle_tool.models.vo {
 			clone._transformationPoint = _transformationPoint != null ? _transformationPoint.clone() : null;
 			return clone;
 		}
+
+
+		/**
+		 * Generate transformation object for add it to maf.
+		 * @param scale Global stage scale.
+		 * @param previousTransform Previous frame transformation object.
+		 * (need to calculation of shortest angle between two matrix)
+		 * @return Generated transform object with transformation matrix,
+		 * color transformation object, and polygon bounds.
+		 */
+		public function generateTransform(scale:Number, previousTransform:Transformation):Transformation {
+			if(this.matrix != null){
+				var matrix:TransformMatrix = TransformMatrix.fromMatrix(this.matrix,
+						this.transformationPoint.x, this.transformationPoint.y);
+				//multiply scale to matrix
+				matrix.tx = matrix.tx * scale;
+				matrix.ty = matrix.ty * scale;
+				matrix.offsetX = matrix.offsetX * scale;
+				matrix.offsetY = matrix.offsetY * scale;
+				//calculate shortest angle between previous matrix skew and current matrix skew
+				if(previousTransform != null){
+					 matrix.skewX = this.getShortest(matrix.skewX, previousTransform.matrix.skewX);
+					 matrix.skewY = this.getShortest(matrix.skewY, previousTransform.matrix.skewY);
+				}
+				var transformation:Transformation = new Transformation();
+				transformation.matrix = matrix;
+				//add color to transformation
+				transformation.color = this.color;
+				//TODO add bounds
+				transformation.bounds = new Rectangle(0, 0, 0, 0);
+			}
+			//if matrix doesn't exist then frame is empty
+			return transformation;
+		}
 		//} endregion PUBLIC METHODS ===================================================
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
+		[Inline]
+		private function getShortest(a:Number, b:Number):Number {
+			if(Math.abs(a - b) > Math.PI){
+				if(a > 0){
+					return a - Math.PI * 2;
+				}else if(a < 0){
+					return Math.PI * 2 + a;
+				}
+			}
+			return a;
+		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
 
 		//==============================================================================
