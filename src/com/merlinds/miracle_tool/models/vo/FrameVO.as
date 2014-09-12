@@ -4,9 +4,9 @@
  * Time: 22:45
  */
 package com.merlinds.miracle_tool.models.vo {
-	import com.merlinds.miracle.meshes.Color;
-	import com.merlinds.miracle.meshes.TransformMatrix;
-	import com.merlinds.miracle.meshes.Transformation;
+	import com.merlinds.miracle.geom.Color;
+	import com.merlinds.miracle.geom.TransformMatrix;
+	import com.merlinds.miracle.geom.Transformation;
 
 	import flash.geom.Matrix;
 	import flash.geom.Point;

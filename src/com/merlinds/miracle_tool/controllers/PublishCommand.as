@@ -5,7 +5,7 @@
  */
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
-	import com.merlinds.miracle.meshes.Transformation;
+	import com.merlinds.miracle.geom.Transformation;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;

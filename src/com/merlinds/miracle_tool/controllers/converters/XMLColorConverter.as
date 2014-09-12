@@ -4,14 +4,14 @@
  * Time: 18:41
  */
 package com.merlinds.miracle_tool.controllers.converters {
-	import com.merlinds.miracle.meshes.Color;
+	import com.merlinds.miracle.geom.Color;
 	import com.merlinds.unitls.ColorUtils;
 
 	/**
 	 * The XMLColorConverter class present color transformations from the XML to Miracle format.
 	 * In miracle engine this object will be downloaded as Color object and gives to shader color transformations data.
 	 *
-	 * @see com.merlinds.miracle.meshes.Color
+	 * @see com.merlinds.miracle.geom.Color
 	 **/
 	public class XMLColorConverter extends Color{
 		//constants Color node attributes that need convert to Color parameters
