@@ -41,6 +41,7 @@ package com.merlinds.miracle_tool.controllers {
 		private var _animations:ByteArray;
 
 		private var _scale:Number;
+		private var _elements:Object;
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public function PublishCommand() {
@@ -71,6 +72,7 @@ package com.merlinds.miracle_tool.controllers {
 		//{region						PRIVATE\PROTECTED METHODS
 		private function createOutput():void{
 			var buffer:BitmapData = new BitmapData(this.projectModel.outputSize, this.projectModel.outputSize, true, 0x0);
+			_elements = {};
 			var mesh:Array = [];
 			var animations:Array = [];
 			var n:int = this.projectModel.sources.length;
@@ -90,6 +92,8 @@ package com.merlinds.miracle_tool.controllers {
 						uv:MeshUtils.covertToRelative(element.uv, this.projectModel.outputSize),
 						indexes:element.indexes
 					});
+					//save mesh bounds to buffer for animation bounds calculation
+					_elements[element.name] = element.vertexes;
 				}
 				//get animation
 				m = source.animations.length;
@@ -122,6 +126,7 @@ package com.merlinds.miracle_tool.controllers {
 					var frameVO:FrameVO = timelineVO.frames[j];
 					//create matrix
 					var transform:Transformation = frameVO.generateTransform(_scale,
+							_elements[frameVO.name],
 							//get previous frame transformation object
 							layer.matrixList.length > 0 ? layer.matrixList[ layer.matrixList.length - 1] : null
 					);

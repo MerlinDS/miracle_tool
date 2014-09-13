@@ -118,7 +118,6 @@ package com.merlinds.miracle_tool.controllers {
 			element.vertexes = new <Number>[topLeftPoint.x, topLeftPoint.y, topRightPoint.x, topRightPoint.y,
 				bottomRightPoint.x, bottomRightPoint.y, bottomLeftPoint.x, bottomLeftPoint.y];
 
-
 			return element;
 		}
 

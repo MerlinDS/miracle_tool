@@ -55,12 +55,13 @@ package com.merlinds.miracle_tool.models.vo {
 		/**
 		 * Generate transformation object for add it to maf.
 		 * @param scale Global stage scale.
+		 * @param vertexes Pixel vertexes of element in texture.
 		 * @param previousTransform Previous frame transformation object.
 		 * (need to calculation of shortest angle between two matrix)
 		 * @return Generated transform object with transformation matrix,
-		 * color transformation object, and polygon bounds.
+		 * color transformation object, and polygon bounds with transformation.
 		 */
-		public function generateTransform(scale:Number, previousTransform:Transformation):Transformation {
+		public function generateTransform(scale:Number, vertexes:Vector.<Number>, previousTransform:Transformation):Transformation {
 			if(this.matrix != null){
 				var matrix:TransformMatrix = this.getMatrix();
 				//multiply scale to matrix
@@ -77,8 +78,35 @@ package com.merlinds.miracle_tool.models.vo {
 				transformation.matrix = matrix;
 				//add color to transformation
 				transformation.color = this.color;
-				//TODO add bounds
-				transformation.bounds = new Rectangle(0, 0, 0, 0);
+				transformation.bounds = new Rectangle();
+				//calculate new bounds for this frame
+				var topLeft:Point = new Point(), bottomRight:Point = new Point();
+				var n:int = vertexes.length >> 1;
+				for(var i:int = 0; i < n; i++){
+					var x:Number = vertexes[ 2 * i ] + this.transformationPoint.x;
+					var y:Number = vertexes[ 2 * i + 1] + this.transformationPoint.y;
+					var point:Point = this.matrix.transformPoint(new Point(x, y));
+					//find smallest and largest x and y positions
+					//for x
+					if(point.x < topLeft.x){
+						topLeft.x = point.x;
+					}else if(point.x > bottomRight.x){
+						bottomRight.x = point.x;
+					}
+					//for y
+					if(point.y < topLeft.y){
+						topLeft.y = point.y;
+					}else if(point.y > bottomRight.y){
+						bottomRight.y = point.y;
+					}
+				}
+				transformation.bounds.topLeft = topLeft;
+				transformation.bounds.bottomRight = bottomRight;
+				//round rectangle
+				transformation.bounds.x = Math.round(transformation.bounds.x);
+				transformation.bounds.y = Math.round(transformation.bounds.y);
+				transformation.bounds.width = Math.round(transformation.bounds.width);
+				transformation.bounds.height = Math.round(transformation.bounds.height);
 			}
 			//if matrix doesn't exist then frame is empty
 			return transformation;

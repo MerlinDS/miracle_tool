@@ -11,6 +11,7 @@ package com.merlinds.miracle_tool.models.vo {
 	import flash.display.IBitmapDrawable;
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
 	public class ElementVO {
@@ -111,13 +112,6 @@ package com.merlinds.miracle_tool.models.vo {
 			for(var i:int = 0; i < _vertexes.length; i++){
 				_vertexes[i] = _vertexes[i] * value;
 			}
-			/*//topRightPoint
-			_vertexes[2] = _vertexes[2] * value;//x
-			//bottomRightPoint
-			_vertexes[4] = _vertexes[4] * value;//x
-			_vertexes[5] = _vertexes[5] * value;//y
-			//bottomLeftPoint
-			_vertexes[7] = _vertexes[7] * value;//y*/
 			this.view = new Bitmap(bitmapData);
 			this.updateView(true, value);
 		}
