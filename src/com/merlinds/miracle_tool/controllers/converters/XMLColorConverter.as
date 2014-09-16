@@ -82,9 +82,9 @@ package com.merlinds.miracle_tool.controllers.converters {
 						this.redMultiplier = this.greenMultiplier = this.blueMultiplier = attribute;
 					}else if(name == BRIGHTNESS_TAG){
 						//brightness multiplier spreads for all channels except alpha chanel
-						this.redMultiplier = this.greenMultiplier = this.blueMultiplier = attribute;
+						this.redMultiplier = this.greenMultiplier = this.blueMultiplier = attribute > 0 ? attribute : attribute * -1;
 						//all channels offset equals 255 channels except alpha chanel
-						this.redOffset = this.greenOffset = this.blueOffset = 1;
+						this.redOffset = this.greenOffset = this.blueOffset = attribute > 0 ? 1 : 0;
 					}
 				}
 			}

@@ -88,7 +88,7 @@ package com.merlinds.miracle_tool.viewer {
 		//==============================================================================
 		//{region							EVENTS HANDLERS
 		private function createHandler(animation:Boolean = false):void {
-			//TODO: Show view if it exit
+			//\TODO: Show view if it exit
 			if(animation || _model.viewerInput == null){
 				_model.viewerInput = _model.lastFileDirection;
 				_model.viewerInput.addEventListener(Event.SELECT, this.selectFileHandler);
@@ -128,7 +128,7 @@ package com.merlinds.miracle_tool.viewer {
 			log(this, "selectAnimationHandler", animation);
 			if(_current == null){
 				_current = Miracle.currentScene.createAnimation(_name, _name + "." + animation, 60);
-				_current.moveTO(this.stage.stageWidth >> 1, this.stage.stageHeight >> 1);
+				_current.moveTO(this.stage.stageWidth - 300 >> 1, this.stage.stageHeight - 300  >> 1);
 				_current.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
 			}else{
 				_current.animation = _name + "." + animation;

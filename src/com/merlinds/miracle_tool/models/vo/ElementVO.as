@@ -65,7 +65,7 @@ package com.merlinds.miracle_tool.models.vo {
 			}
 			matrix.scale(scale, scale);
 			this.bitmapData = new BitmapData(this.width, this.height, true, 0x0);
-			bitmapData.draw(source, matrix);
+			bitmapData.draw(source, matrix, null, null, null, true);
 			var selector:Bitmap = new Bitmap(new BitmapData(this.width, this.height, true, 0x3300FF00));
 			selector.visible = false;
 			var view:Sprite = new Sprite();
