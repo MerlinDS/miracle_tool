@@ -12,7 +12,7 @@
               <dependency linkage="Merged" />
             </entry>
           </entries>
-          <sdk name="AIR 4.0" />
+          <sdk name="AIR.15.0.0.249" />
         </dependencies>
         <compiler-options />
         <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/com/merlinds/miracle_tool/Main-app.xml" package-file-name="miracle_tool">
@@ -33,7 +33,7 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/bin" />
     </content>
-    <orderEntry type="jdk" jdkName="AIR 4.0" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="jdk" jdkName="AIR.15.0.0.249" jdkType="Flex SDK Type (new)" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="libs" level="project" />
     <orderEntry type="module-library" exported="">
