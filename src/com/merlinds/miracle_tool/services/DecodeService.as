@@ -38,7 +38,7 @@ package com.merlinds.miracle_tool.services {
 		}
 
 		public function decodeAnimation(bytes:ByteArray, silent:Boolean = false):Object{
-			log(this, "decodeAnimation");
+//			log(this, "decodeAnimation");
 			var result:Object = {};
 			//if first symbol is < its XML file in other case it is FLA file
 			bytes.position = 0;
