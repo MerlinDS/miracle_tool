@@ -16,8 +16,6 @@ package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.XMLConverters;
 
-	import flash.debugger.enterDebugger;
-
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 
