@@ -12,7 +12,6 @@ package com.merlinds.miracle_tool.services {
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
 	import flash.events.Event;
-	import flash.geom.Point;
 	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 
