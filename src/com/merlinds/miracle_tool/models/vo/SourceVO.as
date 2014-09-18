@@ -49,6 +49,14 @@ package com.merlinds.miracle_tool.models.vo {
 		//==============================================================================
 		//{region							GETTERS/SETTERS
 
+		public function get clearName():String {
+			var name:String;
+			if(_file != null){
+				name = _file.name.substr(0, -(_file.extension.length + 1));
+			}
+			return name;
+		}
+
 		public function get name():String {
 			return _file != null ? _file.name : null;
 		}
