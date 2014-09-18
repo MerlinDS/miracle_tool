@@ -4,6 +4,7 @@
  * Time: 22:22
  */
 package com.merlinds.miracle_tool.controllers.converters {
+	import com.codeazur.as3swf.timeline.Frame;
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
@@ -15,6 +16,8 @@ package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.miracle_tool.models.vo.TimelineVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.XMLConverters;
+
+	import flash.debugger.enterDebugger;
 
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -34,6 +37,8 @@ package com.merlinds.miracle_tool.controllers.converters {
 		private var _inputLayers:Array;
 		private var _animation:AnimationVO;
 
+		private var _containers:Object;
+
 		private var _namespace:Namespace;
 		//==============================================================================
 		//{region							PUBLIC METHODS
@@ -47,6 +52,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 			var data:AnimSourcesVO = this.event.body as AnimSourcesVO;
 			var source:SourceVO = this.projectModel.selected;
 			if(source == null)source = this.projectModel.inProgress;
+			this.readContainerParams(data["DOMDocument.xml"]);
 			var n:int = source.animations.length;
 			for(var i:int = 0; i < n; i++){
 				var animation:AnimationVO = source.animations[i];
@@ -68,6 +74,22 @@ package com.merlinds.miracle_tool.controllers.converters {
 
 		//==============================================================================
 		//{region						PRIVATE\PROTECTED METHODS
+		/** get top container properties **/
+		private function readContainerParams(xml:XML):void {
+			_containers = {};
+			_namespace = new Namespace(xml.inScopeNamespaces()[0],
+					xml.inScopeNamespaces()[1]);
+			default xml namespace = _namespace;
+			xml.normalize();
+			var symbols:XMLList = xml.timelines.DOMTimeline.layers.DOMLayer.
+					frames.DOMFrame.elements.DOMSymbolInstance;
+			var n:int = symbols.length();
+			for(var i:int = 0; i < n; i++){
+				var frameVO:FrameVO = new FrameVO(0, 1);
+				this.parseSymbols(symbols[i], frameVO);
+				_containers[frameVO.name + ".xml"] = frameVO;
+			}
+		}
 		private function prepareData4Animation(xml:XML):void {
 			_namespace = new Namespace(xml.inScopeNamespaces()[0],
 					xml.inScopeNamespaces()[1]);
@@ -152,18 +174,22 @@ package com.merlinds.miracle_tool.controllers.converters {
 			return separatedLayer;
 		}
 
-		private function parseSymbols(elements:XML, frameVO:FrameVO):void {
+		private function parseSymbols(symbol:XML, frameVO:FrameVO):void {
 			default xml namespace =  _namespace;
-
-			var n:int = elements.length();
-			for(var i:int = 0; i < n; i++) {
-				var element:XML = elements[i];
-				frameVO.name = element.@libraryItemName;
-				//get element matrix
-				frameVO.matrix = XMLConverters.convertToObject(element.matrix.Matrix, Matrix);
-				frameVO.transformationPoint = XMLConverters.convertToObject(
-						element.transformationPoint.Point, Point);
-				frameVO.color = new XMLColorConverter(element.color.Color);
+			var element:XML = symbol;
+			frameVO.name = element.@libraryItemName;
+			//get element matrix
+			frameVO.matrix = XMLConverters.convertToObject(element.matrix.Matrix, Matrix);
+			frameVO.transformationPoint = XMLConverters.convertToObject(
+					element.transformationPoint.Point, Point);
+			frameVO.color = new XMLColorConverter(element.color.Color);
+			if(_animation != null){
+				//add offset to all elements by container transform point
+				var container:FrameVO = _containers[_animation.name + ".xml"];
+				container.matrix.tx = container.matrix.ty = 0;
+				frameVO.matrix.tx = frameVO.matrix.tx - container.transformationPoint.x;
+				frameVO.matrix.ty = frameVO.matrix.ty - container.transformationPoint.y;
+				frameVO.matrix.concat(container.matrix);
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================

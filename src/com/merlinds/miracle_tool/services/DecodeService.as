@@ -48,10 +48,15 @@ package com.merlinds.miracle_tool.services {
 				//read FLA as zip file
 				var zip:ZipFile = new ZipFile(bytes);
 				const LIBRARY:String = "LIBRARY/";
+				const DOM_DOCUMENT:String = "DOMDocument.xml";
+				//read DOMDocument file
+				var entry:ZipEntry = zip.getEntry(DOM_DOCUMENT);
+				result [ entry.name ] =
+						this.decodeAnimation(zip.getInput(entry), true);
 				//read all entries from LIBRARY folder
 				var n:int = zip.entries.length;
 				for(var i:int = 0; i < n; i++){
-					var entry:ZipEntry = zip.entries[i];
+					entry = zip.entries[i];
 					if(!entry.isDirectory() && entry.name.search(LIBRARY) > -1){
 						if(entry.name.search(".xml") > -1){
 							result [ entry.name.substr(LIBRARY.length) ] =
