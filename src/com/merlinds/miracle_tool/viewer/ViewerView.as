@@ -65,6 +65,7 @@ package com.merlinds.miracle_tool.viewer {
 					_window = new Window(this, 0, 0, "Chose animation");
 					var list:List = new List(_window, 0, 0, this.getAnimations(asset.output));
 					_window.x = this.stage.stageWidth - _window.width;
+					_window.setSize(_window.height, list.height + 20);
 					list.addEventListener(Event.SELECT, this.selectAnimationHandler);
 				}
 			}
