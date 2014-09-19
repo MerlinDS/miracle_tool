@@ -10,6 +10,7 @@ package com.merlinds.miracle_tool.viewer {
 	import com.merlinds.miracle.Miracle;
 	import com.merlinds.miracle.animations.AnimationHelper;
 	import com.merlinds.miracle.display.MiracleDisplayObject;
+	import com.merlinds.miracle.geom.Color;
 	import com.merlinds.miracle.utils.Asset;
 	import com.merlinds.miracle.utils.MafReader;
 	import com.merlinds.miracle_tool.models.AppModel;
@@ -21,6 +22,7 @@ package com.merlinds.miracle_tool.viewer {
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.utils.ByteArray;
+	import flash.utils.setTimeout;
 
 	[SWF(backgroundColor="0x333333", frameRate=60)]
 	public class ViewerView extends Sprite {
