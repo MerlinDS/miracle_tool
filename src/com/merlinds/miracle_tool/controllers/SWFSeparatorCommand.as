@@ -17,6 +17,7 @@ package com.merlinds.miracle_tool.controllers {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -48,7 +49,8 @@ package com.merlinds.miracle_tool.controllers {
 				for(var i:int = 0; i < n; i++){
 					_target = container.getChildAt(i) as MovieClip;
 					//create animations value object
-					var animation:AnimationVO = new AnimationVO(null, _target.width, _target.height);
+					var bounds:Rectangle = _target.getBounds(_target);
+					var animation:AnimationVO = new AnimationVO(null, bounds);
 					animation.name = getQualifiedClassName(_target);
 					animation.totalFrames = _target.totalFrames;
 					source.animations.push(animation);

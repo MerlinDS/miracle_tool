@@ -21,6 +21,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 
 	import flash.geom.Matrix;
 	import flash.geom.Point;
+	import flash.geom.Point;
 
 	import org.robotlegs.mvcs.Command;
 
@@ -59,8 +60,13 @@ package com.merlinds.miracle_tool.controllers.converters {
 				for(var sourceName:String in data){
 					if(animation.name + '.xml' == sourceName){
 						_animation = animation;
+						var container:FrameVO = _containers[_animation.name + ".xml"];
 						_animation.name = animation.name;
 						_animation.file = this.projectModel.tempFile;
+						//add bounds
+						//maybe need to add transformPoint to bounds
+						_animation.bounds.topLeft = container.matrix.deltaTransformPoint(_animation.bounds.topLeft);
+						_animation.bounds.bottomRight = container.matrix.deltaTransformPoint(_animation.bounds.bottomRight);
 						_animation.added = true;
 						this.prepareData4Animation(data[sourceName] as XML);
 						this.convert2Animation();
