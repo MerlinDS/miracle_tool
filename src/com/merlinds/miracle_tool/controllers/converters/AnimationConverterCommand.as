@@ -64,7 +64,8 @@ package com.merlinds.miracle_tool.controllers.converters {
 						_animation.name = animation.name;
 						_animation.file = this.projectModel.tempFile;
 						//add bounds
-						//maybe need to add transformPoint to bounds
+						_animation.bounds.x -= container.transformationPoint.x;
+						_animation.bounds.y -= container.transformationPoint.y;
 						_animation.bounds.topLeft = container.matrix.deltaTransformPoint(_animation.bounds.topLeft);
 						_animation.bounds.bottomRight = container.matrix.deltaTransformPoint(_animation.bounds.bottomRight);
 						_animation.added = true;
