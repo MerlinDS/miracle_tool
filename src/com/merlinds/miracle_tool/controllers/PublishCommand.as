@@ -110,9 +110,11 @@ package com.merlinds.miracle_tool.controllers {
 			trace(json);
 			_mesh = new ByteArray();
 			_mesh.writeObject(meshes);
-			_png = PNGEncoder.encode(buffer);
 			_animations = new ByteArray();
 			_animations.writeObject(animations);
+			_animations.position = 0;
+			var test:Object = _animations.readObject();
+			_png = PNGEncoder.encode(buffer);
 		}
 
 		private function createAnimationOutput(animationVO:AnimationVO, meshPrefix:String):Object {
@@ -147,7 +149,6 @@ package com.merlinds.miracle_tool.controllers {
 				}
 				data.layers.unshift(layer);
 			}
-			trace(JSON.stringify(data));
 			return data;
 		}
 
