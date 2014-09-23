@@ -118,8 +118,15 @@ package com.merlinds.miracle_tool.controllers {
 		private function createAnimationOutput(animationVO:AnimationVO, meshPrefix:String):Object {
 			var data:Object = { name:meshPrefix + "." + animationVO.name,// name of the matrix
 				totalFrames:animationVO.totalFrames,// Total animation frames
-				bounds:animationVO.bounds.clone(),
 				layers:[]};
+			//scale bounds
+			var bounds:Rectangle = animationVO.bounds.clone();
+			bounds.x = bounds.x * _scale;
+			bounds.y = bounds.y * _scale;
+			bounds.width = bounds.width * _scale;
+			bounds.height = bounds.height * _scale;
+			data.bounds = bounds;
+			//calculate frames
 			var n:int = animationVO.timelines.length;
 			//find matrix sequence for current animation
 			for(var i:int = 0; i < n; i++){
