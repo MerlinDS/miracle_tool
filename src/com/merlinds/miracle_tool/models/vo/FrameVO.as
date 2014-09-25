@@ -54,7 +54,6 @@ package com.merlinds.miracle_tool.models.vo {
 		/**
 		 * Generate transformation object for add it to maf.
 		 * @param scale Global stage scale.
-		 * @param vertexes Pixel vertexes of element in texture.
 		 * @param previousTransform Previous frame transformation object.
 		 * (need to calculation of shortest angle between two matrix)
 		 * @return Generated transform object with transformation matrix,

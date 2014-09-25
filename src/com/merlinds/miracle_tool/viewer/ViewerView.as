@@ -79,7 +79,7 @@ package com.merlinds.miracle_tool.viewer {
 		private function getAnimations(bytes:ByteArray):Array {
 			var result:Array = [];
 			var reader:MafReader = new MafReader();
-			reader.execute(bytes);
+			reader.execute(bytes, 1);
 			var animations:Vector.<AnimationHelper> = reader.animations;
 			for each(var animation:AnimationHelper in animations){
 				result.push(animation.name);
