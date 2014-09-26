@@ -138,6 +138,7 @@ package com.merlinds.miracle_tool.viewer {
 			}else{
 				_current.mesh = mesh;
 				_current.animation = animation;
+				_current.play();
 			}
 		}
 
