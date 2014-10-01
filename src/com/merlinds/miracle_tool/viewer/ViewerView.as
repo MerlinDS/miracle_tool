@@ -9,6 +9,7 @@ package com.merlinds.miracle_tool.viewer {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle.Miracle;
 	import com.merlinds.miracle.animations.AnimationHelper;
+	import com.merlinds.miracle.display.MiracleAnimation;
 	import com.merlinds.miracle.display.MiracleDisplayObject;
 	import com.merlinds.miracle.geom.Color;
 	import com.merlinds.miracle.utils.Asset;
@@ -31,7 +32,7 @@ package com.merlinds.miracle_tool.viewer {
 		private var _assets:Vector.<Asset>;
 		private var _window:Window;
 		private var _name:String;
-		private var _current:MiracleDisplayObject;
+		private var _current:MiracleAnimation;
 
 		public function ViewerView(model:AppModel = null) {
 			super();
