@@ -118,7 +118,7 @@ package com.merlinds.miracle_tool.viewer {
 			_assets.push(asset);
 			if(_assets.length > 1){
 				this.choseAnimation();
-				Miracle.createScene(_assets, 1);
+				Miracle.createScene(_assets,null, 1);
 				Miracle.resume();
 			}else{
 				this.createHandler(true);
