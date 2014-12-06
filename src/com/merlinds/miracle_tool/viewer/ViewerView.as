@@ -133,7 +133,7 @@ package com.merlinds.miracle_tool.viewer {
 			var mesh:String = animation.substr(0, animation.lastIndexOf("."));
 			animation = animation.substr(animation.lastIndexOf(".") + 1);
 			if(_current == null){
-				_current = Miracle.currentScene.createAnimation(mesh, animation, 60);
+				_current = Miracle.scene.createAnimation(mesh, animation, 60);
 				_current.moveTO(this.stage.stageWidth >> 1, this.stage.stageHeight >> 1);
 				_current.addEventListener(Event.ADDED_TO_STAGE, this.imageAddedToStage);
 			}else{
