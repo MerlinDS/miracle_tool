@@ -18,7 +18,6 @@ package com.merlinds.debug {
 		//==============================================================================
 		//{region							PUBLIC METHODS
 		public static function writeLog(instance:Object, method:String, level:String, message:Array = null):void {
-			return;
 			var target:String = instance.toString();
 			target = target.substr(0, target.length - 1) + "." + method + "()]";
 			var timestamp:Number = getTimer() * .001;
