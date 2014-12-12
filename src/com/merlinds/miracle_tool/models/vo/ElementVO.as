@@ -64,6 +64,7 @@ package com.merlinds.miracle_tool.models.vo {
 				source = this.bitmapData.clone();
 			}
 			matrix.scale(scale, scale);
+			if(this.width < 1)this.width = 1;
 			this.bitmapData = new BitmapData(this.width, this.height, true, 0x0);
 			bitmapData.draw(source, matrix, null, null, null, true);
 			var selector:Bitmap = new Bitmap(new BitmapData(this.width, this.height, true, 0x3300FF00));
