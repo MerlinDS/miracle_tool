@@ -16,6 +16,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.vo.TimelineVO;
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.services.FileSystemService;
+	import com.merlinds.miracle_tool.services.PublishingService;
 	import com.merlinds.miracle_tool.utils.MeshUtils;
 	import com.merlinds.unitls.Resolutions;
 
@@ -27,6 +28,9 @@ package com.merlinds.miracle_tool.controllers {
 	import org.robotlegs.mvcs.Command;
 
 	public class PublishCommand extends Command {
+
+		[Inject]
+		public var publishingService:PublishingService;
 
 		[Inject]
 		public var projectModel:ProjectModel;
@@ -61,6 +65,9 @@ package com.merlinds.miracle_tool.controllers {
 				var  projectName:String = event.body.projectName;
 				_scale = Resolutions.width(this.projectModel.targetResolution) /
 						Resolutions.width(this.projectModel.referenceResolution);
+				this.publishingService.execute(this.projectModel);
+
+				return;
 				this.createOutput();
 				this.fileSystemService.writeTexture(projectName, _png, _mesh);
 				this.fileSystemService.writeAnimation(_animations);
