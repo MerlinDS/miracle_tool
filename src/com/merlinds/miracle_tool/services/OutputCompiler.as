@@ -33,7 +33,7 @@ package com.merlinds.miracle_tool.services {
 			throw new Error("Must be override");
 		}
 
-		private final function finalyzeCompilation(output:ByteArray):void {
+		protected final function finalyzeCompilation(output:ByteArray):void {
 			output.position = 0;
 			_output = output;
 			if(_callback is Function)

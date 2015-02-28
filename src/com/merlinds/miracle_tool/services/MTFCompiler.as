@@ -58,16 +58,17 @@ package com.merlinds.miracle_tool.services {
 			for(var i:int = 0; i < n; i++){
 				var source:SourceVO = this.model.sources[i];
 				var m:int = source.elements.length;
+				var mesh:Object = {};
 				for(var j:int = 0; j < m; j++){
 					//push element view to _buffer
 					var element:ElementVO = source.elements[j];
-					var mesh:Object = {
+					mesh[element.name] = {
 						vertices:MeshUtils.flipToY(element.vertexes),
 						uv:MeshUtils.covertToRelative(element.uv, this.model.outputSize),
 						indexes:element.indexes
 					};
-					_mtf.addMesh(element.name, mesh);
 				}
+				_mtf.addMesh(source.clearName, mesh);
 			}
 		}
 		//} endregion PRIVATE\PROTECTED METHODS ========================================
@@ -77,7 +78,8 @@ package com.merlinds.miracle_tool.services {
 		private function atfCallback():void {
 			_mtf.addTexture(_atfBuilder.output);
 			this.compileMeshes();
-			trace("atfCallback");
+			_mtf.finalize();
+			this.finalyzeCompilation(_mtf);
 		}
 		//} endregion EVENTS HANDLERS ==================================================
 
