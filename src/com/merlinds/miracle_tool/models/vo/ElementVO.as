@@ -54,16 +54,17 @@ package com.merlinds.miracle_tool.models.vo {
 		}
 
 		private function updateView(fromBitmap:Boolean, scale:Number = 1):void {
-			var matrix:Matrix;
+			var matrix:Matrix = new Matrix(scale, 0, 0, scale);
 			var source:IBitmapDrawable;
 			if(!fromBitmap){
-				matrix = new Matrix(1, 0, 0, 1, -Math.floor(_vertexes[0]), -Math.floor(_vertexes[1]));
+				this.normalizeSize(matrix);
+				matrix.tx = -_vertexes[0];
+				matrix.ty = -_vertexes[1];
 				source = this.view;
 			}else{
-				matrix = new Matrix(1, 0, 0, 1, 0, 0);
+				this.normalizeSize(matrix);
 				source = this.bitmapData.clone();
 			}
-			matrix.scale(scale, scale);
 			if(this.width < 1)this.width = 1;
 			this.bitmapData = new BitmapData(this.width, this.height, true, 0x0);
 			bitmapData.draw(source, matrix, null, null, null, true);
@@ -74,6 +75,23 @@ package com.merlinds.miracle_tool.models.vo {
 			view.addChild(new Bitmap(bitmapData));
 			view.name = "element";
 			this.view = view;
+		}
+
+		private function normalizeSize(matrix:Matrix):void
+		{
+			var n:int = Math.floor(this.height);
+			if(this.height - n > 0)
+			{
+				matrix.a += (++n / this.height) - 1;
+				this.height = n;
+			}
+			//
+			n = Math.floor(this.width);
+			if(this.width - n > 0)
+			{
+				matrix.d += (++n / this.width) - 1;
+				this.width = n;
+			}
 		}
 
 		public function get vertexes():Vector.<Number> {

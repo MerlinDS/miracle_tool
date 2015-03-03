@@ -156,7 +156,7 @@ package com.merlinds.miracle_tool.viewer {
 			var dot:int = selected.lastIndexOf(".");
 			var animation:String = selected.substr(dot+1);
 			var mesh:String = selected.substr(0, dot);
-			_instance = Miracle.scene.createAnimation(mesh, animation, 30);
+			_instance = Miracle.scene.createImage(mesh, animation);
 			_instance.x = this.stage.stageWidth >> 1;
 			_instance.y = this.stage.stageHeight >> 1;
 			_instance.visible = true;

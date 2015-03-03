@@ -84,8 +84,15 @@ package com.merlinds.miracle_tool.controllers {
 				for(var j:int = 0; j < m; j++){
 					//push element view to buffer
 					var element:ElementVO = source.elements[j];
-					var depth:Point = new Point(element.x + this.projectModel.boundsOffset,
-									element.y + this.projectModel.boundsOffset);
+					var depth:Point = new Point(element.x, element.y);
+					//assert
+					/*var kl:int = element.x;
+					if(element.x - kl != 0)
+						throw new Error("This");
+					kl = element.y;
+					if(element.y - kl != 0)
+						throw new Error("Tis");*/
+
 					buffer.copyPixels(element.bitmapData, element.bitmapData.rect, depth);
 					//get mesh
 					mesh.push({

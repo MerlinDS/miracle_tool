@@ -54,7 +54,7 @@ package com.merlinds.miracle_tool.models {
 			_referenceResolution = referenceResolution;
 			_targetResolution = referenceResolution;
 			_sources = new <SourceVO>[];
-			_boundsOffset = 0;
+			_boundsOffset = 1;//2;
 			_sheetSize = new Point();
 			super();
 		}
@@ -194,12 +194,12 @@ package com.merlinds.miracle_tool.models {
 		}
 
 		public function set boundsOffset(value:int):void {
-			if(value != _boundsOffset){
+	/*		if(value != _boundsOffset){
 				_boundsOffset = value;
 				if(_sources.length > 0){
 					this.dispatch(new EditorEvent(EditorEvent.UPDATE_PROJECT));
 				}
-			}
+			}*/
 		}
 
 		public function get outputSize():int {

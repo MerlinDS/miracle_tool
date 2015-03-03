@@ -117,8 +117,9 @@ package com.merlinds.miracle_tool.controllers {
 			element.width = view.width + this.projectModel.boundsOffset * 2;
 			element.height = view.height + this.projectModel.boundsOffset * 2;
 
-			element.vertexes = new <Number>[topLeftPoint.x, topLeftPoint.y, topRightPoint.x, topRightPoint.y,
-				bottomRightPoint.x, bottomRightPoint.y, bottomLeftPoint.x, bottomLeftPoint.y];
+			element.vertexes = new <Number>[
+				Math.ceil(topLeftPoint.x), Math.ceil(topLeftPoint.y), Math.ceil(topRightPoint.x),Math.ceil(topRightPoint.y),
+				Math.ceil(bottomRightPoint.x),Math.ceil(bottomRightPoint.y),Math.ceil(bottomLeftPoint.x),Math.ceil(bottomLeftPoint.y)];
 
 			return element;
 		}

@@ -45,8 +45,8 @@ package com.merlinds.miracle_tool.controllers.placers {
 			var rect:Rectangle = _packer.quickInsert(element.width, element.height);
 
 			if(rect != null){
-				element.view.x = rect.x + this.boundsOffset;
-				element.view.y = rect.y + this.boundsOffset;
+				element.view.x = rect.x;// + this.boundsOffset;
+				element.view.y = rect.y;// + this.boundsOffset;
 				//get uv position
 				element.uv = new <Number>[
 					rect.left, rect.top,
