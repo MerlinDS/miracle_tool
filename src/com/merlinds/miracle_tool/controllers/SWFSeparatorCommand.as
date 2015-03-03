@@ -99,6 +99,7 @@ package com.merlinds.miracle_tool.controllers {
 
 		[Inline]
 		private function getElementBounds(element:ElementVO):ElementVO {
+			//TODO create tests for this/ This is one of glitches reason
 			var view:DisplayObject = element.view;
 			var ratio:Number = view.width / view.transform.pixelBounds.width;
 			var topLeftPoint:Point = new Point(view.transform.pixelBounds.x - view.x - this.projectModel.boundsOffset,
