@@ -13,6 +13,8 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.models.vo.ElementVO;
 	import com.merlinds.miracle_tool.models.vo.SourceVO;
 
+	import flash.debugger.enterDebugger;
+
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
@@ -79,6 +81,10 @@ package com.merlinds.miracle_tool.controllers {
 				for(j = 0; j < m; j++){
 					elementView = _target.getChildAt(j);
 					elementName = getQualifiedClassName(elementView);
+					if(elementName == "flash.display::Shape")
+					{
+						throw Error("Something wrong");
+					}
 					if(!this.hasElement(elementName)){
 						element = new ElementVO(elementName, elementView);
 						_elements.push(element);
