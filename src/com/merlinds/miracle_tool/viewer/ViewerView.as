@@ -57,7 +57,7 @@ package com.merlinds.miracle_tool.viewer {
 					"Start", this.startBtnHandler );
 		}
 
-		function clear():void
+		public function clear():void
 		{
 			if(_animation != null) _animation.clear();
 			if(_texture != null) _texture.clear();
@@ -79,7 +79,7 @@ package com.merlinds.miracle_tool.viewer {
 		}
 
 		private function getAnimationList():void {
-			var mafReader = new MafReader();
+			var mafReader:MafReader = new MafReader();
 			mafReader.execute(_animation, 1);
 			var animationsName:Array = [];
 			for each(var animation:AnimationHelper in mafReader.animations)
