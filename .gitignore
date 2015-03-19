@@ -1,6 +1,5 @@
 /bin
 /tests
 /miracle_tool.iml
-/.idea
-
+/editor.iml
 /src/Temp.as

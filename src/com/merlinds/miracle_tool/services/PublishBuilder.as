@@ -32,7 +32,7 @@ package com.merlinds.miracle_tool.services {
 
 		public function PublishBuilder() {
 			_png2atf = File.applicationDirectory;
-			_png2atf = _png2atf.resolvePath("png2atf.exe");
+			_png2atf = _png2atf.resolvePath("nativeapp/png2atf.exe");
 		}
 		//==============================================================================
 		//{region							PUBLIC METHODS
