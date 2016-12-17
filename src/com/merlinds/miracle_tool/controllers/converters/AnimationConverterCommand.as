@@ -4,7 +4,6 @@
  * Time: 22:22
  */
 package com.merlinds.miracle_tool.controllers.converters {
-	import com.codeazur.as3swf.timeline.Frame;
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.EditorEvent;
@@ -17,10 +16,7 @@ package com.merlinds.miracle_tool.controllers.converters {
 	import com.merlinds.miracle_tool.services.ActionService;
 	import com.merlinds.miracle_tool.utils.XMLConverters;
 
-	import flash.debugger.enterDebugger;
-
 	import flash.geom.Matrix;
-	import flash.geom.Point;
 	import flash.geom.Point;
 
 	import org.robotlegs.mvcs.Command;

@@ -70,7 +70,7 @@ package com.merlinds.miracle_tool.services {
 			nativeProcessStartupInfo.executable = _png2atf;
 			nativeProcessStartupInfo.workingDirectory =_workDir;
 			nativeProcessStartupInfo.arguments =  new <String>[
-				"-n", "0," + _minMap, "-i", _file.name, "-o", _atf.name
+				/*"-c", "e",*/ "-n", "0,0", "-i", _file.name, "-o", _atf.name
 			];
 
 			trace(nativeProcessStartupInfo.arguments);

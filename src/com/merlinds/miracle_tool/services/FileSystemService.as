@@ -23,6 +23,8 @@ package com.merlinds.miracle_tool.services {
 		public static const PROJECT_EXTENSION:String = ".mtp"; /** Miracle tools project **/
 		public static const TEXTURE_EXTENSION:String = ".mtf"; /** Miracle texture format **/
 		public static const ANIMATION_EXTENSION:String = ".maf"; /** Miracle animation format **/
+		public static const ATF_EXTENSION:String = ".atf"; /** Miracle animation format **/
+		public static const PNG_EXTENSION:String = ".png"; /** Miracle animation format **/
 		[Inject]
 		public var appModel:AppModel;
 		[Inject]
@@ -95,19 +97,20 @@ package com.merlinds.miracle_tool.services {
 
 		public function writeTexture(name:String, png:ByteArray, mesh:ByteArray):void{
 			log(this, "writeTexture", name);
-			name = name + TEXTURE_EXTENSION;
+			_queue.push(new SaveHelper(png, PNG_EXTENSION));
+			name = name + ATF_EXTENSION;
 			//create file
-			_output = new ByteArray();
+			var output:ByteArray = new ByteArray();
 			//add signature
-			_output.position = 0;
-			_output.writeUTFBytes(TEXTURE_EXTENSION.substr(1).toUpperCase());
-			_output.position = 4;
+			output.position = 0;
+			output.writeUTFBytes(TEXTURE_EXTENSION.substr(1).toUpperCase());
+			output.position = 4;
 			var meshHeaderBlocks:int = Math.ceil( mesh.length / 512 );
-			_output.writeUnsignedInt( meshHeaderBlocks );
-			_output.position = 8;
-			_output.writeBytes(mesh);
-			_output.position = 8 + meshHeaderBlocks * 512;
-			//save file
+			output.writeUnsignedInt( meshHeaderBlocks );
+			output.position = 8;
+			output.writeBytes(mesh);
+			output.position = 8 + meshHeaderBlocks * 512;
+			_queue.push(new SaveHelper(output, TEXTURE_EXTENSION));
 			_target = this.appModel.lastFileDirection.resolvePath(name);
 			_publishBuilder.createATFFile(png, 0, this.publishBuilderATFHandler);
 		}
@@ -119,7 +122,7 @@ package com.merlinds.miracle_tool.services {
 			output.writeUTFBytes(ANIMATION_EXTENSION.substr(1).toUpperCase());
 			output.position = 4;
 			output.writeBytes(animation);
-			_queue.push(output);
+			_queue.push(new SaveHelper(output, ANIMATION_EXTENSION));
 		}
 
 		public function clear():void {
@@ -185,8 +188,9 @@ package com.merlinds.miracle_tool.services {
 			_output.clear();
 			_output = null;
 			if(!_queue.empty){
-				_output = _queue.pop();
-				var name:String = _target.name.replace(TEXTURE_EXTENSION, ANIMATION_EXTENSION);
+				var saveHelper:SaveHelper = _queue.pop();
+				_output = saveHelper.bytes;
+				var name:String = _target.name.substr(0, -4) + saveHelper.ext;
 				_target = this.appModel.lastFileDirection.resolvePath(name);
 				_target.addEventListener(Event.SELECT, this.selectProjectForSaveHandler);
 				_target.browseForSave("Publish animation");
@@ -196,6 +200,7 @@ package com.merlinds.miracle_tool.services {
 		}
 
 		private function publishBuilderATFHandler():void {
+			_output = new ByteArray();
 			_output.writeBytes(_publishBuilder.output);
 			_target.addEventListener(Event.SELECT, this.selectProjectForSaveHandler);
 			_target.browseForSave("Publish texture");
@@ -214,5 +219,18 @@ package com.merlinds.miracle_tool.services {
 		}
 
 //} endregion GETTERS/SETTERS ==================================================
+	}
+}
+
+import flash.utils.ByteArray;
+
+class SaveHelper{
+	public var bytes:ByteArray;
+	public var ext:String;
+	
+	public function SaveHelper(bytes:ByteArray, ext:String)
+	{
+		this.bytes = bytes;
+		this.ext = ext;
 	}
 }

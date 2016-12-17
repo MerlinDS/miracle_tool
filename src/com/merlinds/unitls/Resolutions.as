@@ -13,6 +13,8 @@ package com.merlinds.unitls {
 		public static const QVGA:int = 1;
 		/** VGA - 640×480 / 4:3 / 307,2 kpix**/
 		public static const VGA:int = 2;
+		/** HD720p - 1280×720 / 6:9 / 786,432 kpix**/
+		public static const HD720p:int = 3;
 		/** XGA - 1024×768 / 4:3 / 786,432 kpix**/
 		public static const XGA:int = 4;
 		/** Full HD - 1920×1080 / 16:9 / 2,07 mpix**/
@@ -29,18 +31,6 @@ package com.merlinds.unitls {
 		}
 
 		/**
-		 * Closest resolution in value by Width
-		 * @param value Width of the resolution
-		 */
-		public static function closestInValue(value:Number):int {
-			value = Math.ceil(value / SMALLEST_WIDTH);
-			if(value < QVGA)value = 1;
-			else if(value > VGA && value < FULL_HD)value = XGA;
-			else if(value >= FULL_HD)value = FULL_HD;
-			return value;
-		}
-
-		/**
 		 * Return resolution name by it's value
 		 * @param value Resolution value
 		 * **/
@@ -49,6 +39,7 @@ package com.merlinds.unitls {
 				case 0: case QVGA: return "QVGA";
 				case VGA: return "VGA";
 				case XGA: return "XGA";
+				case HD720p: return "HD720p";
 				default :return value > FULL_HD ? "Retina" : "Full HD";
 			}
 		}
@@ -61,6 +52,7 @@ package com.merlinds.unitls {
 			switch (value){
 				case "VGA": return VGA;
 				case "XGA": return XGA;
+				case "HD720p": return HD720p;
 				case "Full HD": return FULL_HD;
 				case "Retina": return RETINA;
 				default: return QVGA;
@@ -72,6 +64,7 @@ package com.merlinds.unitls {
 				case 0: case QVGA: return 320;
 				case VGA: return 640;
 				case XGA: return 1024;
+				case HD720p: return 1280;
 				case RETINA: return 2048;
 				default : return 1920;
 			}
@@ -81,6 +74,7 @@ package com.merlinds.unitls {
 			switch (resolution){
 				case 0: case QVGA: return 240;
 				case VGA: return 480;
+				case HD720p: return 720;
 				case XGA: return 768;
 				case RETINA: return 1536;
 				default : return 1080;

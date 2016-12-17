@@ -25,6 +25,7 @@ package com.merlinds.miracle_tool.views.alerts.dialogs {
 			var resolutions:Array = [
 				Resolutions.toString(Resolutions.RETINA),
 				Resolutions.toString(Resolutions.FULL_HD),
+				Resolutions.toString(Resolutions.HD720p),
 				Resolutions.toString(Resolutions.XGA),
 				Resolutions.toString(Resolutions.VGA),
 				Resolutions.toString(Resolutions.QVGA)

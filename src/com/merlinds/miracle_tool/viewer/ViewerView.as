@@ -80,7 +80,7 @@ package com.merlinds.miracle_tool.viewer {
 
 		private function getAnimationList():void {
 			var mafReader:MafReader = new MafReader();
-			mafReader.execute(_animation, 1);
+			mafReader.execute(_animation, 1, function():void{});
 			var animationsName:Array = [];
 			for each(var animation:AnimationHelper in mafReader.animations)
 			{
