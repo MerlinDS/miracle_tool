@@ -5,6 +5,7 @@
  */
 package com.merlinds.miracle_tool.services {
 	import com.merlinds.debug.log;
+	import com.merlinds.miracle.utils.serializers.MTFSerializer;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.unitls.structures.QueueFIFO;
@@ -99,7 +100,7 @@ package com.merlinds.miracle_tool.services {
 			log(this, "writeTexture", name);
 			_queue.push(new SaveHelper(png, PNG_EXTENSION));
 			name = name + ATF_EXTENSION;
-			//create file
+			/*//create file
 			var output:ByteArray = new ByteArray();
 			//add signature
 			output.position = 0;
@@ -109,8 +110,9 @@ package com.merlinds.miracle_tool.services {
 			output.writeUnsignedInt( meshHeaderBlocks );
 			output.position = 8;
 			output.writeBytes(mesh);
-			output.position = 8 + meshHeaderBlocks * 512;
-			_queue.push(new SaveHelper(output, TEXTURE_EXTENSION));
+			output.position = 8 + meshHeaderBlocks * 512;*/
+			
+			_queue.push(new SaveHelper(mesh, TEXTURE_EXTENSION));
 			_target = this.appModel.lastFileDirection.resolvePath(name);
 			_publishBuilder.createATFFile(png, 0, this.publishBuilderATFHandler);
 		}

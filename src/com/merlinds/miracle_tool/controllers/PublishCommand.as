@@ -6,6 +6,7 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle.geom.Transformation;
+	import com.merlinds.miracle.utils.serializers.MTFSerializer;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
@@ -97,7 +98,7 @@ package com.merlinds.miracle_tool.controllers {
 					//get mesh
 					mesh.push({
 						name:element.name,
-						vertexes:MeshUtils.flipToY(element.vertexes),
+						vertices:MeshUtils.flipToY(element.vertexes),
 						uv:MeshUtils.covertToRelative(element.uv, this.projectModel.outputSize),
 						indexes:element.indexes
 					});
@@ -115,8 +116,9 @@ package com.merlinds.miracle_tool.controllers {
 			trace("mesh");
 			var json:String = JSON.stringify(meshes);
 			trace(json);
-			_mesh = new ByteArray();
-			_mesh.writeObject(meshes);
+			var serializer:MTFSerializer =  MTFSerializer.createSerializer(MTFSerializer.V2);
+			_mesh = serializer.serialize(meshes);
+//			_mesh.writeObject(meshes);
 			_animations = new ByteArray();
 			_animations.writeObject(animations);
 			_animations.position = 0;
