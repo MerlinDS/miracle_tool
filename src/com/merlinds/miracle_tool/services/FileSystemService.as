@@ -99,21 +99,8 @@ package com.merlinds.miracle_tool.services {
 		public function writeTexture(name:String, png:ByteArray, mesh:ByteArray):void{
 			log(this, "writeTexture", name);
 			_queue.push(new SaveHelper(png, PNG_EXTENSION));
-			name = name + ATF_EXTENSION;
-			/*//create file
-			var output:ByteArray = new ByteArray();
-			//add signature
-			output.position = 0;
-			output.writeUTFBytes(TEXTURE_EXTENSION.substr(1).toUpperCase());
-			output.position = 4;
-			var meshHeaderBlocks:int = Math.ceil( mesh.length / 512 );
-			output.writeUnsignedInt( meshHeaderBlocks );
-			output.position = 8;
-			output.writeBytes(mesh);
-			output.position = 8 + meshHeaderBlocks * 512;*/
-			
 			_queue.push(new SaveHelper(mesh, TEXTURE_EXTENSION));
-			_target = this.appModel.lastFileDirection.resolvePath(name);
+			_target = this.appModel.lastFileDirection.resolvePath(name + ATF_EXTENSION);
 			_publishBuilder.createATFFile(png, 0, this.publishBuilderATFHandler);
 		}
 
