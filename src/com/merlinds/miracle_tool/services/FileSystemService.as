@@ -5,7 +5,7 @@
  */
 package com.merlinds.miracle_tool.services {
 	import com.merlinds.debug.log;
-	import com.merlinds.miracle.utils.serializers.AbstractMTFSerializer;
+	import com.merlinds.miracle.utils.serializers.MTF.AbstractMTFSerializer;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.unitls.structures.QueueFIFO;

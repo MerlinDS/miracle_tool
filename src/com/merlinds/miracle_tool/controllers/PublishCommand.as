@@ -6,8 +6,8 @@
 package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle.geom.Transformation;
-	import com.merlinds.miracle.utils.serializers.MTFSerializer;
-	import com.merlinds.miracle.utils.serializers.MTFVersions;
+	import com.merlinds.miracle.utils.serializers.MTF.MTFSerializer;
+	import com.merlinds.miracle.utils.serializers.MSVersions;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
@@ -117,7 +117,7 @@ package com.merlinds.miracle_tool.controllers {
 			trace("animations:");
 			trace(JSON.stringify(animations));
 			var serializer:MTFSerializer = new MTFSerializer();
-			_mesh = serializer.serialize(meshes, MTFVersions.V2);
+			_mesh = serializer.serialize(meshes, MSVersions.MTF2);
 			_animations = new ByteArray();
 			_animations.writeObject(animations);
 			_animations.position = 0;
