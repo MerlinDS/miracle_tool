@@ -116,7 +116,7 @@ package com.merlinds.miracle_tool.controllers {
 				}
 			}
 			trace("animations:");
-			trace(JSON.stringify(animations));
+//			trace(JSON.stringify(animations));
 			var serializerMTF:MTFSerializer = new MTFSerializer();
 			_mesh = serializerMTF.serialize(meshes, MSVersions.MTF2);
 			var serializerMAF:MAFSerializer = new MAFSerializer();
@@ -142,7 +142,10 @@ package com.merlinds.miracle_tool.controllers {
 			for(var i:int = 0; i < n; i++){
 				var timelineVO:TimelineVO = animationVO.timelines[i];
 				var m:int = timelineVO.frames.length;
-				var layer:Layer = new Layer();
+				var layer:Object = {
+					matrixList:[],
+					framesList:[]
+				};
 				for(var j:int = 0; j < m; j++){
 					var frameVO:FrameVO = timelineVO.frames[j];
 					//create matrix
@@ -170,7 +173,7 @@ package com.merlinds.miracle_tool.controllers {
 			if(index > -1){
 				var t:Number = 1 / duration;
 				for(var i:int = 0; i < duration; i++){
-					var frameInfoData:FrameInfoData = new FrameInfoData();
+					var frameInfoData:Object = {};
 					frameInfoData.index = index;
 					frameInfoData.polygonName = polygonName;
 					frameInfoData.motion = motion;
@@ -192,19 +195,4 @@ package com.merlinds.miracle_tool.controllers {
 		//} endregion GETTERS/SETTERS ==================================================
 	}
 }
-class Layer{
-	public var matrixList:Array;
-	public var framesList:Array;
 
-	public function Layer() {
-		this.framesList = [];
-		this.matrixList = [];
-	}
-}
-
-class FrameInfoData{
-	public var polygonName:String;
-	public var motion:Boolean;
-	public var index:int;
-	public var t:Number;
-}

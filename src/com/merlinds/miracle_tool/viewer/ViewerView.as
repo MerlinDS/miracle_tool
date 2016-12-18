@@ -84,7 +84,7 @@ package com.merlinds.miracle_tool.viewer {
 			var animationsName:Array = [];
 			for each(var animation:AnimationHelper in mafReader.animations)
 			{
-				animationsName.push(animation.name);
+//				animationsName.push(animation.name);
 			}
 			trace("Was get animations", animationsName);
 			_list = new List(this, this.stage.stageWidth - 200, 0, animationsName);
