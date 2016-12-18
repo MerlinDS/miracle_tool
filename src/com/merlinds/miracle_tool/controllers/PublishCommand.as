@@ -113,12 +113,10 @@ package com.merlinds.miracle_tool.controllers {
 					animations.push(animation);
 				}
 			}
-			trace("mesh");
-			var json:String = JSON.stringify(meshes);
-			trace(json);
+			trace("animations:");
+			trace(JSON.stringify(animations));
 			var serializer:MTFSerializer =  MTFSerializer.createSerializer(MTFSerializer.V2);
 			_mesh = serializer.serialize(meshes);
-//			_mesh.writeObject(meshes);
 			_animations = new ByteArray();
 			_animations.writeObject(animations);
 			_animations.position = 0;
