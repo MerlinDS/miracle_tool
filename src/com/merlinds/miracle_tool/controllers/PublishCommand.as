@@ -7,6 +7,7 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.debug.log;
 	import com.merlinds.miracle.geom.Transformation;
 	import com.merlinds.miracle.utils.serializers.MTFSerializer;
+	import com.merlinds.miracle.utils.serializers.MTFVersions;
 	import com.merlinds.miracle_tool.events.ActionEvent;
 	import com.merlinds.miracle_tool.events.DialogEvent;
 	import com.merlinds.miracle_tool.models.ProjectModel;
@@ -19,14 +20,14 @@ package com.merlinds.miracle_tool.controllers {
 	import com.merlinds.miracle_tool.services.FileSystemService;
 	import com.merlinds.miracle_tool.utils.MeshUtils;
 	import com.merlinds.unitls.Resolutions;
-
+	
 	import flash.display.BitmapData;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.ByteArray;
-
+	
 	import org.robotlegs.mvcs.Command;
-
+	
 	public class PublishCommand extends Command {
 
 		[Inject]
@@ -115,8 +116,8 @@ package com.merlinds.miracle_tool.controllers {
 			}
 			trace("animations:");
 			trace(JSON.stringify(animations));
-			var serializer:MTFSerializer =  MTFSerializer.createSerializer(MTFSerializer.V2);
-			_mesh = serializer.serialize(meshes);
+			var serializer:MTFSerializer = new MTFSerializer();
+			_mesh = serializer.serialize(meshes, MTFVersions.V2);
 			_animations = new ByteArray();
 			_animations.writeObject(animations);
 			_animations.position = 0;
