@@ -5,20 +5,19 @@
  */
 package com.merlinds.miracle_tool.services {
 	import com.merlinds.debug.log;
-	import com.merlinds.miracle.utils.serializers.MTF.AbstractMTFSerializer;
 	import com.merlinds.miracle_tool.events.EditorEvent;
 	import com.merlinds.miracle_tool.models.AppModel;
 	import com.merlinds.unitls.structures.QueueFIFO;
-
+	
 	import flash.events.Event;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
 	import flash.net.FileFilter;
 	import flash.utils.ByteArray;
-
+	
 	import org.robotlegs.mvcs.Actor;
-
+	
 	public class FileSystemService extends Actor {
 
 		public static const PROJECT_EXTENSION:String = ".mtp"; /** Miracle tools project **/
@@ -105,13 +104,7 @@ package com.merlinds.miracle_tool.services {
 		}
 
 		public function writeAnimation(animation:ByteArray):void{
-			var output:ByteArray = new ByteArray();
-			//add signature
-			output.position = 0;
-			output.writeUTFBytes(ANIMATION_EXTENSION.substr(1).toUpperCase());
-			output.position = 4;
-			output.writeBytes(animation);
-			_queue.push(new SaveHelper(output, ANIMATION_EXTENSION));
+			_queue.push(new SaveHelper(animation, ANIMATION_EXTENSION));
 		}
 
 		public function clear():void {
